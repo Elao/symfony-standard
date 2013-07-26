@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+./app/console server:run 127.0.0.1:8000 &
+
+SERVER_ID=$!
+
+./bin/behat --profile=jenkins
+
+kill $(ps aux | awk '/[1]27.0.0.1:8000/ {print $2}')
