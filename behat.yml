@@ -12,6 +12,10 @@ default:
             goutte: ~
             files_path: features/files
         Behat\Symfony2Extension\Extension: ~
+        SensioLabs\Behat\PageObjectExtension\Extension:
+            namespaces:
+                page: Context\Page
+                element: Context\Page\Element
         VIPSoft\DoctrineDataFixturesExtension\Extension:
             autoload: true
             lifetime: scenario
