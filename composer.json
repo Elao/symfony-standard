@@ -22,8 +22,7 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "sensiolabs/behat-page-object-extension": "1.0.*@dev"
+        "incenteev/composer-parameter-handler": "~2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
@@ -34,7 +33,8 @@
         "behat/mink-selenium2-driver": "*",
         "behat/symfony2-extension": "*",
         "doctrine/data-fixtures": "*@dev",
-        "vipsoft/doctrine-data-fixtures-extension": "*"
+        "vipsoft/doctrine-data-fixtures-extension": "*",
+        "sensiolabs/behat-page-object-extension": "1.0.*@dev"
     },
     "scripts": {
         "post-install-cmd": [
