@@ -1,0 +1,135 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+    path: /home/vagrant/www
+    port: 80
+
+  tasks:
+
+  # Dependencies
+  - name: python-pycurl package
+    apt: pkg=python-pycurl state=present
+
+  # Git
+  - name: git package
+    apt: pkg=git state=present
+
+  # Ssh Config
+  - name: ssh config
+    template: src=templates/ssh_config.j2 dest=/home/vagrant/.ssh/config
+
+  # Dotdeb
+  - name: dotdeb key
+    apt_key: url=http://www.dotdeb.org/dotdeb.gpg state=present
+  - name: dotdeb repositories
+    apt_repository: repo='$item' state=present update_cache=yes
+    with_items:
+      - deb http://packages.dotdeb.org wheezy all
+      - deb-src http://packages.dotdeb.org wheezy all
+      - deb http://packages.dotdeb.org wheezy-php55 all
+      - deb-src http://packages.dotdeb.org wheezy-php55 all
+
+  # Apache
+  - name: apache package
+    apt: pkg=apache2-mpm-prefork state=present
+  - name: apache service
+    service: name=apache2 state=started enabled=yes
+
+  # Apache Virtual Host
+  - name: apache disable default
+    shell: a2dissite default
+      removes=/etc/apache2/sites-enabled/000-default
+  - name: apache virtual host conf
+    template: src=templates/vhost.conf.j2 dest=/etc/apache2/sites-available/vhost_default
+  - name: apache enable virtual host conf
+    shell: a2ensite vhost_default
+      creates=/etc/apache2/sites-enabled/vhost_default
+    notify: apache restart
+
+  # Mysql Server
+  - name: mysql server package
+    apt: pkg=mysql-server state=present
+
+  # Php 5.5
+  - name: php55 packages
+    apt: pkg={{ item }} state=present
+    with_items:
+      - php5
+      - php5-intl
+      - php5-mysqlnd
+  - name: php apache module
+    shell: a2enmod php5
+      creates=/etc/apache2/mods-enabled/php5.conf
+    notify: apache restart
+  - name: php config memory cli
+    template: src=templates/php_memory.ini.j2 dest=/etc/php5/cli/conf.d/100_memory.ini
+  - name: php config memory apache
+    template: src=templates/php_memory.ini.j2 dest=/etc/php5/apache2/conf.d/100_memory.ini
+  - name: php config date cli
+    template: src=templates/php_date.ini.j2 dest=/etc/php5/cli/conf.d/100_date.ini
+  - name: php config date apache
+    template: src=templates/php_date.ini.j2 dest=/etc/php5/apache2/conf.d/100_date.ini
+
+  # Php 5.5 Dev
+  - name: php55 packages
+    apt: pkg={{ item }} state=present
+    with_items:
+      - php5-xdebug
+      - php5-xsl
+      - php5-curl
+  - name: php config xdebug cli
+    template: src=templates/php_xdebug.ini.j2 dest=/etc/php5/cli/conf.d/100_xdebug.ini
+  - name: php config xdebug apache
+    template: src=templates/php_xdebug.ini.j2 dest=/etc/php5/apache2/conf.d/100_xdebug.ini
+
+  # Composer
+  - name: composer install
+    shell: curl -sS https://getcomposer.org/installer | /usr/bin/php && /bin/mv -f /home/vagrant/composer.phar /usr/local/bin/composer
+      creates=/usr/local/bin/composer
+
+  # Npm
+  - name: bearstech key
+    apt_key: url=http://deb.bearstech.com/bearstech-archive.gpg state=present
+  - name: bearstech repositories
+    apt_repository: repo='$item' state=present update_cache=yes
+    with_items:
+      - deb http://deb.bearstech.com/debian wheezy-bearstech main
+  - name: nodejs package
+    apt: pkg=nodejs state=present
+
+  # Project
+  - name: project vagrant
+    lineinfile: dest=/home/vagrant/.bashrc line="export SYMFONY__VAGRANT=1" regexp="^export SYMFONY__VAGRANT="
+  - name: project path bin
+    lineinfile: dest=/home/vagrant/.bashrc line="PATH=$PATH:./bin" regexp="^PATH="
+  - name: project root
+    file: path={{ path }}/.. state=directory group=www-data mode=0710
+  - name: project cache
+    file: path={{ path }}/../cache state=directory
+    sudo: no
+  - name: project logs
+    file: path={{ path }}/../logs state=directory
+    sudo: no
+
+  # Acl (Should be simplified with ansible 1.4)
+  - name: acl package
+    apt: pkg=acl state=present
+  - name: acl dirs
+    shell: setfacl -R -m u:www-data:rwX -m u:vagrant:rwX {{ path }}/../cache {{ path }}/../logs && setfacl -dR -m u:www-data:rwx -m u:vagrant:rwx {{ path }}/../cache {{ path }}/../logs
+
+  # Build
+  - name: ant package
+    apt: pkg=ant state=present
+  - name: graphviz package
+    apt: pkg=graphviz state=present
+  - name: build-essential package
+    apt: pkg=build-essential state=present
+  - name: zombie package
+    npm: name=zombie version=1.4.1 state=present global=yes
+
+  handlers:
+
+    # Apache
+    - name: apache restart
+      service: name=apache2 state=restarted
