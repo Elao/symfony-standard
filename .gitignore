@@ -1,11 +1,13 @@
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
-/app/check.php
 /app/config/parameters.yml
 /app/logs/*
-/app/SymfonyRequirements.php
+!app/cache/.gitkeep
+!app/logs/.gitkeep
 /build/
 /vendor/
 /bin/
 /composer.phar
+/nbproject/
+/.vagrant/
