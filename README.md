@@ -27,4 +27,4 @@ Ant
 
 Installation :
 
-* Change the project name inside the app/build.xml
+* Change the project name inside the build.xml

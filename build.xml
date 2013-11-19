@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="symfony" default="build" basedir="..">
+<project name="symfony" default="build" basedir=".">
 
     <property name="source" value="src"/>
 
@@ -111,8 +111,8 @@
 
     <target name="behat-build" description="Run behat test">
         <exec executable="bin/behat">
-            <arg value="--profile=build" />
             <arg value="-c=app/behat.yml" />
+            <arg value="--profile=build" />
         </exec>
     </target>
 
