@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="symfony" default="build" basedir="..">
+
+    <property name="source" value="src"/>
+
+    <target name="build" depends="clean,prepare,parallelTasks,phpunit-build,behat-build"/>
+
+    <target name="clean" description="Clean up and create artifact directories">
+        <delete dir="${basedir}/build/logs"/>
+        <delete dir="${basedir}/build/pdepend"/>
+        <delete dir="${basedir}/build/phpunit"/>
+        <delete dir="${basedir}/build/behat"/>
+        <delete dir="${basedir}/build/phpdoc"/>
+
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/pdepend"/>
+        <mkdir dir="${basedir}/build/phpunit"/>
+        <mkdir dir="${basedir}/build/behat"/>
+        <mkdir dir="${basedir}/build/behat/junit"/>
+        <mkdir dir="${basedir}/build/phpdoc"/>
+    </target>
+
+    <target name="prepare" description="Prepare the project (vendors + database)">
+        <copy file="${basedir}/app/config/parameters.yml.dist" tofile="${basedir}/app/config/parameters.yml" />
+        <exec executable="composer" failonerror="true">
+            <arg value="install" />
+            <arg value="--dev" />
+        </exec>
+        <delete includeEmptyDirs="true">
+            <fileset dir="${basedir}/../logs" includes="**/*" defaultexcludes="no"/>
+        </delete>
+        <exec executable="app/console" failonerror="false">
+            <arg value="cache:clear" />
+            <arg value="--env=test" />
+        </exec>
+        <exec executable="app/console" failonerror="false">
+            <arg value="doctrine:database:create" />
+            <arg value="--env=test" />
+        </exec>
+        <exec executable="app/console" failonerror="true">
+            <arg value="doctrine:schema:drop" />
+            <arg value="--force" />
+            <arg value="--env=test" />
+        </exec>
+        <exec executable="app/console" failonerror="true">
+            <arg value="doctrine:schema:create" />
+            <arg value="--env=test" />
+        </exec>
+    </target>
+
+    <target name="parallelTasks" description="Run the pdepend and phpmd-build tasks in parallel using a maximum of 2 threads.">
+        <parallel threadCount="2">
+            <sequential>
+                <antcall target="pdepend"/>
+                <antcall target="phpmd-build"/>
+            </sequential>
+            <antcall target="phpcpd"/>
+            <antcall target="phpcs"/>
+            <antcall target="phploc"/>
+        </parallel>
+    </target>
+
+    <target name="pdepend" description="Generate jdepend.xml and software metrics charts using PHP_Depend">
+        <exec executable="bin/pdepend">
+            <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+            <arg value="--jdepend-chart=${basedir}/build/pdepend/jdepend.svg" />
+            <arg value="--overview-pyramid=${basedir}/build/pdepend/pyramid.svg" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpmd-build" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
+        <exec executable="bin/phpmd">
+            <arg path="${source}" />
+            <arg value="xml" />
+            <arg value="${basedir}/app/phpmd.xml" />
+            <arg value="--reportfile" />
+            <arg value="${basedir}/build/logs/pmd.xml" />
+        </exec>
+    </target>
+
+    <target name="phpmd" description="Perform project mess detection using PHPMD">
+        <exec executable="bin/phpmd">
+            <arg path="${source}" />
+            <arg value="text" />
+            <arg value="${basedir}/app/phpmd.xml" />
+        </exec>
+    </target>
+
+    <target name="phpunit-build" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
+        <exec executable="bin/phpunit" failonerror="true">
+            <arg value="--colors" />
+            <arg value="-c" />
+            <arg path="${basedir}/app" />
+            <arg value="--coverage-html" />
+            <arg path="${basedir}/build/phpunit" />
+            <arg value="--coverage-clover" />
+            <arg path="${basedir}/build/logs/clover.xml" />
+            <arg value="--log-junit" />
+            <arg path="${basedir}/build/logs/junit.xml" />
+        </exec>
+    </target>
+
+    <target name="phpunit" description="Run unit tests using PHPUnit">
+        <exec executable="bin/phpunit">
+            <arg value="--colors" />
+            <arg value="--configuration" />
+            <arg path="${basedir}/app/phpunit.xml" />
+        </exec>
+    </target>
+
+    <target name="behat-build" description="Run behat test">
+        <exec executable="bin/behat">
+            <arg value="--profile=build" />
+            <arg value="-c=app/behat.yml" />
+        </exec>
+    </target>
+
+    <target name="behat" description="Run behat test">
+        <exec executable="bin/behat">
+            <arg value="-c=app/behat.yml" />
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
+        <exec executable="bin/phpcs" output="/dev/null">
+            <arg value="--report=checkstyle" />
+            <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+            <arg value="--standard=PSR2" />
+            <arg value="--ignore=*Bundle/Resources/*" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phploc" description="Measure project size using PHPLOC">
+        <exec executable="bin/phploc">
+            <arg value="--log-csv" />
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
+        <exec executable="bin/phpcpd">
+            <arg value="--log-pmd" />
+            <arg value="${basedir}/build/logs/pmd-cpd.xml" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+</project>

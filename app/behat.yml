@@ -1,0 +1,23 @@
+default:
+    paths:
+        features: features
+    context:
+        class:  Context\FeatureContext
+    extensions:
+        Behat\MinkExtension\Extension:
+            javascript_session: zombie
+            base_url: http://symfony.dev/app_test.php
+            zombie: ~
+            goutte: ~
+            files_path: features/files
+        Behat\Symfony2Extension\Extension: ~
+        SensioLabs\Behat\PageObjectExtension\Extension:
+            namespaces:
+                page: Context\Page
+                element: Context\Page\Element
+
+build:
+    formatter:
+        name: progress,junit,html
+        parameters:
+            output_path: ,build/behat/junit,build/behat/index.html

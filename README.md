@@ -1,13 +1,6 @@
 Elao Symfony Standard Edition
 ========================
 
-# Intégration de Behat
-
-Source :https://gist.github.com/tentacode/5907802
-
-A l'installation du projet, il faut penser a modifier l'url du projet dans le fichier behat.yml ainsi que dans script/behat
-
-
 Vagrant
 -------
 
@@ -21,3 +14,17 @@ Requirements :
 Installation :
 
  * Fill options in Vagrantfile
+
+Behat
+------
+
+Installation :
+
+* Change the base url inside app/behat.yml according to VagrantFile config.vm.hostname
+
+Ant
+------
+
+Installation :
+
+* Change the project name inside the app/build.xml

@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = '2'
 
 options = {
   :name      => 'symfony',
-  :ip        => '172.16.1.*',
+  :ip        => '172.16.1.6',
   :memory    => 512,
   :box       => 'debian-7-amd64'
 }
@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = 'http://www.elao.com/vagrant-boxes/' + options[:box] + '.box'
 
   config.vm.hostname = options[:name] + '.dev'
-  
+
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
 
@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.name = options[:name]
     vb.customize ['modifyvm', :id, '--memory', options[:memory]]
   end
- 
+
   config.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'vagrant/ansible/site.yml'
     ansible.inventory_path = 'vagrant/ansible/hosts'
