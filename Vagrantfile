@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = '2'
 
 options = {
   :name      => 'symfony',
-  :ip        => '172.16.1.6',
+  :ip        => '172.16.1.*',
   :memory    => 512,
   :box       => 'debian-7-amd64'
 }
@@ -13,7 +13,6 @@ options = {
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = options[:box]
-
   config.vm.box_url = 'http://www.elao.com/vagrant-boxes/' + options[:box] + '.box'
 
   config.vm.hostname = options[:name] + '.dev'
