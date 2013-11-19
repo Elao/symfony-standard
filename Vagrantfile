@@ -13,7 +13,7 @@ options = {
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = options[:box]
+  config.vm.box_url = 'http://www.elao.com/vagrant-boxes/' + options[:box] + '.box'
 
   config.vm.hostname = options[:name] + '.' + options[:namespace] + '.dev'
   
