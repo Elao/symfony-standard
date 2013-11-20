@@ -1,6 +1,21 @@
 Elao Symfony Standard Edition
 ========================
 
+Naming
+------
+
+Lower case and hyphens only !
+Ex : "foo", "foo-bar"
+
+If you have a vendor/namespace, such as "gdf" or "arianespace", appends it with a dot.
+Ex : "foo-bar.gdf"
+
+For db names, just reverse name and vendor/namespace, replacing the dot by an underscore
+Ex : "gdf_foo-bar"
+
+Bundles : FooBar/Bundle/CoreBundle
+Bundles with vendor/namespace : Gdf/FooBar/Bundle/CoreBundle
+
 Vagrant
 -------
 
