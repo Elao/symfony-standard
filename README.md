@@ -54,11 +54,21 @@ Behat
 
 Installation :
 
-* Change the base url inside app/behat.yml according to VagrantFile config.vm.hostname
+ * Change the base url inside app/behat.yml according to VagrantFile config.vm.hostname
 
 Ant
-------
+---
 
 Installation :
 
-* Change the project name inside the build.xml
+ * Change the project name inside the build.xml
+
+Checklist
+---------
+
+ * Change session name in app/config/config.yml :
+
+framework:
+    ...
+    session:
+        name: foo-bar
