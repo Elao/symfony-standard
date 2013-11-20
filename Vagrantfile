@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = '2'
 
 options = {
-  :name      => 'symfony',
+  :name      => 'symfony-standard',
   :ip        => '172.16.1.6',
   :memory    => 512,
   :box       => 'debian-7-amd64'
