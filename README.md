@@ -61,7 +61,8 @@ Ant
 
 Installation :
 
- * Change the project name inside the build.xml
+ * Change project name in build.xml
+ * Change project title in app/phpdoc.xml
 
 Checklist
 ---------
