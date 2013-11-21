@@ -6,7 +6,7 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             javascript_session: zombie
-            base_url: http://symfony.dev/app_test.php
+            base_url: http://symfony-standard.dev/app_test.php
             zombie: ~
             goutte: ~
             files_path: features/files
