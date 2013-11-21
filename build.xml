@@ -3,20 +3,21 @@
 
     <property name="source" value="src"/>
 
-    <target name="build" depends="clean,prepare,lint,pdepend,phpmd-build,phpcpd,phpcs-build,phploc,phpdoc,phpunit-build,behat-build"/>
+    <target name="build" depends="clean,prepare,lint,pdepend,phpmd-build,phpcpd,phpcs-build,phploc,phpdoc,phpunit-build,behat-build,phpcb"/>
 
     <target name="clean" description="Clean up and create artifact directories">
         <delete dir="${basedir}/build/logs"/>
         <delete dir="${basedir}/build/pdepend"/>
+        <delete dir="${basedir}/build/phpdoc"/>
         <delete dir="${basedir}/build/phpunit"/>
         <delete dir="${basedir}/build/behat"/>
-        <delete dir="${basedir}/build/phpdoc"/>
-
+        <delete dir="${basedir}/build/phpcb"/>
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/pdepend"/>
+        <mkdir dir="${basedir}/build/phpdoc"/>
         <mkdir dir="${basedir}/build/phpunit"/>
         <mkdir dir="${basedir}/build/behat"/>
-        <mkdir dir="${basedir}/build/phpdoc"/>
+        <mkdir dir="${basedir}/build/phpcbc"/>
     </target>
 
     <target name="prepare" description="Prepare the project (vendors + database)">
@@ -170,6 +171,17 @@
             <arg value="--ansi" />
         </exec>
     </target>
+
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
+        <exec executable="phpcb">
+            <arg value="--log" />
+            <arg path="${basedir}/build/logs" />
+            <arg value="--source" />
+             <arg path="${source}" />
+            <arg value="--output" />
+            <arg path="${basedir}/build/phpcb" />
+        </exec>
+     </target>
 
     <target name="php-cs-fixer" description="Run php code styling fixer">
         <exec executable="bin/php-cs-fixer">
