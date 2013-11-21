@@ -25,7 +25,9 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "phpunit/phpunit": "3.7.*",
+        "hautelook/alice-bundle": "0.1.*",
+
+        "fabpot/php-cs-fixer": "0.3.*",
 
         "phpunit/phpunit": "3.7.*",
         "pdepend/pdepend": "1.1.*",
@@ -39,6 +41,8 @@
         "behat/mink-extension": "1.2.*",
         "behat/mink-goutte-driver": "1.0.*",
         "behat/mink-zombie-driver": "1.1.*",
+        "behat/common-contexts": "1.2.*",
+        "kriswallsmith/buzz": "0.10.*",
         "sensiolabs/behat-page-object-extension": "1.0.*"
     },
     "scripts": {
@@ -65,6 +69,7 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
