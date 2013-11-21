@@ -2,10 +2,6 @@
 
 namespace Context;
 
-use Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-
 use Behat\MinkExtension\Context\MinkContext;
 
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
@@ -14,6 +10,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use SensioLabs\Behat\PageObjectExtension\Context\PageObjectAwareInterface;
 use SensioLabs\Behat\PageObjectExtension\Context\PageFactory;
 
+/**
+ * Feature context
+ */
 class FeatureContext extends MinkContext implements KernelAwareInterface, PageObjectAwareInterface
 {
     /**
@@ -26,7 +25,10 @@ class FeatureContext extends MinkContext implements KernelAwareInterface, PageOb
      */
     private $pageFactory = null;
 
-    public function __construct()
+    /**
+     * Constructor
+     */
+    public function __construct(array $parameters)
     {
         // add sub contexts here
     }
