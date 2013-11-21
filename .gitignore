@@ -9,5 +9,6 @@
 /vendor/
 /bin/
 /composer.phar
+
 /nbproject/
 /.vagrant/
