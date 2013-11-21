@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="symfony" default="build" basedir=".">
+<project name="symfony-standard" default="build" basedir=".">
 
     <property name="source" value="src"/>
 
-    <target name="build" depends="clean,prepare,parallelTasks,phpunit-build,behat-build"/>
+    <target name="build" depends="clean,prepare,lint,pdepend,phpmd-build,phpcpd,phpcs-build,phploc,phpdoc,phpunit-build,behat-build"/>
 
     <target name="clean" description="Clean up and create artifact directories">
         <delete dir="${basedir}/build/logs"/>
@@ -16,7 +16,6 @@
         <mkdir dir="${basedir}/build/pdepend"/>
         <mkdir dir="${basedir}/build/phpunit"/>
         <mkdir dir="${basedir}/build/behat"/>
-        <mkdir dir="${basedir}/build/behat/junit"/>
         <mkdir dir="${basedir}/build/phpdoc"/>
     </target>
 
@@ -48,24 +47,31 @@
         </exec>
     </target>
 
-    <target name="parallelTasks" description="Run the pdepend and phpmd-build tasks in parallel using a maximum of 2 threads.">
-        <parallel threadCount="2">
-            <sequential>
-                <antcall target="pdepend"/>
-                <antcall target="phpmd-build"/>
-            </sequential>
-            <antcall target="phpcpd"/>
-            <antcall target="phpcs"/>
-            <antcall target="phploc"/>
-        </parallel>
-    </target>
+    <target name="lint" description="Perform syntax check of sourcecode files">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+     </target>
 
     <target name="pdepend" description="Generate jdepend.xml and software metrics charts using PHP_Depend">
         <exec executable="bin/pdepend">
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/jdepend.svg" />
             <arg value="--overview-pyramid=${basedir}/build/pdepend/pyramid.svg" />
+            <arg value="--ignore=*Bundle/Resources/*" />
             <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpmd" description="Perform project mess detection using PHPMD">
+        <exec executable="bin/phpmd">
+            <arg path="${source}" />
+            <arg value="text" />
+            <arg value="${basedir}/app/phpmd.xml" />
         </exec>
     </target>
 
@@ -79,11 +85,60 @@
         </exec>
     </target>
 
-    <target name="phpmd" description="Perform project mess detection using PHPMD">
-        <exec executable="bin/phpmd">
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
+        <exec executable="bin/phpcpd">
+            <arg value="--exclude=*Bundle/Resources/*" />
+            <arg value="--ansi" />
+            <arg value="--log-pmd" />
+            <arg value="${basedir}/build/logs/pmd-cpd.xml" />
             <arg path="${source}" />
-            <arg value="text" />
-            <arg value="${basedir}/app/phpmd.xml" />
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
+        <exec executable="bin/phpcs">
+            <arg value="--report=full" />
+            <arg value="--standard=PSR2" />
+            <arg value="--ignore=*Bundle/Resources/*" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpcs-build" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
+        <exec executable="bin/phpcs">
+            <arg value="--report=checkstyle" />
+            <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+            <arg value="--standard=PSR2" />
+            <arg value="--ignore=*Bundle/Resources/*" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phploc" description="Measure project size using PHPLOC">
+        <exec executable="bin/phploc">
+            <arg value="--exclude=*Bundle/Resources/*" />
+            <arg value="--ansi" />
+            <arg value="--log-csv" />
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpdoc" description="Generate API documentation using phpDocumentor 2">
+        <exec executable="bin/phpdoc.php">
+            <arg value="--config=${basedir}/app/phpdoc.xml" />
+            <arg value="--template=responsive" />
+            <arg value="--template=checkstyle" />
+            <arg value="--force" />
+            <arg value="--ansi" />
+        </exec>
+    </target>
+
+    <target name="phpunit" description="Run unit tests using PHPUnit">
+        <exec executable="bin/phpunit">
+            <arg value="--colors" />
+            <arg value="--configuration" />
+            <arg path="${basedir}/app/phpunit.xml" />
         </exec>
     </target>
 
@@ -101,11 +156,10 @@
         </exec>
     </target>
 
-    <target name="phpunit" description="Run unit tests using PHPUnit">
-        <exec executable="bin/phpunit">
-            <arg value="--colors" />
-            <arg value="--configuration" />
-            <arg path="${basedir}/app/phpunit.xml" />
+    <target name="behat" description="Run behat test">
+        <exec executable="bin/behat">
+            <arg value="-c=app/behat.yml" />
+            <arg value="--ansi" />
         </exec>
     </target>
 
@@ -113,37 +167,13 @@
         <exec executable="bin/behat">
             <arg value="-c=app/behat.yml" />
             <arg value="--profile=build" />
+            <arg value="--ansi" />
         </exec>
     </target>
 
-    <target name="behat" description="Run behat test">
-        <exec executable="bin/behat">
-            <arg value="-c=app/behat.yml" />
-        </exec>
-    </target>
-
-    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
-        <exec executable="bin/phpcs" output="/dev/null">
-            <arg value="--report=checkstyle" />
-            <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
-            <arg value="--standard=PSR2" />
-            <arg value="--ignore=*Bundle/Resources/*" />
-            <arg path="${source}" />
-        </exec>
-    </target>
-
-    <target name="phploc" description="Measure project size using PHPLOC">
-        <exec executable="bin/phploc">
-            <arg value="--log-csv" />
-            <arg value="${basedir}/build/logs/phploc.csv" />
-            <arg path="${source}" />
-        </exec>
-    </target>
-
-    <target name="phpcpd" description="Find duplicate code using PHPCPD">
-        <exec executable="bin/phpcpd">
-            <arg value="--log-pmd" />
-            <arg value="${basedir}/build/logs/pmd-cpd.xml" />
+    <target name="php-cs-fixer" description="Run php code styling fixer">
+        <exec executable="bin/php-cs-fixer">
+            <arg value="fix" />
             <arg path="${source}" />
         </exec>
     </target>
