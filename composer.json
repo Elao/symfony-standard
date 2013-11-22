@@ -42,6 +42,9 @@
         "pear/pear_exception": "dev-master@dev",
 
         "behat/symfony2-extension": "1.1.*",
+
+        "behat/behat": "2.5.*@dev",
+
         "behat/mink-extension": "1.2.*",
         "behat/mink-goutte-driver": "1.0.*",
         "behat/mink-zombie-driver": "1.1.*",
