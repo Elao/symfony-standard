@@ -31,10 +31,10 @@ Installation :
  * Fill options in Vagrantfile. Remember to replace the ip by an actual one, and to have only letters, numbers, hyphens or dots in name. From now you can only choose "debian-7-amd64" or "centos-6.4-x86_64" as box
  * To get rid of ssh issues, just add this to your ~/.ssh/config:
 
-Host vagrant
-  HostName 127.0.0.1
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
+Host 127.0.0.1
+    Port 2222
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
 
 Usage :
 

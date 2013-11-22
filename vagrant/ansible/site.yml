@@ -32,7 +32,7 @@
       state=present
   - name: dotdeb repositories
     apt_repository: >
-      repo={{ item }}
+      repo="{{ item }}"
       state=present
       update_cache=yes
     with_items:
@@ -136,7 +136,7 @@
       state=present
   - name: bearstech repositories
     apt_repository: >
-      repo={{ item }}
+      repo="{{ item }}"
       state=present
       update_cache=yes
     with_items:

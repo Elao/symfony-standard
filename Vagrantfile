@@ -27,16 +27,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder '.', '/home/vagrant/www', nfs: true
 
   config.vm.provider :virtualbox do |vb|
-    #vb.gui = true
     vb.name = options[:name]
     vb.customize ['modifyvm', :id, '--memory', options[:memory]]
+    #vb.gui = true
   end
 
   config.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'vagrant/ansible/site.yml'
     ansible.inventory_path = 'vagrant/ansible/hosts'
     ansible.extra_vars = {host: options[:name] + '.dev'}
-    ansible.verbose = 'vvvv'
+    #ansible.verbose = 'vvvv'
   end
 
 end
