@@ -20,4 +20,4 @@ build:
     formatter:
         name: progress,junit,html
         parameters:
-            output_path: ,build/behat/junit,build/behat/index.html
+            output_path: ,app/build/behat/junit,app/build/behat/index.html

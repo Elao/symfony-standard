@@ -6,9 +6,9 @@
         <ignore>*Bundle/Resources/*</ignore>
     </files>
     <parser>
-        <target>../build/phpdoc</target>
+        <target>build/phpdoc</target>
     </parser>
     <transformer>
-        <target>../build/phpdoc</target>
+        <target>build/phpdoc</target>
     </transformer>
 </phpdocumentor>

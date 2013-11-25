@@ -7,10 +7,20 @@
 
   tasks:
 
+  # Apt update
+  - name: apt update
+    apt: update_cache=yes
+
   # Dependencies
   - name: python-pycurl package
     apt: >
       pkg=python-pycurl
+      state=present
+
+  # Vim
+  - name: vim package
+    apt: >
+      pkg=vim
       state=present
 
   # Git
@@ -22,8 +32,39 @@
   # Ssh Config
   - name: ssh config
     template: >
-      src=templates/ssh_config.j2
+      src=templates/ssh/config.j2
       dest=/home/vagrant/.ssh/config
+
+  # Oh my zsh
+  - name: zsh package
+    apt: >
+      pkg=zsh
+      state=present
+  - name: oh-my-zsh clone
+    git: >
+      repo=https://github.com/robbyrussell/oh-my-zsh.git
+      dest=~/.oh-my-zsh
+      update=no
+    sudo: no
+  - name: oh-my-zsh template
+    shell: >
+      cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+      creates=~/.zshrc
+    sudo: no
+  - name: oh-my-zsh plugins
+    lineinfile: >
+      dest=/home/vagrant/.zshrc
+      line="plugins=(git composer symfony2 history history-substring-search)"
+      regexp="plugins=(git)"
+  - name: oh-my-zsh prompt
+    lineinfile: >
+      dest=/home/vagrant/.zshrc
+      line="PROMPT='%{$fg[cyan]%}%n%{$fg[red]%}@%{$fg[cyan]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'"
+      regexp="plugins=(git)"
+  - name: oh-my-zsh shell
+    user: >
+      name=vagrant
+      shell=/bin/zsh
 
   # Dotdeb
   - name: dotdeb key
@@ -32,7 +73,7 @@
       state=present
   - name: dotdeb repositories
     apt_repository: >
-      repo={{ item }}
+      repo="{{ item }}"
       state=present
       update_cache=yes
     with_items:
@@ -46,33 +87,27 @@
     apt: >
       pkg=apache2-mpm-prefork
       state=present
+  - name: apache disable default
+    shell: >
+      a2dissite default
+      removes=/etc/apache2/sites-enabled/000-default
+    notify: apache restart
   - name: apache service
     service: >
       name=apache2
       state=started
       enabled=yes
 
-  # Apache Virtual Host
-  - name: apache disable default
-    shell: >
-      a2dissite default
-      removes=/etc/apache2/sites-enabled/000-default
-    notify: apache restart
-  - name: apache virtual host conf
-    template: >
-      src=templates/vhost.conf.j2
-      dest=/etc/apache2/sites-available/vhost_default
-  - name: apache enable virtual host conf
-    shell: >
-      a2ensite vhost_default
-      creates=/etc/apache2/sites-enabled/vhost_default
-    notify: apache restart
-
   # Mysql Server
   - name: mysql server package
     apt: >
       pkg=mysql-server
       state=present
+  - name: mysql service
+    service: >
+      name=mysql
+      state=started
+      enabled=yes
 
   # Php 5.5
   - name: php55 packages
@@ -80,7 +115,8 @@
       pkg={{ item }}
       state=present
     with_items:
-      - php5
+      - libapache2-mod-php5
+      - php5-cli
       - php5-intl
       - php5-mysqlnd
   - name: php apache module
@@ -88,22 +124,33 @@
       a2enmod php5
       creates=/etc/apache2/mods-enabled/php5.conf
     notify: apache restart
-  - name: php config memory cli
-    template: >
-      src=templates/php_memory.ini.j2
-      dest=/etc/php5/cli/conf.d/100_memory.ini
   - name: php config memory apache
     template: >
-      src=templates/php_memory.ini.j2
+      src=templates/php/memory.ini.j2
       dest=/etc/php5/apache2/conf.d/100_memory.ini
-  - name: php config date cli
+  - name: php config memory cli
     template: >
-      src=templates/php_date.ini.j2
-      dest=/etc/php5/cli/conf.d/100_date.ini
+      src=templates/php/memory.ini.j2
+      dest=/etc/php5/cli/conf.d/100_memory.ini
   - name: php config date apache
     template: >
-      src=templates/php_date.ini.j2
+      src=templates/php/date.ini.j2
       dest=/etc/php5/apache2/conf.d/100_date.ini
+  - name: php config date cli
+    template: >
+      src=templates/php/date.ini.j2
+      dest=/etc/php5/cli/conf.d/100_date.ini
+
+  # Apache Virtual Host
+  - name: apache virtual host conf
+    template: >
+      src=templates/apache/vhost.conf.j2
+      dest=/etc/apache2/sites-available/vhost_default
+  - name: apache enable virtual host conf
+    shell: >
+      a2ensite vhost_default
+      creates=/etc/apache2/sites-enabled/vhost_default
+    notify: apache restart
 
   # Php 5.5 Dev
   - name: php55 packages
@@ -114,14 +161,14 @@
       - php5-xdebug
       - php5-xsl
       - php5-curl
-  - name: php config xdebug cli
-    template: >
-      src=templates/php_xdebug.ini.j2
-      dest=/etc/php5/cli/conf.d/100_xdebug.ini
   - name: php config xdebug apache
     template: >
-      src=templates/php_xdebug.ini.j2
+      src=templates/php/xdebug.ini.j2
       dest=/etc/php5/apache2/conf.d/100_xdebug.ini
+  - name: php config xdebug cli
+    template: >
+      src=templates/php/xdebug.ini.j2
+      dest=/etc/php5/cli/conf.d/100_xdebug.ini
 
   # Composer
   - name: composer install
@@ -136,7 +183,7 @@
       state=present
   - name: bearstech repositories
     apt_repository: >
-      repo={{ item }}
+      repo="{{ item }}"
       state=present
       update_cache=yes
     with_items:
@@ -149,12 +196,12 @@
   # Project
   - name: project vagrant
     lineinfile: >
-      dest=/home/vagrant/.bashrc
+      dest=/home/vagrant/.zshrc
       line="export SYMFONY__VAGRANT=1"
       regexp="^export SYMFONY__VAGRANT="
   - name: project path bin
     lineinfile: >
-      dest=/home/vagrant/.bashrc
+      dest=/home/vagrant/.zshrc
       line="PATH=$PATH:./bin"
       regexp="^PATH="
   - name: project root
@@ -186,8 +233,11 @@
   # Build
   - name: ant package
     apt: >
-      pkg=ant
+      pkg={{ item }}
       state=present
+    with_items:
+      - ant
+      - openjdk-6-jdk
   - name: graphviz package
     apt: >
       pkg=graphviz
