@@ -68,6 +68,13 @@ Installation :
 
 Checklist
 ---------
+ * Change database name in  app/config/parameters.yml.dist :
+
+```
+parameters:
+    ...
+    database_name: foo-bar
+```
 
  * Change session name in app/config/config.yml :
 
