@@ -33,8 +33,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision 'ansible' do |ansible|
-    ansible.playbook = 'vagrant/ansible/site.yml'
-    ansible.inventory_path = 'vagrant/ansible/hosts'
+    ansible.playbook = 'app/vagrant/ansible/site.yml'
+    ansible.inventory_path = 'app/vagrant/ansible/hosts'
     ansible.extra_vars = {host: options[:name] + '.dev'}
     #ansible.verbose = 'vvvv'
   end

@@ -5,10 +5,12 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
-/build/
 /vendor/
 /bin/
 /composer.phar
 
+/app/check.php
+/app/SymfonyRequirements.php
+/app/build/
 /nbproject/
 /.vagrant/
