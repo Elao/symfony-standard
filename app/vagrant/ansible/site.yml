@@ -55,12 +55,12 @@
     lineinfile: >
       dest=/home/vagrant/.zshrc
       line="plugins=(git composer symfony2 history history-substring-search)"
-      regexp="plugins=(git)"
+      regexp="plugins=\(.*\)"
   - name: oh-my-zsh prompt
     lineinfile: >
       dest=/home/vagrant/.zshrc
       line="PROMPT='%{$fg[cyan]%}%n%{$fg[red]%}@%{$fg[cyan]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'"
-      regexp="plugins=(git)"
+      regexp="^PROMPT="
   - name: oh-my-zsh shell
     user: >
       name=vagrant
