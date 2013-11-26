@@ -1,8 +1,8 @@
 {
-    "name": "elao/symfony-standard",
-    "license": "MIT",
-    "type": "project",
+    "name": "elao/symfony-standard",,
     "description": "The \"Symfony Standard Edition\" distribution by Elao",
+    "type": "project",
+    "license": "proprietary",
     "autoload": {
         "psr-0": {
             "": "src/",
@@ -76,9 +76,6 @@
         "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.3-dev"
         }
     }
 }
