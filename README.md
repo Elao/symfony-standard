@@ -51,8 +51,14 @@ Notes :
  * Project is mapped in ~/www in the vm
  * For speedup needings, cache and logs are respectively mapped in ~/cache and ~/logs
 
+Composer
+--------
+
+ * Change project name & description in composer.json
+
+
 Behat
-------
+-----
 
 Installation :
 
