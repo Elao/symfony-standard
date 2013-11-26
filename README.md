@@ -16,6 +16,21 @@ Ex : "gdf_foo-bar"
 Bundles : FooBar/Bundle/CoreBundle
 Bundles with vendor/namespace : Gdf/FooBar/Bundle/CoreBundle
 
+Docblock
+--------
+
+ * Insert this doc block at the start of each php file
+
+```
+/**
+ * This file is part of the [project] package.
+ *
+ * Copyright (C) 2013 [client]
+ *
+ * @author Elao <contact@elao.com>
+ */
+```
+
 Vagrant
 -------
 
