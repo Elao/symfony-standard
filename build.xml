@@ -143,11 +143,20 @@
         </exec>
     </target>
 
+    <target name="phpunit-coverage" description="Run unit tests using PHPUnit">
+        <exec executable="bin/phpunit">
+            <arg value="--colors" />
+            <arg value="--configuration" />
+            <arg path="${basedir}/app/phpunit.xml" />
+            <arg value="--coverage-text" />
+        </exec>
+    </target>
+
     <target name="phpunit-build" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
         <exec executable="bin/phpunit" failonerror="true">
             <arg value="--colors" />
-            <arg value="-c" />
-            <arg path="${basedir}/app" />
+            <arg value="--configuration" />
+            <arg path="${basedir}/app/phpunit.xml" />
             <arg value="--coverage-html" />
             <arg path="${basedir}/app/build/phpunit" />
             <arg value="--coverage-clover" />
