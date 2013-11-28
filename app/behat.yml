@@ -1,6 +1,9 @@
 default:
     paths:
         features: features
+    formatter:
+        parameters:
+            language: en
     context:
         class:  Context\FeatureContext
     extensions:

@@ -34,7 +34,11 @@
             <property name="exceptions" description="Comma-separated list of exceptions" value="id,to" />
         </properties>
     </rule>
-    <rule ref="rulesets/naming.xml/LongVariable" />
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" description="The variable length reporting threshold" value="32"/>
+        </properties>
+    </rule>
     <rule ref="rulesets/naming.xml/ShortMethodName" />
     <rule ref="rulesets/naming.xml/ConstructorWithNameAsEnclosingClass" />
     <rule ref="rulesets/naming.xml/ConstantNamingConventions" />
