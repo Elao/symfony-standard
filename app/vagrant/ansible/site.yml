@@ -109,34 +109,43 @@
       state=started
       enabled=yes
 
-  # Php 5.5
-  - name: php55 packages
+  # Php 5
+  - name: php5 packages
     apt: >
       pkg={{ item }}
       state=present
     with_items:
       - libapache2-mod-php5
       - php5-cli
+    notify: apache restart
+  - name: php5 extra packages
+    apt: >
+      pkg={{ item }}
+      state=present
+    with_items:
       - php5-intl
       - php5-mysqlnd
-  - name: php apache module
+    notify: apache restart
+  - name: php5 apache module
     shell: >
       a2enmod php5
       creates=/etc/apache2/mods-enabled/php5.conf
     notify: apache restart
-  - name: php config memory apache
+  - name: php5 config memory apache
     template: >
       src=templates/php/memory.ini.j2
       dest=/etc/php5/apache2/conf.d/100_memory.ini
-  - name: php config memory cli
+    notify: apache restart
+  - name: php5 config memory cli
     template: >
       src=templates/php/memory.ini.j2
       dest=/etc/php5/cli/conf.d/100_memory.ini
-  - name: php config date apache
+  - name: php5 config date apache
     template: >
       src=templates/php/date.ini.j2
       dest=/etc/php5/apache2/conf.d/100_date.ini
-  - name: php config date cli
+    notify: apache restart
+  - name: php5 config date cli
     template: >
       src=templates/php/date.ini.j2
       dest=/etc/php5/cli/conf.d/100_date.ini
@@ -152,8 +161,8 @@
       creates=/etc/apache2/sites-enabled/vhost_default
     notify: apache restart
 
-  # Php 5.5 Dev
-  - name: php55 packages
+  # Php 5 Dev
+  - name: php5 extra packages dev
     apt: >
       pkg={{ item }}
       state=present
@@ -161,11 +170,13 @@
       - php5-xdebug
       - php5-xsl
       - php5-curl
-  - name: php config xdebug apache
+    notify: apache restart
+  - name: php5 config xdebug apache
     template: >
       src=templates/php/xdebug.ini.j2
       dest=/etc/php5/apache2/conf.d/100_xdebug.ini
-  - name: php config xdebug cli
+    notify: apache restart
+  - name: php5 config xdebug cli
     template: >
       src=templates/php/xdebug.ini.j2
       dest=/etc/php5/cli/conf.d/100_xdebug.ini
