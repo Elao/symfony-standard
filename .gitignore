@@ -9,7 +9,7 @@
 /composer.phar
 
 /bin/*
-!/bin/vendor.sh
+!/bin/vendor
 /app/check.php
 /app/SymfonyRequirements.php
 /app/build/
