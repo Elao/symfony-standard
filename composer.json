@@ -19,7 +19,7 @@
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~2.3",
-        "sensio/framework-extra-bundle": "~3.0@dev",
+        "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
 
@@ -42,9 +42,6 @@
         "pear/pear_exception": "dev-master@dev",
 
         "behat/symfony2-extension": "1.1.*",
-
-        "behat/behat": "2.5.*@dev",
-
         "behat/mink-extension": "1.2.*",
         "behat/mink-goutte-driver": "1.0.*",
         "behat/mink-zombie-driver": "1.1.*",
@@ -72,7 +69,6 @@
         "bin-dir": "bin",
         "process-timeout": 600
     },
-    "minimum-stability": "beta",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
