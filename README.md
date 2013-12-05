@@ -52,9 +52,9 @@ In **composer.json**, change the name and the description of the project
 
 | Project       | Name                  | Description  |
 | ------------- |-----------------------|--------------|
-| foo           | foo/foo               | Foo          |
-| foo bAr 99 !  | foo-bar-99/foo-bar-99 | Foo Bar 99 ! |
-| gdf foo       | gdf/foo               | Gdf - Foo    |
+| foo           | foo/foo               | Foo               |
+| foo bAr 99 !  | foo-bar-99/foo-bar-99 | Foo Bar 99 !      |
+| customer foo  | customer/foo          | Customer - Foo    |
 
 ### Symfony config files
 
@@ -64,7 +64,7 @@ In **app/config/parameters.yml.dist**, change the database name as following :
 | ------------- |---------------|
 | foo           | foo           |
 | foo bAr 99 !  | foo-bar-99    |
-| gdf foo       | gdf_foo       |
+| cust foo      | cust_foo      |
 
 
 In **app/phpdoc.xml**, change the title as following :
@@ -73,7 +73,7 @@ In **app/phpdoc.xml**, change the title as following :
 | ------------- |--------------|
 | foo           | Foo          |
 | foo bAr 99 !  | Foo Bar 99 ! |
-| gdf foo       | Gdf - Foo    |
+| cust foo      | cust - Foo   |
 
 
 In **app/config/config.yml**, change the session name as following :
@@ -82,7 +82,7 @@ In **app/config/config.yml**, change the session name as following :
 | ------------- |--------------|
 | foo           | foo          |
 | foo bAr 99 !  | foo-bar-99   |
-| gdf foo       | foo          |
+| cust foo      | foo          |
 
 
 ### Behat
@@ -93,7 +93,7 @@ In **app/behat.yml**, change the base_url as following :
 | ------------- |------------------------------------|
 | foo           | http://foo.dev/app_test.php        |
 | foo bAr 99 !  | http://foo-bar-99.dev/app_test.php |
-| gdf foo       | http://foo.gdf.dev/app_test.php    |
+| cust foo      | http://foo.cust.dev/app_test.php    |
 
 
 ### Ant
@@ -105,7 +105,7 @@ In **build.xml**, change the project name as following :
 | ------------- |--------------|
 | foo           | foo          |
 | foo bAr 99 !  | foo-bar-99   |
-| gdf foo       | foo.gdf      |
+| cust foo      | foo.cust      |
 
 
 First run
@@ -125,7 +125,7 @@ Conventions
 
 Bundles : FooBar/Bundle/CoreBundle
 
-Bundles with vendor/namespace : Gdf/FooBar/Bundle/CoreBundle
+Bundles with vendor/namespace : Customer/FooBar/Bundle/CoreBundle
 
 
 Docblock
@@ -137,7 +137,7 @@ Insert this doc block at the start of each php file
 /**
  * This file is part of the [project] package.
  *
- * Copyright (C) 2013 [client]
+ * Copyright (C) 2013 [customer]
  *
  * @author Elao <contact@elao.com>
  */
