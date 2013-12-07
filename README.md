@@ -85,7 +85,7 @@ In **app/phpdoc.xml**, change the title as following :
 | ------------- |--------------|
 | foo           | Foo          |
 | foo bAr 99 !  | Foo Bar 99 ! |
-| vendor foo    | vendor - Foo |
+| vendor foo    | Vendor - Foo |
 
 
 ### Behat
