@@ -56,6 +56,7 @@ In **composer.json**, change the name and the description of the project
 | foo bAr 99 !  | foo-bar-99/foo-bar-99 | Foo Bar 99 ! |
 | vendor foo    | vendor/foo            | Vendor - Foo |
 
+
 ### Symfony config files
 
 In **app/config/parameters.yml.dist**, change the database name as following :
@@ -67,15 +68,6 @@ In **app/config/parameters.yml.dist**, change the database name as following :
 | vendor foo    | vendor_foo    |
 
 
-In **app/phpdoc.xml**, change the title as following :
-
-| Project       | Title        |
-| ------------- |--------------|
-| foo           | Foo          |
-| foo bAr 99 !  | Foo Bar 99 ! |
-| vendor foo    | vendor - Foo |
-
-
 In **app/config/config.yml**, change the session name as following :
 
 | Project       | Session name |
@@ -83,6 +75,17 @@ In **app/config/config.yml**, change the session name as following :
 | foo           | foo          |
 | foo bAr 99 !  | foo-bar-99   |
 | vendor foo    | foo          |
+
+
+### Phpdoc
+
+In **app/phpdoc.xml**, change the title as following :
+
+| Project       | Title        |
+| ------------- |--------------|
+| foo           | Foo          |
+| foo bAr 99 !  | Foo Bar 99 ! |
+| vendor foo    | vendor - Foo |
 
 
 ### Behat
@@ -97,7 +100,6 @@ In **app/behat.yml**, change the base_url as following :
 
 
 ### Ant
-
 
 In **build.xml**, change the project name as following :
 
