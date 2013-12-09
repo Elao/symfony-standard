@@ -26,6 +26,11 @@ class FeatureContext extends MinkContext implements KernelAwareInterface, PageOb
     private $pageFactory = null;
 
     /**
+     * @var Page $currentPage
+     */
+    private $currentPage;
+
+    /**
      * Constructor
      */
     public function __construct(array $parameters)
@@ -73,5 +78,30 @@ class FeatureContext extends MinkContext implements KernelAwareInterface, PageOb
     public function setPageFactory(PageFactory $pageFactory)
     {
         $this->pageFactory = $pageFactory;
+    }
+
+    /**
+     * Returns the current Page
+     *
+     * @return Page The current page
+     */
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
+    /**
+     * Open the page and set it as the current page
+     *
+     * @param  Page  $page   The page
+     * @param  array $params The get params for the page
+     *
+     * @return Page
+     */
+    public function openPage($page, $params = array())
+    {
+        $this->currentPage = $this->getPage($page);
+
+        $this->getCurrentPage()->open($params);
     }
 }
