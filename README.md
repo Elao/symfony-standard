@@ -32,7 +32,7 @@ Given three typical projects :
 
  * One simple without specific vendor : "foo"
  * One simple without vendor and funky name: "foo bAr 99 !"
- * One with vendor "gdf foo"
+ * One with vendor "vendor foo"
 
 ### Vagrant
 
@@ -42,7 +42,7 @@ In **Vagrantfile**, name option will be used as domain, suffixed by ".dev", so, 
 | ------------- |------------|
 | foo           | foo        |
 | foo bAr 99 !  | foo-bar-99 |
-| gdf foo       | foo.gdf    |
+| vendor foo    | foo.vendor |
 
 Fill in the ip address (must be unique accross project), memory and box (currentlty limited to "debian-7-amd64" or "centos-6.4-x86_64")
 
@@ -54,7 +54,8 @@ In **composer.json**, change the name and the description of the project
 | ------------- |-----------------------|--------------|
 | foo           | foo/foo               | Foo          |
 | foo bAr 99 !  | foo-bar-99/foo-bar-99 | Foo Bar 99 ! |
-| gdf foo       | gdf/foo               | Gdf - Foo    |
+| vendor foo    | vendor/foo            | Vendor - Foo |
+
 
 ### Symfony config files
 
@@ -64,16 +65,7 @@ In **app/config/parameters.yml.dist**, change the database name as following :
 | ------------- |---------------|
 | foo           | foo           |
 | foo bAr 99 !  | foo-bar-99    |
-| gdf foo       | gdf_foo       |
-
-
-In **app/phpdoc.xml**, change the title as following :
-
-| Project       | Title        |
-| ------------- |--------------|
-| foo           | Foo          |
-| foo bAr 99 !  | Foo Bar 99 ! |
-| gdf foo       | Gdf - Foo    |
+| vendor foo    | vendor_foo    |
 
 
 In **app/config/config.yml**, change the session name as following :
@@ -82,7 +74,18 @@ In **app/config/config.yml**, change the session name as following :
 | ------------- |--------------|
 | foo           | foo          |
 | foo bAr 99 !  | foo-bar-99   |
-| gdf foo       | foo          |
+| vendor foo    | foo          |
+
+
+### Phpdoc
+
+In **app/phpdoc.xml**, change the title as following :
+
+| Project       | Title        |
+| ------------- |--------------|
+| foo           | Foo          |
+| foo bAr 99 !  | Foo Bar 99 ! |
+| vendor foo    | Vendor - Foo |
 
 
 ### Behat
@@ -93,11 +96,10 @@ In **app/behat.yml**, change the base_url as following :
 | ------------- |------------------------------------|
 | foo           | http://foo.dev/app_test.php        |
 | foo bAr 99 !  | http://foo-bar-99.dev/app_test.php |
-| gdf foo       | http://foo.gdf.dev/app_test.php    |
+| vendor foo    | http://foo.vendor.dev/app_test.php |
 
 
 ### Ant
-
 
 In **build.xml**, change the project name as following :
 
@@ -105,7 +107,7 @@ In **build.xml**, change the project name as following :
 | ------------- |--------------|
 | foo           | foo          |
 | foo bAr 99 !  | foo-bar-99   |
-| gdf foo       | foo.gdf      |
+| vendor foo    | foo.vendor   |
 
 
 First run
@@ -125,7 +127,7 @@ Conventions
 
 Bundles : FooBar/Bundle/CoreBundle
 
-Bundles with vendor/namespace : Gdf/FooBar/Bundle/CoreBundle
+Bundles with vendor/namespace : Vendor/FooBar/Bundle/CoreBundle
 
 
 Docblock
@@ -137,7 +139,7 @@ Insert this doc block at the start of each php file
 /**
  * This file is part of the [project] package.
  *
- * Copyright (C) 2013 [client]
+ * Copyright (C) 2013 [vendor]
  *
  * @author Elao <contact@elao.com>
  */
