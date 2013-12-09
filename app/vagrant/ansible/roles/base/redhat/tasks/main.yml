@@ -1,0 +1,15 @@
+---
+
+- name: whoami
+  command: >
+      /usr/bin/whoami
+  register: whoami
+  sudo: no
+
+- name: user profiles
+  copy: >
+      src=user_profile
+      dest="{{ item }}"
+      force=no
+  with_items: user_profiles
+  sudo: no

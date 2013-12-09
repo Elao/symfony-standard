@@ -8,16 +8,30 @@ default:
         class:  Context\FeatureContext
     extensions:
         Behat\MinkExtension\Extension:
-            javascript_session: zombie
-            base_url: http://symfony-standard.dev/app_test.php
-            zombie: ~
-            goutte: ~
+            base_url:   http://symfony-standard.dev/app_test.php
             files_path: features/files
-        Behat\Symfony2Extension\Extension: ~
+            default_session:    goutte
+            javascript_session: selenium2
+            zombie:    ~
+            selenium2: ~
+        Behat\Symfony2Extension\Extension:
+            kernel:
+                env:   test
+                debug: true
         SensioLabs\Behat\PageObjectExtension\Extension:
             namespaces:
                 page: Context\Page
                 element: Context\Page\Element
+
+local:
+    formatter:
+        name: progress,html
+        parameters:
+            output_path: ,app/build/behat/index.html
+    extensions:
+        Behat\MinkExtension\Extension:
+            selenium2:
+                wd_host: http://172.16.1.1:4444/wd/hub
 
 build:
     formatter:

@@ -1,0 +1,7 @@
+---
+
+dependencies:
+
+    - { role: selenium/redhat }
+    - { role: xvfb/redhat }
+    - { role: firefox/redhat }

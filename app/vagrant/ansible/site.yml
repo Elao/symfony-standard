@@ -2,8 +2,10 @@
 - hosts: all
   sudo: yes
   vars:
-    path: /home/vagrant/www
-    port: 80
+      path: /home/vagrant/www
+      port: 80
+  roles:
+      - build/debian
 
   tasks:
 
@@ -240,29 +242,6 @@
   - name: acl dirs
     shell: >
       setfacl -R -m u:www-data:rwX -m u:vagrant:rwX {{ path }}/../cache {{ path }}/../logs && setfacl -dR -m u:www-data:rwx -m u:vagrant:rwx {{ path }}/../cache {{ path }}/../logs
-
-  # Build
-  - name: ant package
-    apt: >
-      pkg={{ item }}
-      state=present
-    with_items:
-      - ant
-      - openjdk-6-jdk
-  - name: graphviz package
-    apt: >
-      pkg=graphviz
-      state=present
-  - name: build-essential package
-    apt: >
-      pkg=build-essential
-      state=present
-  - name: zombie package
-    npm: >
-      name=zombie
-      version=1.4.1
-      state=present
-      global=yes
 
   handlers:
 

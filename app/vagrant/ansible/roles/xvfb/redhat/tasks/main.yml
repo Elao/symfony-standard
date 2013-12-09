@@ -1,0 +1,45 @@
+---
+
+- name: packages
+  yum: >
+      name={{ item }}
+      state=present
+  with_items:
+      - xorg-x11-server-Xvfb
+  sudo: yes
+
+- name: service template
+  template: >
+      src=xvfbd.j2
+      dest=/etc/init.d/xvfbd
+  sudo: yes
+
+- name: service file
+  file: >
+      path=/etc/init.d/xvfbd
+      state=file
+      group=root
+      owner=root
+      mode=0755
+  sudo: yes
+
+- name: service install
+  shell: >
+      /sbin/chkconfig xvfbd on
+      creates=/etc/rc.d/rc2.d/S85xvfbd
+  sudo: yes
+
+- name: service
+  service: >
+      name=xvfbd
+      state=started
+      enabled=true
+  sudo: yes
+
+- name: user profiles display
+  lineinfile: >
+      dest={{ item }}
+      line="export DISPLAY=:99"
+      regexp="^export DISPLAY="
+  with_items: user_profiles
+  sudo: no

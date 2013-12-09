@@ -1,0 +1,8 @@
+---
+
+# IP Tables
+- name: iptables restart
+  service: >
+      name=iptables
+      state=restarted
+  sudo: yes

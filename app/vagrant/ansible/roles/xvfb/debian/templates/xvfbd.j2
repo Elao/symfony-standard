@@ -1,0 +1,89 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          xvfbd
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: X Virtual Framebuffer
+# Description:       X Virtual Framebuffer
+### END INIT INFO
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+DISPLAY=":99"
+
+NAME="xvfbd"
+BIN="/usr/bin/Xvfb"
+OPTIONS="${DISPLAY} -ac -screen 0 1280x1024x24 -nolisten tcp"
+LOG_PATH="/var/log/${NAME}"
+PID_FILE="/var/run/${NAME}.pid"
+
+# Include the default user configuration if exists
+[ -r /etc/default/${NAME} ] && . /etc/default/${NAME}
+
+if [[ ! -d "${LOG_PATH}" ]]; then
+    mkdir -p "${LOG_PATH}"
+fi
+
+do_start() {
+    start-stop-daemon --start --quiet --make-pidfile --pidfile ${PID_FILE} --background --exec ${BIN} -- ${OPTIONS}
+    RETVAL="$?"
+    return "$RETVAL"
+}
+
+do_stop() {
+    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile ${PID_FILE} --name Xvfb
+    RETVAL="$?"
+    rm -f ${PID_FILE}
+    return "$RETVAL"
+}
+
+case "$1" in
+    start)
+        log_daemon_msg "Starting ${NAME}: "
+        do_start
+        case "$?" in
+            0|1) log_end_msg 0 ;;
+            2) log_end_msg 1 ;;
+        esac
+        ;;
+    stop)
+        log_daemon_msg "Stopping ${NAME}: "
+        do_stop
+        case "$?" in
+            0|1) log_end_msg 0 ;;
+            2) log_end_msg 1 ;;
+        esac
+        ;;
+    restart)
+        log_daemon_msg "Restarting ${NAME}: "
+        do_stop
+        case "$?" in
+            0|1)
+                do_start
+                case "$?" in
+                    0) log_end_msg 0 ;;
+                    1) log_end_msg 1 ;; # Old process is still running
+                    *) log_end_msg 1 ;; # Failed to start
+                esac
+                ;;
+            *)
+                # Failed to stop
+                log_end_msg 1
+            ;;
+        esac
+        ;;
+    *)
+        echo "Usage: ${NAME} {start|stop|restart}" >&2
+        exit 3
+        ;;
+esac
+
+:

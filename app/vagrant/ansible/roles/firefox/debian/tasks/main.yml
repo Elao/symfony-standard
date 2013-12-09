@@ -1,0 +1,19 @@
+---
+
+- name: packages remove
+  apt: >
+      pkg={{ item }}
+      state=absent
+  with_items:
+      - iceweasel
+  sudo: yes
+
+- name: packages
+  apt: >
+      pkg={{ item }}
+      state=present
+  with_items:
+      - libdbus-glib-1-2
+      - firefox
+      - firefox-l10n-en-us
+  sudo: yes
