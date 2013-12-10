@@ -2,10 +2,12 @@
 - hosts: all
   sudo: yes
   vars:
-      path: /home/vagrant/www
-      port: 80
+    path: /home/vagrant/www
+    port: 80
   roles:
-      - build/debian
+    - base/debian
+    - build/debian
+    - oh-my-zsh/debian
 
   tasks:
 
@@ -19,54 +21,11 @@
       pkg=python-pycurl
       state=present
 
-  # Vim
-  - name: vim package
-    apt: >
-      pkg=vim
-      state=present
-
-  # Git
-  - name: git package
-    apt: >
-      pkg=git
-      state=present
-
   # Ssh Config
   - name: ssh config
     template: >
       src=templates/ssh/config.j2
       dest=/home/vagrant/.ssh/config
-
-  # Oh my zsh
-  - name: zsh package
-    apt: >
-      pkg=zsh
-      state=present
-  - name: oh-my-zsh clone
-    git: >
-      repo=https://github.com/robbyrussell/oh-my-zsh.git
-      dest=~/.oh-my-zsh
-      update=no
-    sudo: no
-  - name: oh-my-zsh template
-    shell: >
-      cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-      creates=~/.zshrc
-    sudo: no
-  - name: oh-my-zsh plugins
-    lineinfile: >
-      dest=/home/vagrant/.zshrc
-      line="plugins=(git composer symfony2 history history-substring-search)"
-      regexp="plugins=\(.*\)"
-  - name: oh-my-zsh prompt
-    lineinfile: >
-      dest=/home/vagrant/.zshrc
-      line="PROMPT='%{$fg[cyan]%}%n%{$fg[red]%}@%{$fg[cyan]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'"
-      regexp="^PROMPT="
-  - name: oh-my-zsh shell
-    user: >
-      name=vagrant
-      shell=/bin/zsh
 
   # Dotdeb
   - name: dotdeb key
