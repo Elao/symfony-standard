@@ -86,6 +86,7 @@
     with_items:
       - php5-intl
       - php5-mysqlnd
+      - php5-gd
     notify: apache restart
   - name: php5 apache module
     shell: >
