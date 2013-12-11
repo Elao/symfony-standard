@@ -4,10 +4,11 @@
 VAGRANTFILE_API_VERSION = '2'
 
 options = {
-  :name      => 'symfony-standard',
-  :ip        => '172.16.1.6',
-  :memory    => 512,
-  :box       => 'debian-7-amd64'
+  :name    => 'symfony-standard',
+  :ip      => '172.16.1.6',
+  :memory  => 512,
+  :box     => 'debian-7-amd64',
+  :aliases => []
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -19,6 +20,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
+
+  if options[:aliases].any?
+    config.hostmanager.aliases = ''
+
+    for item in options[:aliases]
+      config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+    end
+  end
 
   config.vm.network :private_network, ip: options[:ip]
 
