@@ -10,6 +10,11 @@ Provide a pre-configured symfony standard edition, powered by vagrant with the f
  * Ant
  * NodeJs
 
+What's included ?
+-----------------
+
+ * bin/vendor : a shell script to manipulates vendors as archives, when you must deploy with no internet connection
+
 Requirements
 ------------
 
