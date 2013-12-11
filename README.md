@@ -22,12 +22,12 @@ Requirements
  * [Vagrant 1.3.5+](http://downloads.vagrantup.com/)
  * [Vagrant Host Manager plugin 1.2.3+](https://github.com/smdahlen/vagrant-hostmanager)
  * [ansible 1.4.0+](https://github.com/ansible/ansible) (installable via homebrew on osx)
- 
+
 Installation
 ------------
  Just clone the repository :)
- 
- 
+
+
 Configuration
 -------------
 
@@ -118,7 +118,7 @@ In **build.xml**, change the project name as following :
 First run
 ---------
 
-Once configured, 
+Once configured,
 
 ```
 $ vagrant up
@@ -174,8 +174,8 @@ Notes :
 
  * Project is mapped in ~/www in the vm
  * For speedup needings, cache and logs are respectively mapped in ~/cache and ~/logs
- 
- 
+
+
 Jenkins
 -------
 
