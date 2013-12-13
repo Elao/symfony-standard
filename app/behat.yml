@@ -5,14 +5,14 @@ default:
         parameters:
             language: en
     context:
-        class:  Context\FeatureContext
+        class: Context\FeatureContext
     extensions:
         Behat\MinkExtension\Extension:
             base_url:   http://symfony-standard.dev/app_test.php
             files_path: features/files
             default_session:    goutte
             javascript_session: selenium2
-            zombie:    ~
+            goutte:    ~
             selenium2: ~
         Behat\Symfony2Extension\Extension:
             kernel:
