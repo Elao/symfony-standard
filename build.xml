@@ -3,7 +3,9 @@
 
     <property name="source" value="src"/>
 
-    <target name="build" depends="clean,prepare,lint,pdepend,phpmd-build,phpcpd,phpcs-build,phploc,phpdoc,phpunit-build,behat-build,phpcb"/>
+    <target name="build" depends="clean,prepare,lint,pdepend,phpmd-build,phpcpd-build,phpcs-build,phploc,phpdoc-build,phpunit-build,behat-build,phpcb"/>
+
+    <target name="test" depends="prepare,lint,phpmd,phpcpd,phpcs,phpdoc,phpunit-coverage,behat"/>
 
     <target name="clean" description="Clean up and create artifact directories">
         <delete dir="${basedir}/app/build/logs"/>
@@ -90,6 +92,14 @@
         <exec executable="bin/phpcpd">
             <arg value="--exclude=*Bundle/Resources/*" />
             <arg value="--ansi" />
+            <arg path="${source}" />
+        </exec>
+    </target>
+
+    <target name="phpcpd-build" description="Find duplicate code using PHPCPD">
+        <exec executable="bin/phpcpd">
+            <arg value="--exclude=*Bundle/Resources/*" />
+            <arg value="--ansi" />
             <arg value="--log-pmd" />
             <arg value="${basedir}/app/build/logs/pmd-cpd.xml" />
             <arg path="${source}" />
@@ -126,6 +136,17 @@
     </target>
 
     <target name="phpdoc" description="Generate API documentation using phpDocumentor 2">
+        <exec executable="bin/phpdoc.php">
+            <arg value="--config=${basedir}/app/phpdoc.xml" />
+            <arg value="--template=xml" />
+            <arg value="--force" />
+            <arg value="--ansi" />
+            <arg value="--target" />
+            <arg value="/tmp/phpdoc" />
+        </exec>
+    </target>
+
+    <target name="phpdoc-build" description="Generate API documentation using phpDocumentor 2">
         <exec executable="bin/phpdoc.php">
             <arg value="--config=${basedir}/app/phpdoc.xml" />
             <arg value="--template=responsive" />
@@ -169,6 +190,14 @@
     <target name="behat" description="Run behat test">
         <exec executable="bin/behat">
             <arg value="-c=app/behat.yml" />
+            <arg value="--ansi" />
+        </exec>
+    </target>
+
+    <target name="behat-local" description="Run behat test">
+        <exec executable="bin/behat">
+            <arg value="-c=app/behat.yml" />
+            <arg value="--profile=local" />
             <arg value="--ansi" />
         </exec>
     </target>

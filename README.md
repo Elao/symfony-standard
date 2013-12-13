@@ -14,6 +14,8 @@ What's included ?
 -----------------
 
  * bin/vendor : a shell script to manipulates vendors as archives, when you must deploy with no internet connection
+ * ant targets :
+	 * test : run tests
 
 Requirements
 ------------
