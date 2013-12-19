@@ -93,6 +93,15 @@
       a2enmod php5
       creates=/etc/apache2/mods-enabled/php5.conf
     notify: apache restart
+  - name: php5 config short_open_tag apache
+    template: >
+      src=templates/php/short_open_tag.ini.j2
+      dest=/etc/php5/apache2/conf.d/100_short_open_tag.ini
+    notify: apache restart
+  - name: php5 config short_open_tag cli
+    template: >
+      src=templates/php/short_open_tag.ini.j2
+      dest=/etc/php5/cli/conf.d/100_short_open_tag.ini
   - name: php5 config memory apache
     template: >
       src=templates/php/memory.ini.j2
@@ -142,6 +151,15 @@
     template: >
       src=templates/php/xdebug.ini.j2
       dest=/etc/php5/cli/conf.d/100_xdebug.ini
+  - name: php5 config errors apache
+    template: >
+      src=templates/php/errors.ini.j2
+      dest=/etc/php5/apache2/conf.d/100_errors.ini
+    notify: apache restart
+  - name: php5 config errors cli
+    template: >
+      src=templates/php/errors.ini.j2
+      dest=/etc/php5/cli/conf.d/100_errors.ini
 
   # Composer
   - name: composer install
