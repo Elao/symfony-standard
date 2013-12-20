@@ -2,10 +2,10 @@
 - hosts: all
   sudo: yes
   vars:
-    path: /home/vagrant/www
-    port: 80
+    user: vagrant
   roles:
     - base/debian
+    - ssh/debian
     - build/debian
     - oh-my-zsh/debian
 
@@ -14,18 +14,6 @@
   # Apt update
   - name: apt update
     apt: update_cache=yes
-
-  # Dependencies
-  - name: python-pycurl package
-    apt: >
-      pkg=python-pycurl
-      state=present
-
-  # Ssh Config
-  - name: ssh config
-    template: >
-      src=templates/ssh/config.j2
-      dest=/home/vagrant/.ssh/config
 
   # Dotdeb
   - name: dotdeb key
@@ -164,7 +152,7 @@
   # Composer
   - name: composer install
     shell: >
-      curl -sS https://getcomposer.org/installer | /usr/bin/php && /bin/mv -f /home/vagrant/composer.phar /usr/local/bin/composer
+      curl -sS https://getcomposer.org/installer | /usr/bin/php && /bin/mv -f /home/{{ user }}/composer.phar /usr/local/bin/composer
       creates=/usr/local/bin/composer
 
   # Npm
@@ -187,28 +175,32 @@
   # Project
   - name: project vagrant
     lineinfile: >
-      dest=/home/vagrant/.zshrc
+      dest="{{ item }}"
       line="export SYMFONY__VAGRANT=1"
       regexp="^export SYMFONY__VAGRANT="
+    with_items: user_profiles
+    sudo: no
   - name: project path bin
     lineinfile: >
-      dest=/home/vagrant/.zshrc
+      dest="{{ item }}"
       line="PATH=$PATH:./bin"
       regexp="^PATH="
+    with_items: user_profiles
+    sudo: no
   - name: project root
     file: >
-      path={{ path }}/..
+      path=/home/{{ user }}
       state=directory
       group=www-data
       mode=0710
   - name: project cache
     file: >
-      path={{ path }}/../cache
+      path=/home/{{ user }}/cache
       state=directory
     sudo: no
   - name: project logs
     file: >
-      path={{ path }}/../logs
+      path=/home/{{ user }}/logs
       state=directory
     sudo: no
 
@@ -219,7 +211,7 @@
       state=present
   - name: acl dirs
     shell: >
-      setfacl -R -m u:www-data:rwX -m u:vagrant:rwX {{ path }}/../cache {{ path }}/../logs && setfacl -dR -m u:www-data:rwx -m u:vagrant:rwx {{ path }}/../cache {{ path }}/../logs
+      setfacl -R -m u:www-data:rwX -m u:{{ user }}:rwX /home/{{ user }}/cache /home/{{ user }}/logs && setfacl -dR -m u:www-data:rwx -m u:{{ user }}:rwx /home/{{ user }}/cache /home/{{ user }}/logs
 
   handlers:
 

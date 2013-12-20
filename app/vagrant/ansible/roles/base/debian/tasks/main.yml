@@ -5,14 +5,9 @@
     pkg={{ item }}
     state=present
   with_items:
+    - python-pycurl
     - vim
   sudo: yes
-
-- name: whoami
-  command: >
-    /usr/bin/whoami
-  register: whoami
-  sudo: no
 
 - name: user profiles
   copy: >

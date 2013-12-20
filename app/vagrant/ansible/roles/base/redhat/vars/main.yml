@@ -1,7 +1,5 @@
 ---
 
-user: "{{ whoami.stdout }}"
-
 user_profiles:
     - /home/{{ user }}/.profile
     - /home/{{ user }}/.zprofile

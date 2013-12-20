@@ -1,10 +1,10 @@
-<VirtualHost *:{{ port }}>
-    DocumentRoot {{ path }}/web
+<VirtualHost *:80>
+    DocumentRoot /home/{{ user }}/www/web
     ServerName {{ host }}
 
     SetEnv SYMFONY__VAGRANT 1
 
-    <Directory {{ path }}/web>
+    <Directory /home/{{ user }}/www/web>
         AllowOverride All
         Allow from All
     </Directory>

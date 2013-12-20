@@ -1,0 +1,7 @@
+---
+
+- name: config template
+  template: >
+    src=config.j2
+    dest=/home/{{ user }}/.ssh/config
+  sudo: no

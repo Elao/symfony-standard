@@ -1,0 +1,13 @@
+---
+
+- name: repo template
+  template: >
+    src=repo.j2
+    dest=/etc/yum.repos.d/epel.repo
+  sudo: yes
+
+- name: key file
+  copy: >
+    src=RPM-GPG-KEY-EPEL-6
+    dest=/etc/pki/rpm-gpg
+  sudo: yes
