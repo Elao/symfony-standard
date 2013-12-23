@@ -15,5 +15,4 @@
   with_items:
       - libdbus-glib-1-2
       - firefox
-      - firefox-l10n-en-us
   sudo: yes
