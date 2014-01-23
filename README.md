@@ -144,9 +144,9 @@ Insert this doc block at the start of each php file
 
 ```
 /**
- * This file is part of the [project] package.
+ * This file is part of the [project] [package|bundle|...].
  *
- * Copyright (C) 2013 [vendor]
+ * Copyright (C) 2014 [vendor]
  *
  * @author Elao <contact@elao.com>
  */
