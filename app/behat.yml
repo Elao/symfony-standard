@@ -5,7 +5,7 @@ default:
         parameters:
             language: en
     context:
-        class: Context\FeatureContext
+        class: Context\Context
     extensions:
         Behat\MinkExtension\Extension:
             base_url:   http://symfony-standard.dev/app_test.php

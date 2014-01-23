@@ -11,9 +11,9 @@ use SensioLabs\Behat\PageObjectExtension\Context\PageObjectAwareInterface;
 use SensioLabs\Behat\PageObjectExtension\Context\PageFactory;
 
 /**
- * Feature context
+ * Context
  */
-class FeatureContext extends MinkContext implements KernelAwareInterface, PageObjectAwareInterface
+class Context extends MinkContext implements KernelAwareInterface, PageObjectAwareInterface
 {
     /**
      * @var KernelInterface $kernel
