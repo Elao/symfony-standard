@@ -24,16 +24,15 @@
 
     <target name="prepare" description="Prepare the project (vendors + database)">
         <copy file="${basedir}/app/config/parameters.yml.dist" tofile="${basedir}/app/config/parameters.yml" />
-        <exec executable="composer" failonerror="true">
-            <arg value="install" />
-            <arg value="--dev" />
-        </exec>
+        <delete includeEmptyDirs="true">
+            <fileset dir="${basedir}/../cache" includes="**/*" defaultexcludes="no"/>
+        </delete>
         <delete includeEmptyDirs="true">
             <fileset dir="${basedir}/../logs" includes="**/*" defaultexcludes="no"/>
         </delete>
-        <exec executable="app/console" failonerror="false">
-            <arg value="cache:clear" />
-            <arg value="--env=test" />
+        <exec executable="composer" failonerror="true">
+            <arg value="install" />
+            <arg value="--dev" />
         </exec>
         <exec executable="app/console" failonerror="false">
             <arg value="doctrine:database:create" />
