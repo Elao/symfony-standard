@@ -25,6 +25,7 @@ if test $# -eq 0
         echo ''
         echo 'Available commands:'
         echo '  compress         Compress vendors as archive'
+        echo '  compress-git     Compress vendors as archive without .git'
         echo '  extract          Extract vendors from archive'
         echo ''
 
@@ -33,6 +34,11 @@ elif [[ $1 == "compress" ]]
     then
         echo "Compress vendors into ${ARCHIVE_DIR}/vendor.tar.gz"
         $(cd ${VENDORS_DIR}; tar -zcf ${ARCHIVE_DIR}/vendor.tar.gz *)
+# Compress without git
+elif [[ $1 == "compress-git" ]]
+    then
+        echo "Compress vendors into ${ARCHIVE_DIR}/vendor.tar.gz"
+        $(cd ${VENDORS_DIR}; find . -name .git -type d -print | xargs rm -rf {}; tar -zcf ${ARCHIVE_DIR}/vendor.tar.gz *)
 
 # Extract
 elif [[ $1 == "extract" ]]
