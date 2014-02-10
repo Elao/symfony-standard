@@ -1,0 +1,22 @@
+---
+
+- name: packages
+  yum: >
+      name={{ item }}
+      state=present
+  with_items:
+      - mysql-server
+  sudo: yes
+
+- name: service install
+  shell: >
+      /sbin/chkconfig mysqld on
+      creates=/etc/rc0.d/K36mysqld
+  sudo: yes
+
+- name: service
+  service: >
+      name=mysqld
+      state=started
+      enabled=true
+  sudo: yes
