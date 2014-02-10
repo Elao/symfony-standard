@@ -1,0 +1,9 @@
+---
+
+- name: packages
+  apt: >
+      pkg={{ item }}
+      state=present
+  with_items:
+      - mysql-server
+  sudo: yes
