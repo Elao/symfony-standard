@@ -164,6 +164,12 @@ Host 127.0.0.1
     UserKnownHostsFile=/dev/null
 ```
 
+Allow ssh key forwarding in Mac OSX:
+
+```
+$ ssh-add -K ~/.ssh/[your_private_key]
+```
+
 Usage :
 
  * Just "vagrant up" in your current project dir. It will provision your vm and update /etc/hosts for both the host and the guest (using hostmanager plugin) the first run
