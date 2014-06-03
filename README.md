@@ -184,6 +184,30 @@ Notes :
  * For speedup needings, cache and logs are respectively mapped in ~/cache and ~/logs
 
 
+Gulp
+-----
+
+To enable system notifications, install the related vagrant plugin:
+
+```
+vagrant plugin install vagrant-notify
+```
+
+Install also "terminal-notifier" application:
+
+```
+brew install terminal-notifier
+```
+
+Then, create the "notify-send" script, in /usr/local/bin, to make the glue:
+
+```
+#!/bin/bash
+terminal-notifier -title "$2" -message "$3"
+```
+
+Now you can add the "--notify" parameter when using gulp.
+
 Jenkins
 -------
 
