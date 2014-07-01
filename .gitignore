@@ -1,17 +1,22 @@
 /web/bundles/
-/app/bootstrap.php.cache
-/app/cache/*
 /app/config/parameters.yml
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
+/var/bootstrap.php.cache
+/var/cache/*
+/var/logs/*
+!var/cache/.gitkeep
+!var/logs/.gitkeep
 /vendor/
 /bin/
+!bin/console
+!bin/symfony_requirements
 /composer.phar
 
-!/bin/vendor
 /app/check.php
 /app/SymfonyRequirements.php
 /app/build/
-/nbproject/
+
+# Vagrant
 /.vagrant/
+
+# Netbeans
+/nbproject/
