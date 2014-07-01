@@ -13,9 +13,28 @@ Provide a pre-configured symfony standard edition, powered by vagrant with the f
 What's included ?
 -----------------
 
- * bin/vendor : a shell script to manipulates vendors as archives, when you must deploy with no internet connection
  * ant targets :
 	 * test : run tests
+
+What's customized ?
+-------------------
+
+ * Remove default /app/Resources/views
+ * Remove /app/SymfonyStandard
+ * Add "symfony-standard" default session name in /app/config/config.yml
+ * Add specific doctrine dbal dbname for test environment in /app/config/config_test.yml
+ * Change default database_name from "symfony" to "symfony-standard" in /app/config/parameters.yml.dist
+ * Remove configurator dev route in /app/config/routing_dev.yml
+ * Remove /web/config.php
+ * app_dev ip check disabled
+ * Add /web/app_test.php
+ * Remove /build/ in .gitignore
+ * Add some common entries in .gitignore
+ * Remove symfony standard stuff in /composer.json
+ * Longer composer process timeout in /composer.json
+ * Symlink as assets install option in /composer.json
+ * Remove branch-alias option in /composer.json
+ * Use symfony 3 directory layout
 
 Requirements
 ------------
