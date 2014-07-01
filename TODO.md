@@ -19,4 +19,5 @@ Todo
  * Common gitignore entries in user configuration (not in repo) (except bower & npm)
  * Move .sass-cache in /var
  * Polemic around views in app/Resources :)
- 
+ * Translation key convention
+ * Sass classe names convention
