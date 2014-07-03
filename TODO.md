@@ -13,7 +13,10 @@ Todo
  * Update readme
  * check.php / SymfonyRequirements.php (/.gitignore)
  * Favicon / Robots
- * Session name in parameters.yml
+ * **Session name** should only use alphanumeric characters (recommended by PHP):
+   * Update the default session name in `/app/parameters.yml.dist`
+   * Update the recommendation in `README.md`, under the section **Symfony
+     config files**
  * Hook composer pre-install
  * Use Ip filtering in app_dev.php/app_test.php (instead of commenting code)
  * Common gitignore entries in user configuration (not in repo) (except bower & npm)
