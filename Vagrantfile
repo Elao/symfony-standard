@@ -14,7 +14,7 @@ options = {
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = options[:box]
-  config.vm.box_url = 'http://www.elao.com/vagrant-boxes/' + options[:box] + '.box'
+  config.vm.box_url = 'https://boxes.elao.com/boxes/' + options[:box] + '.box'
 
   config.vm.hostname = options[:name] + '.dev'
 
@@ -33,12 +33,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true
 
-  config.vm.synced_folder '.', '/home/vagrant/www', nfs: true
+  config.vm.synced_folder '.', '/home/vagrant/www',
+    nfs: true,
+    mount_options: ['nolock', 'actimeo=1']
 
   config.vm.provider :virtualbox do |vb|
     vb.name = options[:name]
     vb.customize ['modifyvm', :id, '--memory', options[:memory]]
     #vb.gui = true
+  end
+
+  if File.exists?(File.join(Dir.home, '.gitconfig')) then
+    config.vm.provision 'shell',
+      inline: "echo -e \"#{File.read("#{Dir.home}/.gitconfig")}\" > /home/vagrant/.gitconfig"
   end
 
   config.vm.provision 'ansible' do |ansible|
