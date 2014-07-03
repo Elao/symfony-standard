@@ -5,7 +5,8 @@ Todo
  * Behat 3 (/app/features, /app/behat.yml, /composer.json)
  * PHPSpec
  * Bundle migration (/composer.json, /app/AppKernel.php)
- * Use composer global instead of pear/composer.json (/composer.json)
+ * Use composer global instead of pear/composer.json (/composer.json, /build.xml)
+ * Move ansible stuff into app/Resources/ansible (/Vagrantfile)
  * Vagrant / Docker (/vagrant, /Vagrantfile, /app/AppKernel.php)
  * Gulp
  * Build tools (/build.xml, /app/jenkins.xml, /app/phpdoc.xml, /app/phpmd.xml, /app/phpunit.xml, /app/phpunit.xml.dist; /.gitignore)
@@ -23,4 +24,5 @@ Todo
  * Move .sass-cache in /var
  * Polemic around views in app/Resources :)
  * Translation key convention
- * Sass classe names convention
+ * Sass classe names convention (scss-hint ?)
+ * Capifony (Fabric ?)

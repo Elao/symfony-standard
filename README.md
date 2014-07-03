@@ -135,6 +135,15 @@ In **build.xml**, change the project name as following :
 | foo bAr 99 !  | foo-bar-99   |
 | vendor foo    | foo.vendor   |
 
+### Bower
+
+In **bower.json**, change the project name as following :
+
+| Project       | Project name |
+| ------------- |--------------|
+| foo           | foo          |
+| foo bAr 99 !  | foo-bar-99   |
+| vendor foo    | vendor/foo   |
 
 First run
 ---------
