@@ -15,8 +15,28 @@
 /app/SymfonyRequirements.php
 /app/build/
 
+# Assets
+/web/assets/
+
 # Vagrant
 /.vagrant/
 
+# Npm
+/node_modules/
+
+# Sass
+/.sass-cache/
+
 # Netbeans
 /nbproject/
+
+# Netbeans
+/nbproject/
+
+# Eclipse
+/.project
+/.buildpath
+/.settings/
+
+# PhpStorm
+/.idea
