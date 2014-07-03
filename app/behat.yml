@@ -9,7 +9,7 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             base_url:   http://symfony-standard.dev/app_test.php
-            files_path: features/files
+            files_path: app/features/files
             default_session:    goutte
             javascript_session: selenium2
             goutte:    ~
