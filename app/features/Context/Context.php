@@ -16,22 +16,30 @@ use SensioLabs\Behat\PageObjectExtension\Context\PageFactory;
 class Context extends MinkContext implements KernelAwareInterface, PageObjectAwareInterface
 {
     /**
+     * Kernel
+     *
      * @var KernelInterface $kernel
      */
-    private $kernel;
+    protected $kernel;
 
     /**
+     * Page factory
+     *
      * @var PageFactory $pageFactory
      */
-    private $pageFactory = null;
+    protected $pageFactory;
 
     /**
+     * Current page
+     *
      * @var Page $currentPage
      */
-    private $currentPage;
+    protected $currentPage;
 
     /**
      * Constructor
+     *
+     * @param array $parameters
      */
     public function __construct(array $parameters)
     {
@@ -39,7 +47,7 @@ class Context extends MinkContext implements KernelAwareInterface, PageObjectAwa
     }
 
     /**
-     * Sets Kernel instance.
+     * Set Kernel instance.
      *
      * @param KernelInterface $kernel HttpKernel instance
      */
@@ -49,30 +57,22 @@ class Context extends MinkContext implements KernelAwareInterface, PageObjectAwa
     }
 
     /**
-     * Returns Container instance.
+     * Return Container instance.
      *
      * @return ContainerInterface
      */
-    private function getContainer()
+    public function getContainer()
     {
+        if (null === $this->kernel) {
+            throw new \RuntimeException('Kernel is not set');
+        }
+
         return $this->kernel->getContainer();
     }
 
     /**
-     * @param string $name
+     * Set page factory
      *
-     * @return Page
-     */
-    public function getPage($name)
-    {
-        if (null === $this->pageFactory) {
-            throw new \RuntimeException('To create pages you need to pass a factory with setPageFactory()');
-        }
-
-        return $this->pageFactory->createPage($name);
-    }
-
-    /**
      * @param PageFactory $pageFactory
      */
     public function setPageFactory(PageFactory $pageFactory)
@@ -81,7 +81,23 @@ class Context extends MinkContext implements KernelAwareInterface, PageObjectAwa
     }
 
     /**
-     * Returns the current Page
+     * Get page
+     *
+     * @param string $name
+     *
+     * @return Page
+     */
+    public function getPage($name)
+    {
+        if (null === $this->pageFactory) {
+            throw new \RuntimeException('Page factory is not set');
+        }
+
+        return $this->pageFactory->createPage($name);
+    }
+
+    /**
+     * Return the current Page
      *
      * @return Page The current page
      */
@@ -93,8 +109,8 @@ class Context extends MinkContext implements KernelAwareInterface, PageObjectAwa
     /**
      * Open the page and set it as the current page
      *
-     * @param  Page  $page   The page
-     * @param  array $params The get params for the page
+     * @param Page  $page   The page
+     * @param array $params The get params for the page
      *
      * @return Page
      */
@@ -103,5 +119,19 @@ class Context extends MinkContext implements KernelAwareInterface, PageObjectAwa
         $this->currentPage = $this->getPage($page);
 
         $this->getCurrentPage()->open($params);
+    }
+
+    /**
+     * Get current url path of the page.
+     *
+     * @return string
+     */
+    public function getCurrentUrlPath()
+    {
+        return preg_replace(
+            '/^\/[^\.\/]+\.php/',
+            '',
+            parse_url($this->getSession()->getCurrentUrl(), PHP_URL_PATH)
+        );
     }
 }
