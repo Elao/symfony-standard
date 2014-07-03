@@ -1,0 +1,26 @@
+---
+
+- name: packages
+  yum: >
+      name={{ item }}
+      state=present
+  with_items:
+      - httpd
+  sudo: yes
+
+- name: service
+  service: >
+      name=httpd
+      state=started
+      enabled=yes
+  sudo: yes
+
+- name: iptables
+  lineinfile: >
+      dest=/etc/sysconfig/iptables
+      state=present
+      regexp="80"
+      insertafter="^:OUTPUT "
+      line="-A INPUT -p tcp --dport 80 -j ACCEPT"
+  sudo: yes
+  notify: iptables restart

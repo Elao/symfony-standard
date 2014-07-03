@@ -1,17 +1,10 @@
 ---
 
-- name: packages
-  yum: >
-    name={{ item }}
-    state=present
-  with_items:
-    - vim
+- name: ansible provision time
+  shell: >
+    /bin/date > /etc/ansible_provision_time
+    creates=/etc/ansible_provision_time
+  notify: yum update
   sudo: yes
 
-- name: user profiles
-  copy: >
-    src=user_profile
-    dest="{{ item }}"
-    force=no
-  with_items: user_profiles
-  sudo: no
+- meta: flush_handlers

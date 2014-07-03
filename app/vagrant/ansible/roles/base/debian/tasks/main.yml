@@ -1,18 +1,18 @@
 ---
 
+- name: ansible provision time
+  shell: >
+    /bin/date > /etc/ansible_provision_time
+    creates=/etc/ansible_provision_time
+  notify: apt update
+  sudo: yes
+
+- meta: flush_handlers
+
 - name: packages
   apt: >
     pkg={{ item }}
     state=present
   with_items:
     - python-pycurl
-    - vim
   sudo: yes
-
-- name: user profiles
-  copy: >
-    src=user_profile
-    dest="{{ item }}"
-    force=no
-  with_items: user_profiles
-  sudo: no

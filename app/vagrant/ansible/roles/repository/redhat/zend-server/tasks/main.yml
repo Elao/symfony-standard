@@ -1,0 +1,47 @@
+---
+
+- name: archive file
+  copy: >
+      src=ZendServer-6.1.0-RepositoryInstaller-linux.tar.gz
+      dest=/opt/ZendServer-6.1.0-RepositoryInstaller-linux.tar.gz
+  sudo: yes
+
+- name: archive unpack
+  command: >
+      tar zxf /opt/ZendServer-6.1.0-RepositoryInstaller-linux.tar.gz
+      chdir=/opt
+      creates=/opt/ZendServer-RepositoryInstaller-linux/install_zs.sh
+  sudo: yes
+
+- name: install
+  shell: >
+      ./install_zs.sh 5.4 --automatic
+      chdir=/opt/ZendServer-RepositoryInstaller-linux
+      creates=/usr/local/zend/bin/php
+  notify: zend-server bootstrap
+  sudo: yes
+
+- name: iptables
+  lineinfile: >
+      dest=/etc/sysconfig/iptables
+      state=present
+      regexp="10081"
+      insertafter="^:OUTPUT "
+      line="-A INPUT -m state --state NEW -m tcp -p tcp --dport 10081 -j ACCEPT"
+  notify: iptables restart
+  sudo: yes
+
+- name: profile template
+  template: >
+      src=profile.sh.j2
+      dest=/etc/profile.d/zend-server.sh
+  sudo: yes
+
+- name: profile file
+  file: >
+      path=/etc/profile.d/zend-server.sh
+      state=file
+      owner=root
+      group=root
+      mode=0644
+  sudo: yes

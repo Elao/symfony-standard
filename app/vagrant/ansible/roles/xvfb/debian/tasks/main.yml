@@ -10,7 +10,7 @@
 
 - name: service template
   template: >
-      src=xvfbd.j2
+      src=service.j2
       dest=/etc/init.d/xvfbd
   sudo: yes
 
@@ -36,10 +36,17 @@
       enabled=true
   sudo: yes
 
-- name: user profiles display
-  lineinfile: >
-      dest={{ item }}
-      line="export DISPLAY=:99"
-      regexp="^export DISPLAY="
-  with_items: user_profiles
-  sudo: no
+- name: profile template
+  template: >
+      src=profile.sh.j2
+      dest=/etc/profile.d/xvfb.sh
+  sudo: yes
+
+- name: profile file
+  file: >
+      path=/etc/profile.d/xvfb.sh
+      state=file
+      owner=root
+      group=root
+      mode=0644
+  sudo: yes

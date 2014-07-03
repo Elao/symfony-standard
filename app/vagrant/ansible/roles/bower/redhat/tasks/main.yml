@@ -1,0 +1,10 @@
+---
+
+- name: npm packages
+  npm: >
+      name={{ item }}
+      state=present
+      global=yes
+  with_items:
+      - bower
+  sudo: yes

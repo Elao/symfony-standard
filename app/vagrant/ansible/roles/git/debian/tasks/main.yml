@@ -4,6 +4,7 @@
   apt: >
     pkg={{ item }}
     state=present
+    default_release=wheezy-backports
   with_items:
     - git
   sudo: yes

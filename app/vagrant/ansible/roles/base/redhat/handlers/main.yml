@@ -6,3 +6,10 @@
       name=iptables
       state=restarted
   sudo: yes
+
+# Yum
+- name: yum update
+  yum: >
+      name=*
+      state=latest
+  sudo: yes

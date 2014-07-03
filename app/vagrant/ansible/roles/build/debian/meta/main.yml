@@ -3,6 +3,7 @@
 dependencies:
 
     - { role: ant/debian }
+    - { role: gulp/debian }
     - { role: selenium/debian }
     - { role: xvfb/debian }
     - { role: firefox/debian }

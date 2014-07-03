@@ -1,0 +1,16 @@
+---
+
+- name: key
+  apt_key: >
+      url=http://deb.bearstech.com/bearstech-archive.gpg
+      state=present
+  sudo: yes
+
+- name: repositories
+  apt_repository: >
+      repo="{{ item }}"
+      state=present
+      update_cache=yes
+  with_items:
+      - deb http://deb.bearstech.com/debian wheezy-bearstech main
+  sudo: yes

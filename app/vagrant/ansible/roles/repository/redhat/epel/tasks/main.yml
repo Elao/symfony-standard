@@ -1,13 +1,9 @@
 ---
 
-- name: repo template
-  template: >
-    src=repo.j2
-    dest=/etc/yum.repos.d/epel.repo
-  sudo: yes
-
-- name: key file
-  copy: >
-    src=RPM-GPG-KEY-EPEL-6
-    dest=/etc/pki/rpm-gpg
+- name: packages
+  yum: >
+    name={{ item }}
+    state=present
+  with_items:
+    - http://dl.iuscommunity.org/pub/ius/stable/CentOS/6/x86_64/epel-release-6-5.noarch.rpm
   sudo: yes

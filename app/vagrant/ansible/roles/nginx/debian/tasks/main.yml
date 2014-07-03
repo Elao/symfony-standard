@@ -1,0 +1,21 @@
+---
+
+- name: package
+  apt: >
+      pkg=nginx
+      state=present
+  sudo: yes
+
+- name: disable default
+  shell: >
+      ngxdissite default
+      removes=/etc/nginx/sites-enabled/default
+  notify: nginx restart
+  sudo: yes
+
+- name: service
+  service: >
+      name=nginx
+      state=started
+      enabled=yes
+  sudo: yes

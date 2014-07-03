@@ -7,3 +7,9 @@
   with_items:
       - mysql-server
   sudo: yes
+
+- name: service
+  service: >
+      name=mysql
+      state=started
+      enabled=yes

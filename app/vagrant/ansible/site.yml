@@ -5,58 +5,17 @@
     user: vagrant
   roles:
     - base/debian
+    - git/debian
     - ssh/debian
+    - repository/debian/dotdeb
     - build/debian
+    - sass/debian
+    - bower/debian
+    - nginx/debian
+    - mysql/debian
     - oh-my-zsh/debian
 
   tasks:
-
-  # Apt update
-  - name: apt update
-    apt: update_cache=yes
-
-  # Dotdeb
-  - name: dotdeb key
-    apt_key: >
-      url=http://www.dotdeb.org/dotdeb.gpg
-      state=present
-  - name: dotdeb repositories
-    apt_repository: >
-      repo="{{ item }}"
-      state=present
-      update_cache=yes
-    with_items:
-      - deb http://packages.dotdeb.org wheezy all
-      - deb-src http://packages.dotdeb.org wheezy all
-      - deb http://packages.dotdeb.org wheezy-php55 all
-      - deb-src http://packages.dotdeb.org wheezy-php55 all
-
-  # Apache
-  - name: apache package
-    apt: >
-      pkg=apache2-mpm-prefork
-      state=present
-  - name: apache disable default
-    shell: >
-      a2dissite default
-      removes=/etc/apache2/sites-enabled/000-default
-    notify: apache restart
-  - name: apache service
-    service: >
-      name=apache2
-      state=started
-      enabled=yes
-
-  # Mysql Server
-  - name: mysql server package
-    apt: >
-      pkg=mysql-server
-      state=present
-  - name: mysql service
-    service: >
-      name=mysql
-      state=started
-      enabled=yes
 
   # Php 5
   - name: php5 packages
@@ -64,9 +23,9 @@
       pkg={{ item }}
       state=present
     with_items:
-      - libapache2-mod-php5
+      - php5-fpm
       - php5-cli
-    notify: apache restart
+    notify: nginx restart
   - name: php5 extra packages
     apt: >
       pkg={{ item }}
@@ -75,50 +34,57 @@
       - php5-intl
       - php5-mysqlnd
       - php5-gd
-    notify: apache restart
-  - name: php5 apache module
-    shell: >
-      a2enmod php5
-      creates=/etc/apache2/mods-enabled/php5.conf
-    notify: apache restart
-  - name: php5 config short_open_tag apache
+    notify: php5 fpm restart
+  - name: php5 fpm nginx config
     template: >
-      src=templates/php/short_open_tag.ini.j2
-      dest=/etc/php5/apache2/conf.d/100_short_open_tag.ini
-    notify: apache restart
-  - name: php5 config short_open_tag cli
+      src=templates/nginx/php5-fpm.conf.j2
+      dest=/etc/nginx/conf.d/php5-fpm.conf
+    notify:
+      - php5 fpm restart
+      - nginx restart
+  - name: php5 fpm nginx permissions
     template: >
-      src=templates/php/short_open_tag.ini.j2
-      dest=/etc/php5/cli/conf.d/100_short_open_tag.ini
-  - name: php5 config memory apache
+      src=templates/nginx/permissions.conf.j2
+      dest=/etc/php5/fpm/pool.d/permissions.conf
+    notify:
+      - php5 fpm restart
+      - nginx restart
+  - name: php5 fpm nginx timeout
+    template: >
+      src=templates/nginx/timeout.conf.j2
+      dest=/etc/php5/fpm/pool.d/timeout.conf
+    notify:
+      - php5 fpm restart
+      - nginx restart
+  - name: php5 config memory fpm
     template: >
       src=templates/php/memory.ini.j2
-      dest=/etc/php5/apache2/conf.d/100_memory.ini
-    notify: apache restart
+      dest=/etc/php5/fpm/conf.d/100_memory.ini
+    notify: php5 fpm restart
   - name: php5 config memory cli
     template: >
       src=templates/php/memory.ini.j2
       dest=/etc/php5/cli/conf.d/100_memory.ini
-  - name: php5 config date apache
+  - name: php5 config date fpm
     template: >
       src=templates/php/date.ini.j2
-      dest=/etc/php5/apache2/conf.d/100_date.ini
-    notify: apache restart
+      dest=/etc/php5/fpm/conf.d/100_date.ini
+    notify: php5 fpm restart
   - name: php5 config date cli
     template: >
       src=templates/php/date.ini.j2
       dest=/etc/php5/cli/conf.d/100_date.ini
 
-  # Apache Virtual Host
-  - name: apache virtual host conf
+  # Nginx Virtual Host
+  - name: nginx virtual host conf
     template: >
-      src=templates/apache/vhost.conf.j2
-      dest=/etc/apache2/sites-available/vhost_default
-  - name: apache enable virtual host conf
+      src=templates/nginx/vhost.conf.j2
+      dest=/etc/nginx/sites-available/vhost_default
+  - name: nginx enable virtual host conf
     shell: >
-      a2ensite vhost_default
-      creates=/etc/apache2/sites-enabled/vhost_default
-    notify: apache restart
+      ngxensite vhost_default
+      creates=/etc/nginx/sites-enabled/vhost_default
+    notify: nginx restart
 
   # Php 5 Dev
   - name: php5 extra packages dev
@@ -129,21 +95,30 @@
       - php5-xdebug
       - php5-xsl
       - php5-curl
-    notify: apache restart
-  - name: php5 config xdebug apache
+    notify: php5 fpm restart
+  - name: php5 config xdebug fpm
     template: >
       src=templates/php/xdebug.ini.j2
-      dest=/etc/php5/apache2/conf.d/100_xdebug.ini
-    notify: apache restart
+      dest=/etc/php5/fpm/conf.d/100_xdebug.ini
+    notify: php5 fpm restart
   - name: php5 config xdebug cli
     template: >
       src=templates/php/xdebug.ini.j2
       dest=/etc/php5/cli/conf.d/100_xdebug.ini
-  - name: php5 config errors apache
+  - name: php5 config short_open_tag fpm
+    template: >
+      src=templates/php/short_open_tag.ini.j2
+      dest=/etc/php5/fpm/conf.d/100_short_open_tag.ini
+    notify: php5 fpm restart
+  - name: php5 config short_open_tag cli
+    template: >
+      src=templates/php/short_open_tag.ini.j2
+      dest=/etc/php5/cli/conf.d/100_short_open_tag.ini
+  - name: php5 config errors fpm
     template: >
       src=templates/php/errors.ini.j2
-      dest=/etc/php5/apache2/conf.d/100_errors.ini
-    notify: apache restart
+      dest=/etc/php5/fpm/conf.d/100_errors.ini
+    notify: php5 fpm restart
   - name: php5 config errors cli
     template: >
       src=templates/php/errors.ini.j2
@@ -155,38 +130,20 @@
       curl -sS https://getcomposer.org/installer | /usr/bin/php && /bin/mv -f /home/{{ user }}/composer.phar /usr/local/bin/composer
       creates=/usr/local/bin/composer
 
-  # Npm
-  - name: bearstech key
-    apt_key: >
-      url=http://deb.bearstech.com/bearstech-archive.gpg
-      state=present
-  - name: bearstech repositories
-    apt_repository: >
-      repo="{{ item }}"
-      state=present
-      update_cache=yes
-    with_items:
-      - deb http://deb.bearstech.com/debian wheezy-bearstech main
-  - name: nodejs package
-    apt: >
-      pkg=nodejs
-      state=present
-
   # Project
-  - name: project vagrant
-    lineinfile: >
-      dest="{{ item }}"
-      line="export SYMFONY__VAGRANT=1"
-      regexp="^export SYMFONY__VAGRANT="
-    with_items: user_profiles
-    sudo: no
-  - name: project path bin
-    lineinfile: >
-      dest="{{ item }}"
-      line="PATH=$PATH:./bin"
-      regexp="^PATH="
-    with_items: user_profiles
-    sudo: no
+  - name: project profile template
+    template: >
+      src=templates/project/profile.sh.j2
+      dest=/etc/profile.d/project.sh
+    sudo: yes
+  - name: project profile file
+    file: >
+      path=/etc/profile.d/project.sh
+      state=file
+      owner=root
+      group=root
+      mode=0644
+    sudo: yes
   - name: project root
     file: >
       path=/home/{{ user }}
@@ -215,8 +172,9 @@
 
   handlers:
 
-    # Apache
-    - name: apache restart
+    # Php 5 Fpm
+    - name: php5 fpm restart
       service: >
-        name=apache2
+        name=php5-fpm
         state=restarted
+

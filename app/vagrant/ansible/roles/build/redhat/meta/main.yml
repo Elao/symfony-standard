@@ -3,6 +3,7 @@
 dependencies:
 
     - { role: ant/redhat }
+    - { role: gulp/redhat }
     - { role: selenium/redhat }
     - { role: xvfb/redhat }
     - { role: firefox/redhat }
