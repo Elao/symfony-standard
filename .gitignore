@@ -6,29 +6,27 @@
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 /vendor/
-/bin/
+/bin/*
 !bin/console
 !bin/symfony_requirements
 /composer.phar
 
-/app/check.php
-/app/SymfonyRequirements.php
-/app/build/
-
-# Assets
-/web/assets/
-
-# Vagrant
-/.vagrant/
-
 # Npm
 /node_modules/
+
+# Bower
+/bower_components/
 
 # Sass
 /.sass-cache/
 
 # Netbeans
 /nbproject/
+# Assets
+/web/assets/
+
+# Vagrant
+/.vagrant/
 
 # Netbeans
 /nbproject/
