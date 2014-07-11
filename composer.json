@@ -27,19 +27,6 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "fabpot/php-cs-fixer": "0.3.*",
-
-        "pdepend/pdepend": "1.1.*",
-        "phpmd/phpmd": "1.5.*",
-        "sebastian/phpcpd": "2.0.*",
-        "squizlabs/php_codesniffer": "1.5.*",
-        "phploc/phploc": "2.0.*",
-        "phpdocumentor/phpdocumentor": "2.2.*",
-        "phpunit/phpunit": "3.7.*",
-        "mayflower/php-codebrowser": "1.0.*",
-        "pear/console_commandline": "dev-trunk@dev",
-        "pear/log": "dev-master@dev",
-        "pear/pear_exception": "dev-master@dev",
 
         "behat/symfony2-extension": "1.1.*",
         "behat/mink-extension": "1.2.*",
