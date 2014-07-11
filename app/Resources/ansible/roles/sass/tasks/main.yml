@@ -1,0 +1,7 @@
+---
+
+- name: packages
+  shell: >
+    gem install sass -v "{{ version }}"
+    creates=/usr/local/bin/sass
+  sudo: yes

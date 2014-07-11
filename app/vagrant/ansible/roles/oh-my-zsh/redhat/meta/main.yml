@@ -1,6 +1,0 @@
----
-
-dependencies:
-
-    - { role: base/redhat }
-    - { role: git/redhat }

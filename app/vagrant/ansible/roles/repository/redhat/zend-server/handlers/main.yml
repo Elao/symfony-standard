@@ -1,5 +1,0 @@
----
-
-- name: zend-server bootstrap
-  shell: >
-      /usr/local/zend/bin/zs-manage bootstrap-single-server -p admin -a TRUE -r FALSE

@@ -1,0 +1,6 @@
+---
+
+- name: packages
+  shell: >
+    composer global require "phploc/phploc={{ version }}"
+    creates=~/.composer/vendor/bin/phploc

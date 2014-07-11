@@ -1,9 +1,0 @@
----
-
-- name: packages
-  yum: >
-      name={{ item }}
-      state=present
-  with_items:
-      - java-1.7.0
-  sudo: yes

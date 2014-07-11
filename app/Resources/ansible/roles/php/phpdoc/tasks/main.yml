@@ -1,0 +1,6 @@
+---
+
+- name: packages
+  shell: >
+    composer global require "phpdocumentor/phpdocumentor={{ version }}"
+    creates=~/.composer/vendor/bin/phpdoc

@@ -1,0 +1,6 @@
+---
+
+- name: packages
+  shell: >
+    composer global require "phpunit/phpunit={{ version }}"
+    creates=~/.composer/vendor/bin/phpunit

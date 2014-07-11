@@ -1,1 +1,0 @@
-export SYMFONY__VAGRANT=1

@@ -1,6 +1,0 @@
----
-
-dependencies:
-
-    - { role: ruby/redhat }
-

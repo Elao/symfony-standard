@@ -1,7 +1,0 @@
----
-
-- name: gem
-  shell: >
-      gem install sass -v "~>3.2.16"
-      creates=/usr/local/bin/sass
-  sudo: yes

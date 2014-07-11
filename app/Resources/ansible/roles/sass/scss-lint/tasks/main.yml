@@ -1,0 +1,7 @@
+---
+
+- name: packages
+  shell: >
+    gem install scss-lint -v "{{ version }}"
+    creates=/usr/local/bin/scss-lint
+  sudo: yes

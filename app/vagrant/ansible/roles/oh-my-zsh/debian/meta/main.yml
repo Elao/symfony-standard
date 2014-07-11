@@ -1,6 +1,0 @@
----
-
-dependencies:
-
-    - { role: base/debian }
-    - { role: git/debian }

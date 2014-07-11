@@ -1,8 +1,0 @@
----
-
-# Restart
-- name: apache restart
-  service: >
-      name=httpd
-      state=restarted
-  sudo: yes

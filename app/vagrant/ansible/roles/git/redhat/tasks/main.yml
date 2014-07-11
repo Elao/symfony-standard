@@ -1,9 +1,0 @@
----
-
-- name: packages
-  yum: >
-    name={{ item }}
-    state=present
-  with_items:
-    - git18
-  sudo: yes

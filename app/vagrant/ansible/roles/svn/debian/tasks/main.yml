@@ -1,9 +1,0 @@
----
-
-- name: packages
-  apt: >
-    pkg={{ item }}
-    state=present
-  with_items:
-    - subversion
-  sudo: yes

@@ -1,0 +1,11 @@
+---
+
+- name: packages
+  npm: >
+    name={{ item }}
+    state=present
+    global=yes
+    version={{ version }}
+  with_items:
+    - gulp
+  sudo: yes

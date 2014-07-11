@@ -1,0 +1,6 @@
+---
+
+- name: packages
+  shell: >
+    composer global require "mayflower/php-codebrowser={{ version }}"
+    creates=~/.composer/vendor/bin/phpcb

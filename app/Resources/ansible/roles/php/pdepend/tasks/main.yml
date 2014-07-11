@@ -1,0 +1,6 @@
+---
+
+- name: packages
+  shell: >
+    composer global require "pdepend/pdepend={{ version }}"
+    creates=~/.composer/vendor/bin/pdepend
