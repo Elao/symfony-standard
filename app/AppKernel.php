@@ -44,7 +44,7 @@ class AppKernel extends Kernel
             return $this->rootDir.'/../../cache/'.$this->environment;
         }
 
-        return $this->rootDir.'/cache/'.$this->environment;
+        return parent::getCacheDir();
     }
 
     /**
@@ -56,6 +56,6 @@ class AppKernel extends Kernel
             return $this->rootDir.'/../../logs';
         }
 
-        return $this->rootDir.'/logs';
+        return parent::getLogDir();
     }
 }
