@@ -4,55 +4,74 @@
 VAGRANTFILE_API_VERSION = '2'
 
 options = {
-  :name    => 'symfony-standard',
-  :ip      => '172.16.1.6',
-  :memory  => 512,
-  :box     => 'debian-7-amd64',
-  :aliases => []
+    :name   => 'symfony-standard',
+    :memory => 512,
+    :box    => 'elao/symfony-standard-debian',
+    :debug  => false
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = options[:box]
-  config.vm.box_url = 'https://boxes.elao.com/boxes/' + options[:box] + '.box'
+    # Box
+    config.vm.box = options[:box]
 
-  config.vm.hostname = options[:name] + '.dev'
+    # Hostname
+    config.vm.hostname = options[:name] + '.dev'
 
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true
+    # Dns
+    config.landrush.enabled            = true
+    config.landrush.tld                = 'dev'
+    config.landrush.guest_redirect_dns = false
 
-  if options[:aliases].any?
-    config.hostmanager.aliases = ''
+    # Network
+    config.vm.network 'private_network',
+        type: 'dhcp'
 
-    for item in options[:aliases]
-      config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+    # Ssh
+    config.ssh.forward_agent = true
+
+    # Folders
+    config.vm.synced_folder '.', '/home/vagrant/www',
+        nfs: true,
+        mount_options: ['nolock', 'actimeo=1']
+
+    # Providers
+    config.vm.provider :virtualbox do |vb|
+        vb.name   = options[:name]
+        vb.memory = options[:memory]
+        vb.gui    = options[:debug]
+        vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     end
-  end
 
-  config.vm.network :private_network, ip: options[:ip]
+    # Cache
+    if Vagrant.has_plugin?('vagrant-cachier')
+        config.cache.scope = :box
+    end
 
-  config.ssh.forward_agent = true
+    # Git
+    if File.exists?(File.join(Dir.home, '.gitconfig')) then
+        config.vm.provision :file do |file|
+            file.source      = '~/.gitconfig'
+            file.destination = '/home/vagrant/.gitconfig'
+        end
+    end
 
-  config.vm.synced_folder '.', '/home/vagrant/www',
-    nfs: true,
-    mount_options: ['nolock', 'actimeo=1']
+    # Composer
+    if File.exists?(File.join(Dir.home, '.composer/auth.json')) then
+        config.vm.provision :file do |file|
+            file.source      = '~/.composer/auth.json'
+            file.destination = '/home/vagrant/.composer/auth.json'
+        end
+    end
 
-  config.vm.provider :virtualbox do |vb|
-    vb.name = options[:name]
-    vb.customize ['modifyvm', :id, '--memory', options[:memory]]
-    #vb.gui = true
-  end
-
-  if File.exists?(File.join(Dir.home, '.gitconfig')) then
-    config.vm.provision 'shell',
-      inline: "echo -e \"#{File.read("#{Dir.home}/.gitconfig")}\" > /home/vagrant/.gitconfig"
-  end
-
-  config.vm.provision 'ansible' do |ansible|
-    ansible.playbook = 'app/vagrant/ansible/site.yml'
-    ansible.inventory_path = 'app/vagrant/ansible/hosts'
-    ansible.extra_vars = {host: options[:name] + '.dev'}
-    #ansible.verbose = 'vvvv'
-  end
+    # Provisioners
+    config.vm.provision 'ansible' do |ansible|
+        ansible.playbook   = 'app/Resources/ansible/playbook.yml'
+        ansible.extra_vars = {
+            user: 'vagrant',
+            host: options[:name] + '.dev'
+        }
+        ansible.verbose    = options[:debug] ? 'vvvv' : false
+    end
 
 end
