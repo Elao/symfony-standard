@@ -3,11 +3,15 @@
 
 VAGRANTFILE_API_VERSION = '2'
 
+Vagrant.require_version ">= 1.6.3"
+
 options = {
-    :name   => 'symfony-standard',
-    :memory => 512,
-    :box    => 'elao/symfony-standard-debian',
-    :debug  => false
+    :name    => 'symfony-standard',
+    :memory  => 768,
+    :box     => 'elao/symfony-standard-debian',
+    :folder  => '.',
+    :ansible => 'app/Resources/ansible',
+    :debug   => false
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -18,10 +22,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Hostname
     config.vm.hostname = options[:name] + '.dev'
 
-    # Dns
-    config.landrush.enabled            = true
-    config.landrush.tld                = 'dev'
-    config.landrush.guest_redirect_dns = false
+    # Hosts
+    if Vagrant.has_plugin?('landrush')
+        config.landrush.enabled            = true
+        config.landrush.tld                = 'dev'
+        config.landrush.guest_redirect_dns = false
+    elsif Vagrant.has_plugin?('vagrant-hostmanager')
+        config.hostmanager.enabled     = true
+        config.hostmanager.manage_host = true
+    end
 
     # Network
     config.vm.network 'private_network',
@@ -31,9 +40,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.ssh.forward_agent = true
 
     # Folders
-    config.vm.synced_folder '.', '/home/vagrant/www',
-        nfs: true,
-        mount_options: ['nolock', 'actimeo=1']
+    config.vm.synced_folder options[:folder], '/srv/www',
+        type: 'nfs',
+        mount_options: ['nolock', 'actimeo=1', 'fsc']
 
     # Providers
     config.vm.provider :virtualbox do |vb|
@@ -41,11 +50,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.memory = options[:memory]
         vb.gui    = options[:debug]
         vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+        vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
     end
 
     # Cache
     if Vagrant.has_plugin?('vagrant-cachier')
         config.cache.scope = :box
+
+        config.cache.synced_folder_opts = {
+            type: :nfs,
+            mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+        }
     end
 
     # Git
@@ -66,7 +81,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Provisioners
     config.vm.provision 'ansible' do |ansible|
-        ansible.playbook   = 'app/Resources/ansible/playbook.yml'
+        ansible.playbook   = options[:ansible] + '/playbook.yml'
         ansible.extra_vars = {
             user: 'vagrant',
             host: options[:name] + '.dev'
