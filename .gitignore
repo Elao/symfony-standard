@@ -20,8 +20,6 @@
 # Sass
 /.sass-cache/
 
-# Netbeans
-/nbproject/
 # Assets
 /web/assets/
 
