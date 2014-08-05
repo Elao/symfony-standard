@@ -35,17 +35,26 @@ What's customized ?
  * Symlink as assets install option in /composer.json
  * Remove branch-alias option in /composer.json
  * Use symfony 3 directory layout
+ * Disable assetic controller
+ * Vagrant aware Symfony Kernel
 
 Requirements
 ------------
 
- * [VirtualBox 4.3.2+](https://www.virtualbox.org/wiki/Downloads)
- * [Vagrant 1.3.5+](http://downloads.vagrantup.com/)
- * [Vagrant Host Manager plugin 1.2.3+](https://github.com/smdahlen/vagrant-hostmanager)
- * [ansible 1.4.0+](https://github.com/ansible/ansible) (installable via homebrew on osx)
+ * [Vagrant 1.6.3+](http://downloads.vagrantup.com/)
+ * [VirtualBox 4.3.14+](https://www.virtualbox.org/wiki/Downloads)
+ * [Ansible 1.6.10+](https://github.com/ansible/ansible)
+ * [Vagrant Landrush 0.14.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
+
+Recommandations
+---------------
+
+ * [Vagrant Cachier 0.8.0+](http://fgrehm.viewdocs.io/vagrant-cachier)
+ * [Vagrant Notify 0.4.0+](https://github.com/fgrehm/vagrant-notify)
 
 Installation
 ------------
+
  Just clone the repository :)
 
 
