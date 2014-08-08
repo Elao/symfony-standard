@@ -20,15 +20,15 @@ What's customized ?
 -------------------
 
  * Remove default /app/Resources/views
- * Remove /app/SymfonyStandard
  * Add "symfony-standard" default session name in /app/config/config.yml
  * Add specific doctrine dbal dbname for test environment in /app/config/config_test.yml
  * Change default database_name from "symfony" to "symfony-standard" in /app/config/parameters.yml.dist
+ * Don't use assetic controller in /app/config/parameters.yml.dist
  * Remove configurator dev route in /app/config/routing_dev.yml
  * Remove /web/config.php
+ * Remove /web/apple-touch-icon.png
  * app_dev ip check disabled
  * Add /web/app_test.php
- * Remove /build/ in .gitignore
  * Add some common entries in .gitignore
  * Remove symfony standard stuff in /composer.json
  * Longer composer process timeout in /composer.json
@@ -41,9 +41,9 @@ What's customized ?
 Requirements
 ------------
 
- * [Vagrant 1.6.3+](http://downloads.vagrantup.com/)
+ * [Vagrant 1.6.3+](http://www.vagrantup.com/downloads.html)
  * [VirtualBox 4.3.14+](https://www.virtualbox.org/wiki/Downloads)
- * [Ansible 1.6.10+](https://github.com/ansible/ansible)
+ * [Ansible 1.7.0+](http://docs.ansible.com/intro_installation.html)
  * [Vagrant Landrush 0.14.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
 
 Recommandations
