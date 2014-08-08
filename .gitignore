@@ -1,10 +1,12 @@
 /web/bundles/
 /app/config/parameters.yml
 /var/bootstrap.php.cache
+/var/SymfonyRequirements.php
 /var/cache/*
 /var/logs/*
 !var/cache/.gitkeep
 !var/logs/.gitkeep
+/build/
 /vendor/
 /bin/*
 !bin/console
@@ -26,13 +28,5 @@
 # Vagrant
 /.vagrant/
 
-# Netbeans
-/nbproject/
-
-# Eclipse
-/.project
-/.buildpath
-/.settings/
-
-# PhpStorm
-/.idea
+# Ansible
+ansible.cfg
