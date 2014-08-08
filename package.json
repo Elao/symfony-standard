@@ -1,4 +1,5 @@
 {
+	"name": "symfony-standard",
     "private": true,
-    "devDependencies": {}
+    "dependencies": {}
 }
