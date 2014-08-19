@@ -7,6 +7,7 @@ Vagrant.require_version ">= 1.6.3"
 
 options = {
     :name    => 'symfony-standard',
+    :vendor  => '',
     :memory  => 768,
     :box     => 'elao/symfony-standard-debian',
     :folder  => '.',
@@ -20,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = options[:box]
 
     # Hostname
-    config.vm.hostname = options[:name] + '.dev'
+    config.vm.hostname = options[:name] + ('.' + options[:vendor] if options[:vendor]) + '.dev'
 
     # Hosts
     if Vagrant.has_plugin?('landrush')
@@ -46,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Providers
     config.vm.provider :virtualbox do |vb|
-        vb.name   = options[:name]
+        vb.name   = (options[:vendor] + '_' if options[:vendor]) + options[:name]
         vb.memory = options[:memory]
         vb.gui    = options[:debug]
         vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
@@ -84,7 +85,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.playbook   = options[:ansible] + '/playbook.yml'
         ansible.extra_vars = {
             user: 'vagrant',
-            host: options[:name] + '.dev'
+            host: options[:name] + ('.' + options[:vendor] if options[:vendor]) + '.dev'
         }
         ansible.verbose    = options[:debug] ? 'vvvv' : false
     end
