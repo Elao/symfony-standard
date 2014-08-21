@@ -13,6 +13,9 @@
 !bin/symfony_requirements
 /composer.phar
 
+# Data
+/data/
+
 # Npm
 /node_modules/
 
