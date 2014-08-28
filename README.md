@@ -21,6 +21,7 @@ What's customized ?
 
  * Remove default /app/Resources/views
  * Add "symfony-standard" default session name in /app/config/config.yml
+ * Add "doctrine.orm.naming_strategy.underscore" as doctrine orm naming strategy in /app/config/config.yml
  * Add specific doctrine dbal dbname for test environment in /app/config/config_test.yml
  * Change default database_name from "symfony" to "symfony-standard" in /app/config/parameters.yml.dist
  * Don't use assetic controller in /app/config/parameters.yml.dist
