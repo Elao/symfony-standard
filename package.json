@@ -1,5 +1,18 @@
 {
 	"name": "symfony-standard",
+    "author": {
+        "name": "Elao",
+        "email": "contact@elao.com"
+    },
     "private": true,
-    "dependencies": {}
+    "dependencies": {},
+    "browserify-shim": {},
+    "browserify": {
+        "transform": ["browserify-shim"]
+    },
+    "devDependencies": {
+        "gulp": "3.8.*",
+        "browserify-shim": "3.7.*",
+        "elao-assets-gulp": "0.1.*"
+    }
 }
