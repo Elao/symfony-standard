@@ -31,6 +31,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     elsif Vagrant.has_plugin?('vagrant-hostmanager')
         config.hostmanager.enabled     = true
         config.hostmanager.manage_host = true
+        config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
+            if vm.id
+                `VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP"`.split()[1]
+            end
+        end
     end
 
     # Network
