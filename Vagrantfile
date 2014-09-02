@@ -6,22 +6,27 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version ">= 1.6.3"
 
 options = {
-    :name    => 'symfony-standard',
-    :vendor  => '',
-    :memory  => 768,
-    :box     => 'elao/symfony-standard-debian',
-    :folder  => '.',
-    :ansible => 'app/Resources/ansible',
-    :debug   => false
+    :name        => 'symfony-standard',
+    :vendor      => 'tcs',
+    :aliases     => [],
+    :memory      => 768,
+    :box         => 'elao/symfony-standard-debian',
+    :box_version => '~> 0.2.0',
+    :folders     => {
+        '.' => '/srv/project/www'
+    },
+    :ansible     => 'ansible',
+    :debug       => false
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Box
-    config.vm.box = options[:box]
+    config.vm.box         = options[:box]
+    config.vm.box_version = options[:box_version]
 
     # Hostname
-    config.vm.hostname = options[:name] + ('.' + options[:vendor] if options[:vendor]) + '.dev'
+    config.vm.hostname = options[:name] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
 
     # Hosts
     if Vagrant.has_plugin?('landrush')
@@ -36,6 +41,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 `VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP"`.split()[1]
             end
         end
+        for item in options[:aliases]
+            config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+        end
     end
 
     # Network
@@ -46,13 +54,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.ssh.forward_agent = true
 
     # Folders
-    config.vm.synced_folder options[:folder], '/srv/www',
-        type: 'nfs',
-        mount_options: ['nolock', 'actimeo=1', 'fsc']
+    options[:folders].each do |host, guest|
+        config.vm.synced_folder host, guest,
+            type: 'nfs',
+            mount_options: ['nolock', 'actimeo=1', 'fsc']
+    end
 
     # Providers
     config.vm.provider :virtualbox do |vb|
-        vb.name   = (options[:vendor] + '_' if options[:vendor]) + options[:name]
+        vb.name   = ((options[:vendor] != '') ? options[:vendor] + '_' : '') + options[:name]
         vb.memory = options[:memory]
         vb.gui    = options[:debug]
         vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
@@ -90,7 +100,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.playbook   = options[:ansible] + '/playbook.yml'
         ansible.extra_vars = {
             user: 'vagrant',
-            host: options[:name] + ('.' + options[:vendor] if options[:vendor]) + '.dev'
+            host: options[:name] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
         }
         ansible.verbose    = options[:debug] ? 'vvvv' : false
     end
