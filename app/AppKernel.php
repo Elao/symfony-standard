@@ -40,10 +40,22 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        if (isset($_SERVER['SYMFONY__CACHE_BASE_DIR']) && $_SERVER['SYMFONY__CACHE_BASE_DIR']) {
-            return $_SERVER['SYMFONY__CACHE_BASE_DIR'] . '/' . $this->environment;
+        if (isset($_SERVER['VAGRANT']) && $_SERVER['VAGRANT']) {
+            return $this->rootDir . '/../../cache/' . $this->environment;
         }
 
         return parent::getCacheDir();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        if (isset($_SERVER['VAGRANT']) && $_SERVER['VAGRANT']) {
+            return $this->rootDir . '/../../logs';
+        }
+
+        return parent::getLogDir();
     }
 }
