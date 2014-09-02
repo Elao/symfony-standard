@@ -1,6 +1,0 @@
----
-
-- name: packages
-  shell: >
-    composer global require "sebastian/phpcpd={{ version }}"
-    creates=~/.composer/vendor/bin/phpcpd

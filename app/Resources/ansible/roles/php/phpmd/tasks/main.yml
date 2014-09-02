@@ -1,6 +1,0 @@
----
-
-- name: packages
-  shell: >
-    composer global require "phpmd/phpmd={{ version }}"
-    creates=~/.composer/vendor/bin/phpmd

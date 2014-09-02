@@ -1,6 +1,0 @@
----
-
-- name: packages
-  shell: >
-    composer global require "squizlabs/php_codesniffer={{ version }}"
-    creates=~/.composer/vendor/bin/phpcs

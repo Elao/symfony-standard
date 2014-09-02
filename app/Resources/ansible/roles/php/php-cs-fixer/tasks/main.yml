@@ -1,6 +1,0 @@
----
-
-- name: packages
-  shell: >
-    composer global require "fabpot/php-cs-fixer={{ version }}"
-    creates=~/.composer/vendor/bin/php-cs-fixer

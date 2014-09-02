@@ -1,7 +1,0 @@
----
-
-- name: postgresql restart
-  service: >
-    name=mysql
-    state=postgresql
-  sudo: yes
