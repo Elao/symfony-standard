@@ -251,3 +251,20 @@ Jenkins
 -------
 
 See /app/jenkins.xml
+
+FAQ
+---
+
+ * Receive this message: "A host only network interface you're attempting to configure via DHCP
+already has a conflicting host only adapter with DHCP enabled. The
+DHCP on this adapter is..."
+
+```
+VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
+```
+
+ * Guest does not seem to answser. You can try to clear osx dns cache
+
+```
+sudo dscacheutil -flushcache
+```
