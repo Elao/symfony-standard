@@ -34,6 +34,7 @@
     - { role: elao.mysql-php }
 
     - { role: elao.node }
+    - { role: elao.bower }
     - { role: elao.gulp }
     - { role: elao.sass }
     - { role: elao.sass-scsslint }

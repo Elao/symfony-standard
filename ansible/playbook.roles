@@ -14,6 +14,7 @@ elao.mysql-server
 elao.mysql-php
 
 elao.node
+elao.bower
 elao.gulp
 elao.sass
 elao.sass-scsslint
