@@ -1,4 +1,9 @@
 elao.base
+elao.ruby
+elao.git
+elao.service
+elao.supervisor
+elao.nginx
 elao.ohmyzsh
 
 elao.php
