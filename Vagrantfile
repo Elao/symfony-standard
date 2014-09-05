@@ -7,7 +7,7 @@ Vagrant.require_version ">= 1.6.3"
 
 options = {
     :name        => 'symfony-standard',
-    :vendor      => 'tcs',
+    :vendor      => '',
     :aliases     => [],
     :memory      => 768,
     :box         => 'elao/symfony-standard-debian',
