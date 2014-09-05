@@ -57,8 +57,49 @@ Recommandations
 Installation
 ------------
 
- Just clone the repository :)
+Clone the project in your workspace
 
+    $ git clone git@github.com:Elao/symfony-standard.git your-project
+    $ cd your-project
+
+Remove the .git file
+
+    $ rm -rf .git
+
+Install ansible playbook roles
+
+    $ ansible-galaxy install -f -r ansible/playbook.roles
+
+Change the name and the vendor of your project in the Vagrantfile options
+
+```
+    options = {
+        :name        => 'your-project',
+        :vendor      => 'your-vendor',
+        ...
+    }
+```
+
+Launch vagrant box and ssh into it
+
+    $ vagrant up
+    $ vagrant ssh
+
+Initialize project
+
+    ⇒ composer install
+    ⇒ bin/console doctrine:database:create
+    ⇒ bin/console doctrine:schema:create
+
+Initialize and build assets
+
+    ⇒ npm install
+    ⇒ bower install
+    ⇒ gulp install
+
+Note: The $ stands for your machine CLI, while the ⇒ stands for the VM CLI
+
+Your project is accessible via [http://your-project.your-vendor.dev/app_dev.php](http://your-project.your-vendor.dev/app_dev.php)
 
 Configuration
 -------------
@@ -156,18 +197,6 @@ In **bower.json**, change the project name as following :
 | foo bAr 99 !  | foo-bar-99   |
 | vendor foo    | vendor/foo   |
 
-First run
----------
-
-Once configured,
-
-```
-$ vagrant up
-$ vagrant ssh
-$ cd www
-$ composer update
-```
-
 Conventions
 -----------
 
@@ -209,16 +238,12 @@ Allow ssh key forwarding in Mac OSX:
 $ ssh-add -K ~/.ssh/[your_private_key]
 ```
 
-Usage :
 
- * Just "vagrant up" in your current project dir. It will provision your vm and update /etc/hosts for both the host and the guest (using hostmanager plugin) the first run
- * If necessary, ssh to your vm with "vagrant ssh"
- * Remember to "vagrant halt" to shutdown your vm
- * If problems occurs, or if you feel the needs to, you can provision your vm with "vagrant provision" and update /etc/hosts with "vagrant hostmanager"
- * Simple, uh ?
 
 Notes :
 
+ * Remember to "vagrant halt" to shutdown your vm
+ * If problems occurs, or if you feel the needs to, you can provision your vm with "vagrant provision" and update /etc/hosts with "vagrant hostmanager"
  * Project is mapped in ~/www in the vm
  * For speedup needings, cache and logs are respectively mapped in ~/cache and ~/logs
 
