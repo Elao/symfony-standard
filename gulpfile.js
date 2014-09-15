@@ -15,7 +15,10 @@ assets.config({
         ' * (c) <%= date.getFullYear() %> <%= author.name %> <<%= author.email %>>',
         ' * =============================================================',
         ' */\n\n'
-    ].join('\n')
+    ].join('\n'),
+    autoprefixer: {
+        browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+    }
 });
 
 /*********/
