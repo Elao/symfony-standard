@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Hosts
     if Vagrant.has_plugin?('landrush')
         config.landrush.enabled            = true
-        config.landrush.tld                = 'dev'
+        config.landrush.tld                = config.vm.hostname
         config.landrush.guest_redirect_dns = false
     elsif Vagrant.has_plugin?('vagrant-hostmanager')
         config.hostmanager.enabled     = true
