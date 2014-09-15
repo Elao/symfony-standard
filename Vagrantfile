@@ -98,6 +98,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Provisioners
     config.vm.provision 'ansible' do |ansible|
         ansible.playbook   = options[:ansible] + '/playbook.yml'
+        ansible.groups     = {
+            'dev' => ['default']
+        }
         ansible.extra_vars = {
             user: 'vagrant',
             host: options[:name] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
