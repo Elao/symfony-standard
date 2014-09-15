@@ -71,3 +71,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Sonata Intl Configuration
+sonata_intl:
+    timezone:
+        default: Europe/Paris
