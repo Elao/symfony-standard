@@ -12,7 +12,8 @@
     },
     "devDependencies": {
         "gulp": "3.8.*",
-        "browserify-shim": "3.7.*",
-        "elao-assets-gulp": "~0.1.4"
+        "del": "0.1.*",
+        "elao-assets-gulp": "~0.1.5",
+        "browserify-shim": "3.7.*"
     }
 }

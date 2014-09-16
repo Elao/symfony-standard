@@ -1,5 +1,6 @@
 var
     gulp   = require('gulp'),
+    del    = require('del'),
     assets = require('elao-assets-gulp');
 
 /************************/
@@ -25,8 +26,10 @@ assets.config({
 /* Tasks */
 /*********/
 
-gulp.task('install', ['js', 'sass', 'images', 'fonts']);
+gulp.task('default', ['install', 'watch']);
+gulp.task('install', ['js', 'sass', 'images', 'files']);
 gulp.task('watch',   ['watch:js', 'watch:sass', 'watch:images']);
 gulp.task('lint',    ['lint:js', 'lint:sass']);
-gulp.task('clean',   ['clean:js', 'clean:sass', 'clean:images', 'clean:fonts']);
-gulp.task('default', ['install', 'watch']);
+gulp.task('clean',   function(cb) {
+    del(assets.getDest() + '/*', cb);
+});
