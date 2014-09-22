@@ -1,40 +1,11 @@
 ---
 
-- hosts: dev
-
-  vars:
-    elao_env: dev
-    elao_vagrant: true
-    elao_ohmyzsh_users:
-      vagrant:
-        theme:   pygmalion
-        plugins: ['debian', 'common-aliases', 'git', 'composer', 'symfony2', 'npm', 'bower', 'history', 'history-substring-search']
-        cwd:     /srv/project/www
-
-  roles:
-    - { role: elao.ohmyzsh }
-    - { role: elao.php-xdebug }
-    - { role: elao.sass-scsslint }
-    - { role: elao.phantomjs }
-    - { role: elao.mailcatcher }
-
 - hosts: all
-
-  vars:
-    elao_php_version: 5.5
-    elao_php_config:
-      date.timezone: UTC
-    elao_gulp_version: 3
-    elao_sass_version: ~>3
-    elao_projects:
-      project:
-        type: symfony
-        host: '{{ host }}'
 
   roles:
     - { role: elao.php }
     - { role: elao.composer }
-    - { role: elao.mysql-server }
+    - { role: elao.mariadb-server }
     - { role: elao.mysql-php }
     - { role: elao.node }
     - { role: elao.bower }
@@ -42,3 +13,14 @@
     - { role: elao.sass }
     - { role: elao.image }
     - { role: elao.project }
+
+- hosts: dev
+
+  roles:
+    - { role: elao.ohmyzsh }
+    - { role: elao.php-xdebug }
+    - { role: elao.php-phpunit }
+    - { role: elao.php-phpcs }
+    - { role: elao.sass-scsslint }
+    - { role: elao.phantomjs }
+    - { role: elao.mailcatcher }

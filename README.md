@@ -88,7 +88,6 @@ Launch vagrant box and ssh into it
 Initialize project
 
     ⇒ composer install
-    ⇒ bin/console doctrine:database:create
     ⇒ bin/console doctrine:schema:create
 
 Initialize and build assets

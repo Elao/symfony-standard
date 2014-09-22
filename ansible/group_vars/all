@@ -1,0 +1,27 @@
+---
+
+# Php
+elao_php_version: 5.5
+elao_php_config:
+  date.timezone: UTC
+
+# MySQL
+elao_mysql_user:       symfony-standard
+elao_mysql_database:   symfony-standard
+elao_mysql_privileges: ['{{ elao_mysql_database }}.*:ALL']
+elao_mysql_users:
+  - { name: '{{ elao_mysql_user }}', password: '{{ elao_mysql_password }}', priv: '{{ elao_mysql_privileges|join("/") }}', host: '127.0.0.1' }
+elao_mysql_databases:
+  - { name: '{{ elao_mysql_database }}' }
+
+# Gulp
+elao_gulp_version: 3
+
+# Sass
+elao_sass_version: ~>3
+
+# Project
+elao_projects:
+  symfony-standard:
+    type: symfony
+    host: '{{ ansible_fqdn }}'

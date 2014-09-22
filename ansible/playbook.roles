@@ -7,10 +7,12 @@ elao.nginx
 elao.ohmyzsh
 
 elao.php
-elao.php-xdebug
 elao.composer
+elao.php-xdebug
+elao.php-phpunit
+elao.php-phpcs
 
-elao.mysql-server
+elao.mariadb-server
 elao.mysql-php
 
 elao.node

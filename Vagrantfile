@@ -11,9 +11,9 @@ options = {
     :aliases     => [],
     :memory      => 768,
     :box         => 'elao/symfony-standard-debian',
-    :box_version => '~> 0.2.0',
+    :box_version => '~> 0.2.1',
     :folders     => {
-        '.' => '/srv/project/www'
+        '.' => '/srv/symfony-standard/symfony'
     },
     :ansible     => 'ansible',
     :debug       => false
@@ -100,10 +100,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.playbook   = options[:ansible] + '/playbook.yml'
         ansible.groups     = {
             'dev' => ['default']
-        }
-        ansible.extra_vars = {
-            user: 'vagrant',
-            host: options[:name] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
         }
         ansible.verbose    = options[:debug] ? 'vvvv' : false
     end
