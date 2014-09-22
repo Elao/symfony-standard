@@ -24,3 +24,4 @@
     - { role: elao.sass-scsslint }
     - { role: elao.phantomjs }
     - { role: elao.mailcatcher }
+    - { role: elao.capifony }
