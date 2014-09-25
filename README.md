@@ -290,5 +290,5 @@ VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
  * Guest does not seem to answser. You can try to clear osx dns cache
 
 ```
-sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder
 ```
