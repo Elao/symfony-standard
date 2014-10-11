@@ -3,6 +3,7 @@
 - hosts: all
 
   roles:
+    - { role: elao.base }
     - { role: elao.php }
     - { role: elao.composer }
     - { role: elao.mariadb-server }
