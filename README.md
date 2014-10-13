@@ -43,16 +43,10 @@ What's customized ?
 Requirements
 ------------
 
- * [Vagrant 1.6.3+](http://www.vagrantup.com/downloads.html)
- * [VirtualBox 4.3.14+](https://www.virtualbox.org/wiki/Downloads)
- * [Ansible 1.7.0+](http://docs.ansible.com/intro_installation.html)
- * [Vagrant Landrush 0.14.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
-
-Recommandations
----------------
-
- * [Vagrant Cachier 0.8.0+](http://fgrehm.viewdocs.io/vagrant-cachier)
- * [Vagrant Notify 0.4.0+](https://github.com/fgrehm/vagrant-notify)
+ * [Vagrant 1.6.5+](http://www.vagrantup.com/downloads.html)
+ * [VirtualBox 4.3.18+](https://www.virtualbox.org/wiki/Downloads)
+ * [Ansible 1.7.2+](http://docs.ansible.com/intro_installation.html)
+ * [Vagrant Landrush 0.15.2+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
 
 Installation
 ------------
