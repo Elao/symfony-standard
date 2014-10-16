@@ -4,12 +4,13 @@
 elao_env: dev
 elao_vagrant: true
 
-# MySQL
-elao_mysql_password: null
-
 # Oh My Zsh
 elao_ohmyzsh_users:
   vagrant:
     theme:   pygmalion
     plugins: ['debian', 'common-aliases', 'git', 'composer', 'symfony2', 'npm', 'bower', 'history', 'history-substring-search']
     cwd:     /srv/symfony-standard/symfony
+
+# MySQL
+elao_mysql_databases:
+  - { name: 'symfony-standard' }
