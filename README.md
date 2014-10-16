@@ -233,7 +233,31 @@ $ ssh-add -K ~/.ssh/[your_private_key]
 
 
 
-Notes :
+##### Tired of typing your password required for the NFS shared folders synchronization, here's a *tip* for you.
+
+Run the following command to edit /etc/sudoers
+
+```
+$ sudo visudo
+```
+
+Under the section `# Cmnd alias specification`, add the following lines
+
+```
+# Cmnd alias specification
+Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
+Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
+```
+
+Then in `# User privilege specification` section, append the following line underneath `%admin  ALL=(ALL) ALL`
+
+```
+%admin	ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
+```
+
+
+##### Notes :
 
  * Remember to "vagrant halt" to shutdown your vm
  * If problems occurs, or if you feel the needs to, you can provision your vm with "vagrant provision" and update /etc/hosts with "vagrant hostmanager"
