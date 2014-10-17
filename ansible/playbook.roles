@@ -1,7 +1,7 @@
 elao.base
 elao.ruby
 elao.git
-elao.service
+elao.services
 elao.supervisor
 elao.nginx
 elao.ohmyzsh
