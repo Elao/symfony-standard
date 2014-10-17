@@ -8,6 +8,10 @@ elao_php_version: 5.5
 elao_php_config:
   date.timezone: UTC
 
+# MySQL
+elao_mysql_databases:
+  - { name: 'symfony-standard' }
+
 # Gulp
 elao_gulp_version: 3
 
@@ -16,6 +20,6 @@ elao_sass_version: ~>3
 
 # Projects
 elao_projects:
-  symfony-standard:
+  -
+    name: symfony-standard
     type: symfony
-    host: '{{ elao_base_host }}'

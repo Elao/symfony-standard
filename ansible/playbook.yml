@@ -6,18 +6,18 @@
     - { role: elao.base }
     - { role: elao.php }
     - { role: elao.composer }
+    - { role: elao.mariadb-server }
     - { role: elao.mysql-php }
     - { role: elao.node }
     - { role: elao.bower }
     - { role: elao.gulp }
     - { role: elao.sass }
     - { role: elao.image }
-    - { role: elao.project }
+    - { role: elao.projects }
 
 - hosts: dev
 
   roles:
-    - { role: elao.mariadb-server }
     - { role: elao.ohmyzsh }
     - { role: elao.php-xdebug }
     - { role: elao.php-phpunit }
