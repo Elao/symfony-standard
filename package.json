@@ -6,7 +6,11 @@
     },
     "private": true,
     "dependencies": {},
+    "napa": {},
     "browserify-shim": {},
+    "scripts": {
+        "install": "napa"
+    },
     "browserify": {
         "transform": ["browserify-shim"]
     },
@@ -14,6 +18,7 @@
         "gulp": "3.8.*",
         "del": "0.1.*",
         "elao-assets-gulp": "~0.1.11",
+        "napa": "1.0.*",
         "browserify-shim": "3.8.*"
     }
 }
