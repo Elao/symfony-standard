@@ -79,6 +79,8 @@ Launch vagrant box and ssh into it
     $ vagrant up
     $ vagrant ssh
 
+Note: Read the FAQ if you encouter the dhcp server error.
+
 Initialize project
 
     ⇒ composer install
