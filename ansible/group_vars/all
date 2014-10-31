@@ -5,6 +5,7 @@ elao_symfony: true
 
 # Php
 elao_php_version: 5.5
+elao_php_modules: ['intl', 'mysqlnd']
 elao_php_config:
   date.timezone: UTC
 

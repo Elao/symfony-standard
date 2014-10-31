@@ -7,7 +7,6 @@
     - { role: elao.php }
     - { role: elao.composer }
     - { role: elao.mariadb-server }
-    - { role: elao.mysql-php }
     - { role: elao.node }
     - { role: elao.bower }
     - { role: elao.gulp }

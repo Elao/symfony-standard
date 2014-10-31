@@ -13,7 +13,6 @@ elao.php-phpunit
 elao.php-phpcs
 
 elao.mariadb-server
-elao.mysql-php
 
 elao.node
 elao.bower
