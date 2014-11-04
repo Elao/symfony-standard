@@ -4,6 +4,7 @@ elao.git
 elao.services
 elao.supervisor
 elao.nginx
+elao.zsh
 elao.ohmyzsh
 
 elao.php
