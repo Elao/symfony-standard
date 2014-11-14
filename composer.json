@@ -1,5 +1,5 @@
 {
-    "name": "symfony-standard",
+    "name": "elao/symfony-standard",
     "license": "proprietary",
     "type": "project",
     "autoload": {
