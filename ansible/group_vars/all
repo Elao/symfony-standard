@@ -11,7 +11,7 @@ elao_php_config:
 
 # MySQL
 elao_mysql_databases:
-  - { name: 'symfony-standard' }
+  - { name: '{{ projectName }}' }
 
 # Gulp
 elao_gulp_version: 3
@@ -22,5 +22,5 @@ elao_sass_version: ~>3
 # Projects
 elao_projects:
   -
-    name: symfony-standard
+    name: {{ projectName }}
     type: symfony

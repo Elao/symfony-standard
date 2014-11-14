@@ -1,5 +1,5 @@
 {
-    "name": "symfony-standard",
+    "name": "{{ projectName }}",
     "private": true,
     "dependencies": {}
 }

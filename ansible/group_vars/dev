@@ -9,4 +9,4 @@ elao_ohmyzsh_users:
   vagrant:
     theme:   pygmalion
     plugins: ['debian', 'common-aliases', 'git', 'composer', 'symfony2', 'npm', 'bower', 'history', 'history-substring-search']
-    cwd:     /srv/symfony-standard/symfony
+    cwd:     /srv/{{ projectName }}/symfony

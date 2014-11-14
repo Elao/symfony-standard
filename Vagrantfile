@@ -6,14 +6,14 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version ">= 1.6.5"
 
 options = {
-    :name        => 'symfony-standard',
-    :vendor      => '',
+    :name        => '{{ projectName }}',
+    :vendor      => '{{ vendorName }}',
     :aliases     => [],
     :memory      => 768,
     :box         => 'elao/symfony-standard-debian',
     :box_version => '~> 0.2.3',
     :folders     => {
-        '.' => '/srv/symfony-standard/symfony'
+        '.' => '/srv/{{ projectName }}/symfony'
     },
     :ansible     => 'ansible',
     :debug       => false
