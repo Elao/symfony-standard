@@ -34,7 +34,6 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
 
         $files = [
             'Vagrantfile',
-            'composer.json',
             'app/config/parameters.yml.dist',
             'package.json',
             'bower.json',
@@ -56,5 +55,14 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
                 file_put_contents($file, $content);
             }
         }
+
+        // change the project name in composer
+        $composerName = $vendorName ? $vendorName . '/' . $projectName : $projectName;
+
+        $content = file_get_contents('composer.json');
+
+        $content = strtr($content, ['elao/symfony-standard' => $composerName]);
+
+        file_put_contents('composer.json', $content);
     }
 }
