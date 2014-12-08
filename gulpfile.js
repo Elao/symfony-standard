@@ -28,7 +28,7 @@ assets.config({
 
 gulp.task('default', ['install', 'watch']);
 gulp.task('install', ['js', 'sass', 'less', 'css', 'images', 'fonts', 'swf', 'files']);
-gulp.task('watch',   ['watch:js', 'watch:sass', 'watch:less', 'watch:css', 'watch:images']);
+gulp.task('watch',   ['watch:js', 'watch:sass', 'watch:less', 'watch:css', 'watch:images', 'watch:files']);
 gulp.task('clean',   function(cb) {
     del(assets.getDest() + '/*', cb);
 });
