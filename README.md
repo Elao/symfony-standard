@@ -296,6 +296,13 @@ Jenkins
 
 See /app/jenkins.xml
 
+Mail Catcher
+------------
+
+A Mail Catcher server is available on the `1080` port on your project's domain:
+
+http://your-project.your-vendor.dev:1080
+
 FAQ
 ---
 
