@@ -41,8 +41,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 `VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP"`.split()[1]
             end
         end
-        for item in options[:aliases]
-            config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+        if options[:aliases].any?
+            config.hostmanager.aliases = ''
+            for item in options[:aliases]
+                config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+            end
         end
     end
 
