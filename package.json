@@ -18,7 +18,7 @@
         "gulp": "3.8.*",
         "del": "1.1.*",
         "elao-assets-gulp": "~0.1.16",
-        "napa": "1.0.*",
+        "napa": "1.1.*",
         "browserify-shim": "3.8.*"
     }
 }
