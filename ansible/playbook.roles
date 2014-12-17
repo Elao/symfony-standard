@@ -11,7 +11,7 @@ elao.composer
 elao.php-xdebug
 elao.php-phpunit
 elao.php-phpcs
-elao.mariadb-server
+elao.mysql-server
 elao.node
 elao.bower
 elao.gulp
