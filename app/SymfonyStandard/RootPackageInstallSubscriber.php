@@ -58,6 +58,8 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             if (!preg_match('/^([-A-Z0-9]+)+$/', $value)) {
                 throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphen)');
             }
+
+            return $value;
         };
 
         $projectName = $event->getIO()->askAndValidate('<info>Project name</info> [<comment>symfony-standard</comment>]: ', $validator, null, 'symfony-standard');
