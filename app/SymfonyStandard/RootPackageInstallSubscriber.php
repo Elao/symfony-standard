@@ -39,8 +39,8 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
         ];
 
         $event->getIO()->write([
-            '<info>Generation of your project configuration</info>',
-            '<info>The following files will be updated</info>:',
+            '<info>Generating project configuration</info>',
+            '<comment>The following files will be updated</comment>:',
             ' - composer.json'
         ]);
 
@@ -48,7 +48,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             $event->getIO()->write(' - ' . $file);
         }
 
-        $confirmation = $event->getIO()->askConfirmation('Do you want to continue ? [Y/n]', true);
+        $confirmation = $event->getIO()->askConfirmation('<info>Do you want to continue?</info> [<comment>Y,n</comment>]', true);
 
         if (!$confirmation) {
             return;
