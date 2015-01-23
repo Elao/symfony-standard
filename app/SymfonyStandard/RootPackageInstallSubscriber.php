@@ -38,10 +38,15 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             'ansible/group_vars/dev',
         ];
 
-        $event->getIO()->write(array_merge([
+        $event->getIO()->write([
+            '<info>Generation of your project configuration</info>',
             '<info>The following files will be updated</info>:',
-            'composer.json'
-        ], $files));
+            ' - composer.json'
+        ]);
+
+        foreach ($files as $file) {
+            $event->getIO()->write(' - ' . $file);
+        }
 
         $confirmation = $event->getIO()->askConfirmation('Do you want to continue ?', true);
 
