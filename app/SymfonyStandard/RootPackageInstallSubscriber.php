@@ -54,12 +54,16 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', 'symfony-standard');
-        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', '');
+        $validator = function ($value) {
+            return preg_match('/^([-A-Z0-9]+)+$/', $value);
+        };
+
+        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', $validator, null, 'symfony-standard');
+        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', $validator, null, '');
 
         $vars = [
-            '{{ projectName }}' => $projectName,
-            '{{ vendorName }}' => $vendorName,
+            '{{ projectName }}' => strtolower($projectName),
+            '{{ vendorName }}'  => strtolower($vendorName),
         ];
 
         foreach ($files as $file) {
