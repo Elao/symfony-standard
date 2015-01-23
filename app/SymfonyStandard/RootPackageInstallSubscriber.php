@@ -29,9 +29,6 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
 
     public static function overrideProjectName(CommandEvent $event)
     {
-        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', 'symfony-standard');
-        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', '');
-
         $files = [
             'Vagrantfile',
             'app/config/parameters.yml.dist',
@@ -40,6 +37,20 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             'ansible/group_vars/all',
             'ansible/group_vars/dev',
         ];
+
+        $event->getIO()->write(array_merge([
+            '<info>The following files will be updated</info>:',
+            'composer.json'
+        ], $files));
+
+        $confirmation = $event->getIO()->askConfirmation('Do you want to continue ?', true);
+
+        if (!$confirmation) {
+            return;
+        }
+
+        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', 'symfony-standard');
+        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', '');
 
         $vars = [
             '{{ projectName }}' => $projectName,
