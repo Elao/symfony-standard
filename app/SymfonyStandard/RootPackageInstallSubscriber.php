@@ -29,8 +29,8 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
 
     public static function overrideProjectName(CommandEvent $event)
     {
-        $projectName = $event->getIO()->ask('Project name ?', 'symfony-project');
-        $vendorName = $event->getIO()->ask('vendor name ?', '');
+        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', 'symfony-standard');
+        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', '');
 
         $files = [
             'Vagrantfile',
