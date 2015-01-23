@@ -2,6 +2,7 @@
     "name": "elao/symfony-standard",
     "license": "proprietary",
     "type": "project",
+    "description": "The \"Elao Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-0": {
             "": "src/"
@@ -9,21 +10,19 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.6.*",
+        "symfony/symfony": "2.7.x-dev",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~3.0",
+        "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-
         "sonata-project/intl-bundle": "2.2.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-
         "doctrine/doctrine-fixtures-bundle": "2.2.*"
     },
     "scripts": {
