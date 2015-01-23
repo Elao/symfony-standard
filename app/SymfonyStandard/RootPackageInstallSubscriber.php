@@ -58,8 +58,8 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             return preg_match('/^([-A-Z0-9]+)+$/', $value);
         };
 
-        $projectName = $event->getIO()->ask('<info>Project name</info> [<comment>symfony-standard</comment>]: ', $validator, null, 'symfony-standard');
-        $vendorName  = $event->getIO()->ask('<info>Vendor name</info>: ', $validator, null, '');
+        $projectName = $event->getIO()->askAndValidate('<info>Project name</info> [<comment>symfony-standard</comment>]: ', $validator, null, 'symfony-standard');
+        $vendorName  = $event->getIO()->askAndValidate('<info>Vendor name</info>: ', $validator, null, '');
 
         $vars = [
             '{{ projectName }}' => strtolower($projectName),
