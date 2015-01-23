@@ -48,7 +48,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             $event->getIO()->write(' - ' . $file);
         }
 
-        $confirmation = $event->getIO()->askConfirmation('Do you want to continue ?', true);
+        $confirmation = $event->getIO()->askConfirmation('Do you want to continue ? [Y/n]', true);
 
         if (!$confirmation) {
             return;
