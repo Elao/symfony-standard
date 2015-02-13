@@ -314,8 +314,14 @@ DHCP on this adapter is..."
 VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
 ```
 
- * Guest does not seem to answser. You can try to clear osx dns cache
+ * Guest does not seem to answser. You can try to clear osx dns cache (before yosemite)
 
 ```
 sudo killall -HUP mDNSResponder
+```
+ * Guest does not seem to answser (in yosemite). If you ping and get `127.0.53.53`
+
+```
+sudo discoveryutil mdnsflushcache
+sudo discoveryutil udnsflushcaches
 ```
