@@ -36,6 +36,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             'bower.json',
             'ansible/group_vars/all',
             'ansible/group_vars/dev',
+            'behat.yml.dist'
         ];
 
         $event->getIO()->write([
@@ -76,9 +77,12 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             ''
         );
 
+        $projectUrl = $projectName . ($vendorName ? '.' . $vendorName : '') . '.dev';
+
         $vars = [
             '{{ projectName }}' => strtolower($projectName),
             '{{ vendorName }}'  => strtolower($vendorName),
+            '{{ projectUrl }}'  => strtolower($projectUrl),
         ];
 
         foreach ($files as $file) {

@@ -1,0 +1,27 @@
+default:
+    autoload:
+        "":  %paths.base%/features/bootstrap
+        "Page": "%paths.base%/features" # configure your page autoload
+    suites:
+        default:
+            path: %paths.base%/features
+            contexts:
+                - Knp\FriendlyContexts\Context\MinkContext
+                - Knp\FriendlyContexts\Context\EntityContext
+                - Knp\FriendlyContexts\Context\AliceContext
+                - Knp\FriendlyContexts\Context\PageContext
+                - FeatureContext
+    extensions:
+        Behat\MinkExtension:
+            base_url:  'http://{{ projectUrl }}/app_test.php'
+            sessions:
+                default:
+                    symfony2: ~
+                javascript:
+                    selenium2: ~
+        Knp\FriendlyContexts\Extension:
+            page:
+                namespace: "Page" # the namespace by default for page object
+            alice:
+                fixtures: ~
+        Behat\Symfony2Extension: ~
