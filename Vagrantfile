@@ -74,11 +74,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Cache
     if Vagrant.has_plugin?('vagrant-cachier')
-        config.cache.scope = :box
+        config.cache.scope = :machine
 
         config.cache.synced_folder_opts = {
             type: :nfs,
             mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+        }
+
+        config.cache.enable :generic, {
+            'cache'  => { cache_dir: '/srv/{{ projectName }}/symfony/var/cache' },
+            'logs'   => { cache_dir: '/srv/{{ projectName }}/symfony/var/logs' },
+            'vendor' => { cache_dir: '/srv/{{ projectName }}/symfony/vendor' },
         }
     end
 

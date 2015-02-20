@@ -2,12 +2,10 @@
 /app/config/parameters.yml
 /var/bootstrap.php.cache
 /var/SymfonyRequirements.php
-/var/cache/*
-/var/logs/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
+/var/cache
+/var/logs
 /var/build/
-/vendor/
+/vendor
 /bin/*
 !bin/console
 !bin/symfony_requirements
