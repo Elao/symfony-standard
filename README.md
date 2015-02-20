@@ -1,6 +1,8 @@
 Elao Symfony Standard Edition
 =============================
 
+> Disclamer: This project is still a work in progress, It work for us, but it's not well documented
+
 Requirements
 ------------
 
