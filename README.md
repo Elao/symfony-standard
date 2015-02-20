@@ -1,6 +1,8 @@
 Elao Symfony Standard Edition
 =============================
 
+[![Join the chat at https://gitter.im/Elao/symfony-standard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Elao/symfony-standard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > Disclamer: This project is still a work in progress, It work for us, but it's not well documented
 
 Requirements
