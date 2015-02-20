@@ -4,6 +4,11 @@
 elao_env: dev
 elao_vagrant: true
 
+# MySQL
+elao_mysql_databases:
+  - { name: '{{ projectName }}' }
+  - { name: '{{ projectName }}_test' }
+
 # Oh My Zsh
 elao_ohmyzsh_users:
   vagrant:
