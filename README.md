@@ -9,15 +9,19 @@ Requirements
  * [Ansible 1.7.2+](http://docs.ansible.com/intro_installation.html)
  * [Vagrant Landrush 0.15.2+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
 
+> Note: The $ stands for your machine CLI, while the ⇒ stands for the VM CLI
+
 Installation
 ------------
 
 Run the following command and follow the instructions
 
-    composer create-project elao/symfony-standard my-project
+    $ composer create-project elao/symfony-standard my-project
 
 Customize the project
 ---------------------
+
+TODO
 
 Running a project base on our standard application
 --------------------------------------------------
@@ -27,9 +31,7 @@ Running a project base on our standard application
     $ vagrant ssh
     ⇒ make install
 
-> Note:
-> - Read the FAQ if you encouter the dhcp server error.
-> - The $ stands for your machine CLI, while the ⇒ stands for the VM CLI
+> Note: Read the FAQ if you encouter the dhcp server error.
 
 Your project is accessible via [http://your-project.your-vendor.dev/app_dev.php](http://your-project.your-vendor.dev/app_dev.php)
 
