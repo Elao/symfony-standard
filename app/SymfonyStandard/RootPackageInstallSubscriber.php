@@ -56,7 +56,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
         }
 
         $validator = function ($value) {
-            if (!preg_match('/^([-A-Z0-9])+$/', $value)) {
+            if (!preg_match('/^([-A-Z0-9])+$/i', $value)) {
                 throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphen)');
             }
 
