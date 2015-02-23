@@ -8,7 +8,7 @@ Elao Symfony Standard Edition
 Requirements
 ------------
 
- * [Vagrant 1.6.5+](http://www.vagrantup.com/downloads.html)
+ * [Vagrant 1.7.2+](http://www.vagrantup.com/downloads.html)
  * [VirtualBox 4.3.20+](https://www.virtualbox.org/wiki/Downloads)
  * [Ansible 1.7.2+](http://docs.ansible.com/intro_installation.html)
  * [Vagrant Landrush 0.15.2+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.5.0+](https://github.com/smdahlen/vagrant-hostmanager)
