@@ -3,7 +3,7 @@
 
 VAGRANTFILE_API_VERSION = '2'
 
-Vagrant.require_version ">= 1.6.5"
+Vagrant.require_version ">= 1.7.2"
 
 options = {
     :name        => '{{ projectName }}',
