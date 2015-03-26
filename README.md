@@ -176,9 +176,9 @@ An example how to call the assets in your app/Resources/views/base.html.twig :
         </body>
     </html>
 
-If you choose to create a  WebBundle to store assets, here an example of file structure and some code :
+If your Bundle is AppBundle where you store your assets, here an example of files structure and some code :
     
-Create the file WebBundle/Resources/assets/js/web/main.js :
+Create the file AppBundle/Resources/assets/js/web/main.js :
 
     var $              = require('jquery'),
         FastClick      = require('fastclick'),
@@ -200,7 +200,7 @@ Create the file WebBundle/Resources/assets/js/web/main.js :
         // your own code
     });
     
-Create the file WebBundle/Resources/assets/sass/web/main.scss :
+Create the file AppBundle/Resources/assets/sass/web/main.scss :
 
     /* import elaostrap css */
     @import "elaostrap/assets/sass/style";
@@ -210,4 +210,4 @@ Create the file WebBundle/Resources/assets/sass/web/main.scss :
     
 Then do in your Vagrant VM :
 
-    $ gulp
+    $ gulp install
