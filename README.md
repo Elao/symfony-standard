@@ -21,7 +21,7 @@ Installation
 
 Run the following command and follow the instructions
 
-    $ composer create-project elao/symfony-standard my-project
+    $ composer create-project elao/symfony-standard my-project dev-master
 
 Customize the project
 ---------------------
