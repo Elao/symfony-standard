@@ -88,8 +88,8 @@
 
 # Cron
 
-- src:     https://github.com/ElaoInfra/ansible-role-supervisor
-  name:    elao.supervisor
+- src:     https://github.com/ElaoInfra/ansible-role-cron
+  name:    elao.cron
   version: origin/1.0
 
 # Python
