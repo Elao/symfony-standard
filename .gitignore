@@ -2,7 +2,6 @@
 /app/config/parameters.yml
 /var/bootstrap.php.cache
 /var/SymfonyRequirements.php
-/var/build/
 /var/cache
 /var/logs
 /vendor/
@@ -10,6 +9,9 @@
 !bin/console
 !bin/symfony_requirements
 /composer.phar
+
+# Build
+/var/build/
 
 # Npm
 /node_modules/
