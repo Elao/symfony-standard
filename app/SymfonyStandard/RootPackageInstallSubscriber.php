@@ -48,7 +48,11 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             $event->getIO()->write(' - ' . $file);
         }
 
-        $confirmation = $event->getIO()->askConfirmation('<info>Do you want to continue?</info> [<comment>Y,n</comment>]', true);
+        $confirmation = $event->getIO()
+            ->askConfirmation(
+                '<info>Do you want to continue?</info> [<comment>Y,n</comment>]',
+                true
+            );
 
         if (!$confirmation) {
             return;
@@ -62,19 +66,21 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             return $value;
         };
 
-        $vendor = $event->getIO()->askAndValidate(
-            '<info>Vendor name</info>: ',
-            $validator,
-            false,
-            ''
-        );
+        $vendor = $event->getIO()
+            ->askAndValidate(
+                '<info>Vendor name</info>: ',
+                $validator,
+                1,
+                null
+            );
 
-        $app = $event->getIO()->askAndValidate(
-            '<info>Application name</info> [<comment>symfony-standard</comment>]: ',
-            $validator,
-            false,
-            'symfony-standard'
-        );
+        $app = $event->getIO()
+            ->askAndValidate(
+                '<info>Application name</info> [<comment>app</comment>]: ',
+                $validator,
+                1,
+                'app'
+            );
 
         $appHost = $app . ($vendor ? '.' . $vendor : '') . '.dev';
 
