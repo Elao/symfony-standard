@@ -6,17 +6,18 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version ">= 1.7.2"
 
 options = {
-    :name        => '{{ projectName }}',
-    :vendor      => '{{ vendorName }}',
-    :aliases     => [],
-    :memory      => 768,
-    :box         => 'elao/symfony-standard-debian',
-    :box_version => '~> 0.2.4',
-    :folders     => {
-        '.' => '/srv/{{ projectName }}/symfony'
+    :vendor           => '{{ vendor }}',
+    :app              => '{{ app }}',
+    :aliases          => [],
+    :memory           => 1024,
+    :box              => 'elao/symfony-standard-debian',
+    :box_version      => '~> 1.0.0',
+    :folders          => {
+        '.' => '/srv/app/symfony'
     },
-    :ansible     => 'ansible',
-    :debug       => false
+    :ansible_playbook => 'ansible/playbook.yml',
+    :ansible_groups   => ['env_dev', 'app'],
+    :debug            => false
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -26,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box_version = options[:box_version]
 
     # Hostname
-    config.vm.hostname = options[:name] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
+    config.vm.hostname = options[:app] + ((options[:vendor] != '') ? '.' + options[:vendor] : '') + '.dev'
 
     # Hosts
     if Vagrant.has_plugin?('landrush')
@@ -43,15 +44,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
         if options[:aliases].any?
             config.hostmanager.aliases = ''
-            for item in options[:aliases]
-                config.hostmanager.aliases += item + '.' + config.vm.hostname + ' '
+            for host in options[:aliases]
+                config.hostmanager.aliases += host + '.' + config.vm.hostname + ' '
             end
         end
     end
 
     # Network
-    config.vm.network 'private_network',
-        type: 'dhcp'
+    config.vm.network 'private_network', type: 'dhcp'
 
     # Ssh
     config.ssh.forward_agent = true
@@ -65,21 +65,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Providers
     config.vm.provider :virtualbox do |vb|
-        vb.name   = ((options[:vendor] != '') ? options[:vendor] + '_' : '') + options[:name]
+        vb.name   = ((options[:vendor] != '') ? options[:vendor] + '_' : '') + options[:app]
         vb.memory = options[:memory]
         vb.gui    = options[:debug]
         vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
         vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
-    end
-
-    # Cache
-    if Vagrant.has_plugin?('vagrant-cachier')
-        config.cache.scope = :box
-
-        config.cache.synced_folder_opts = {
-            type: :nfs,
-            mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-        }
     end
 
     # Git
@@ -87,6 +77,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.provision :file do |file|
             file.source      = '~/.gitconfig'
             file.destination = '/home/vagrant/.gitconfig'
+        end
+    end
+
+    if File.exists?(File.join(Dir.home, '.gitignore')) then
+        config.vm.provision :file do |file|
+            file.source      = '~/.gitignore'
+            file.destination = '/home/vagrant/.gitignore'
         end
     end
 
@@ -100,11 +97,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Provisioners
     config.vm.provision 'ansible' do |ansible|
-        ansible.playbook   = options[:ansible] + '/playbook.yml'
-        ansible.groups     = {
-            'dev' => ['default']
-        }
+        ansible.playbook   = options[:ansible_playbook]
         ansible.verbose    = options[:debug] ? 'vvvv' : false
+        ansible.groups     = {}
+        for group in options[:ansible_groups]
+            ansible.groups[group] = ['default']
+        end
     end
 
 end

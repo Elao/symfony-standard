@@ -1,27 +1,45 @@
 ---
 
 - hosts: all
+  sudo:  yes
 
   roles:
-    - { role: elao.base }
-    - { role: elao.php }
-    - { role: elao.composer }
-    - { role: elao.mysql-server }
-    - { role: elao.node }
-    - { role: elao.bower }
-    - { role: elao.gulp }
-    - { role: elao.sass }
-    - { role: elao.image }
-    - { role: elao.projects }
-
-- hosts: dev
-
-  roles:
+    - { role: elao.motd }
+    - { role: elao.timezone }
+    - { role: elao.env }
+    - { role: elao.apt }
+    - { role: elao.ssh }
+    - { role: elao.git }
+    - { role: elao.zsh }
     - { role: elao.ohmyzsh }
-    - { role: elao.php-xdebug }
-    - { role: elao.php-phpunit }
-    - { role: elao.php-phpcs }
-    - { role: elao.sass-scsslint }
+    - { role: elao.curl }
+    - { role: elao.acl }
+    - { role: elao.files }
+    - { role: elao.make }
+    - { role: elao.nodejs }
+    - { role: elao.npm }
+    - { role: elao.ruby }
+    - { role: elao.gem }
     - { role: elao.phantomjs }
     - { role: elao.mailcatcher }
-    - { role: elao.capifony }
+    - { role: elao.logio }
+    - { role: elao.php }
+    - { role: elao.composer }
+    - { role: elao.nginx }
+    # Cron
+    #- { role: elao.cron }
+    # Python
+    #- { role: elao.python }
+    #- { role: elao.pip }
+    # Supervisor (need python)
+    #- { role: elao.supervisor }
+    # MySql
+    #- { role: elao.mysql }
+    #- { role: elao.phpmyadmin }
+    # PostgreSQL
+    #- { role: elao.postgresql }
+    #- { role: elao.phppgadmin }
+    # Redis
+    #- { role: elao.redis }
+    #- { role: elao.phpredisadmin }
+    # App
