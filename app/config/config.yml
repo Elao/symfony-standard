@@ -3,18 +3,22 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    #translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:
-        enable_annotations: true
-        api: 2.5
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -24,7 +28,7 @@ framework:
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
-        name:        %session_name%
+        name:        {{ app }}
     fragments:       ~
     http_method_override: true
 
@@ -36,7 +40,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
+        driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -51,8 +55,8 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
-        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
 # Swiftmailer Configuration
