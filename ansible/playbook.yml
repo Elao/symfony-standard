@@ -42,4 +42,7 @@
     # Redis
     #- { role: elao.redis }
     #- { role: elao.phpredisadmin }
+    # Elasticsearch
+    #- { role: elao.java }
+    #- { role: elao.elasticsearch }
     # App

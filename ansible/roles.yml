@@ -138,4 +138,14 @@
   name:    elao.phpredisadmin
   version: origin/1.0
 
+# Elasticsearch
+
+- src:     https://github.com/ElaoInfra/ansible-role-java
+  name:    elao.java
+  version: origin/1.0
+
+- src:     https://github.com/ElaoInfra/ansible-role-elasticsearch
+  name:    elao.elasticsearch
+  version: origin/1.0
+
 # App
