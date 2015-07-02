@@ -1,24 +1,27 @@
 {
-    "name": "{{ projectName }}",
-    "author": {
-        "name": "Elao",
-        "email": "contact@elao.com"
-    },
-    "private": true,
-    "dependencies": {},
-    "napa": {},
-    "browserify-shim": {},
-    "scripts": {
-        "install": "napa"
-    },
-    "browserify": {
-        "transform": ["browserify-shim"]
-    },
-    "devDependencies": {
-        "gulp": "3.8.*",
-        "del": "1.1.*",
-        "elao-assets-gulp": "~0.1.16",
-        "napa": "1.1.*",
-        "browserify-shim": "3.8.*"
-    }
+  "name": "{{ app }}",
+  "author": {
+    "name": "Elao",
+    "email": "contact@elao.com"
+  },
+  "private": true,
+  "dependencies": {
+  },
+  "napa": {},
+  "browserify-shim": {},
+  "scripts": {
+    "install": "napa"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "devDependencies": {
+    "gulp": "3.9.*",
+    "del": "1.2.*",
+    "elao-assets-gulp": "0.3.*",
+    "napa": "1.2.*",
+    "browserify-shim": "3.8.*"
+  }
 }
