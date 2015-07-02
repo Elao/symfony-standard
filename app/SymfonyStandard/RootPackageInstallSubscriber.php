@@ -22,25 +22,24 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
     {
         return array(
             ScriptEvents::PRE_INSTALL_CMD => array(
-                array('overrideProjectName', 512),
+                array('configureApp', 512),
             ),
         );
     }
 
-    public static function overrideProjectName(CommandEvent $event)
+    public static function configureApp(CommandEvent $event)
     {
         $files = [
             'Vagrantfile',
             'app/config/parameters.yml.dist',
+            'app/config/config.yml',
             'package.json',
-            'bower.json',
-            'ansible/group_vars/all',
-            'ansible/group_vars/dev',
+            'ansible/group_vars/all.yml',
             'behat.yml.dist'
         ];
 
         $event->getIO()->write([
-            '<info>Generating project configuration</info>',
+            '<info>Configure application</info>',
             '<comment>The following files will be updated</comment>:',
             ' - composer.json'
         ]);
@@ -57,32 +56,33 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
 
         $validator = function ($value) {
             if (!preg_match('/^([-A-Z0-9])*$/i', $value)) {
-                throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphen)');
+                throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphens)');
             }
 
             return $value;
         };
 
-        $projectName = $event->getIO()->askAndValidate(
-            '<info>Project name</info> [<comment>symfony-standard</comment>]: ',
-            $validator,
-            false,
-            'symfony-standard'
-        );
-
-        $vendorName = $event->getIO()->askAndValidate(
+        $vendor = $event->getIO()->askAndValidate(
             '<info>Vendor name</info>: ',
             $validator,
             false,
             ''
         );
 
-        $projectUrl = $projectName . ($vendorName ? '.' . $vendorName : '') . '.dev';
+        $app = $event->getIO()->askAndValidate(
+            '<info>Application name</info> [<comment>symfony-standard</comment>]: ',
+            $validator,
+            false,
+            'symfony-standard'
+        );
+
+        $appHost = $app . ($vendor ? '.' . $vendor : '') . '.dev';
 
         $vars = [
-            '{{ projectName }}' => strtolower($projectName),
-            '{{ vendorName }}'  => strtolower($vendorName),
-            '{{ projectUrl }}'  => strtolower($projectUrl),
+            '{{ vendor }}'     => strtolower($vendor),
+            '{{ app }}'        => strtolower($app),
+            '{{ vendor_app }}' => ($vendor ? strtolower($vendor) . '_' : '') . strtolower($vendor),
+            '{{ app_host }}'   => strtolower($appHost),
         ];
 
         foreach ($files as $file) {
@@ -95,8 +95,8 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
             }
         }
 
-        // change the project name in composer
-        $composerName = $vendorName ? $vendorName . '/' . $projectName : $projectName;
+        // Change the application name in composer
+        $composerName = $vendor ? $vendor . '/' . strtolower($app) : strtolower($app);
 
         $content = file_get_contents('composer.json');
 
