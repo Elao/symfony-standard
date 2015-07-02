@@ -157,16 +157,16 @@ elao_logio_config_harvester:
 # MySql #
 #########
 
-#elao_mysql_configs_exclusive: true
-#elao_mysql_configs:
-#  - file: my.cnf
-#    template: configs/{{ _env }}.cnf.j2
+elao_mysql_configs_exclusive: true
+elao_mysql_configs:
+  - file: my.cnf
+    template: configs/{{ _env }}.cnf.j2
 
 ##############
 # PhpMyAdmin #
 ##############
 
-#elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
+elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 
 ##############
 # PostgreSQL #
@@ -212,7 +212,7 @@ elao_php_extensions:
   - intl
   - curl
   # App
-  #- mysqlnd
+  - mysqlnd
   #- pgsql
 
 elao_php_configs_exclusive: true
@@ -242,17 +242,17 @@ elao_nginx_configs:
   - file:     gzip
     template: configs/gzip_{{ _env }}.j2
   # PhpMyAdmin
-  #- file:     phpmyadmin.conf
-  #  template: configs/server_{{ _env }}.conf.j2
-  #  config:
-  #    - listen: 1979
-  #    - root:   "{{ elao_phpmyadmin_dir }}"
-  #    - include: conf.d/gzip
-  #    - client_max_body_size: 16M
-  #    - location /:
-  #      - try_files: $uri /index.php$is_args$args
-  #    - location ~ ^/.+\.php(/|$):
-  #      - include: conf.d/php_fpm_params
+  - file:     phpmyadmin.conf
+    template: configs/server_{{ _env }}.conf.j2
+    config:
+      - listen: 1979
+      - root:   "{{ elao_phpmyadmin_dir }}"
+      - include: conf.d/gzip
+      - client_max_body_size: 16M
+      - location /:
+        - try_files: $uri /index.php$is_args$args
+      - location ~ ^/.+\.php(/|$):
+        - include: conf.d/php_fpm_params
   # PhpPgAdmin
   #- file:     phppgadmin.conf
   #  template: configs/server_{{ _env }}.conf.j2

@@ -34,8 +34,8 @@
     # Supervisor (need python)
     #- { role: elao.supervisor }
     # MySql
-    #- { role: elao.mysql }
-    #- { role: elao.phpmyadmin }
+    - { role: elao.mysql }
+    - { role: elao.phpmyadmin }
     # PostgreSQL
     #- { role: elao.postgresql }
     #- { role: elao.phppgadmin }
