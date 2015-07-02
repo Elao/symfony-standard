@@ -87,7 +87,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
         $vars = [
             '{{ vendor }}'     => strtolower($vendor),
             '{{ app }}'        => strtolower($app),
-            '{{ vendor_app }}' => ($vendor ? strtolower($vendor) . '_' : '') . strtolower($vendor),
+            '{{ vendor_app }}' => ($vendor ? strtolower($vendor) . '_' : '') . strtolower($app),
             '{{ app_host }}'   => strtolower($appHost),
         ];
 
