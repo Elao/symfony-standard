@@ -19,9 +19,6 @@
 # Bower
 /bower_components/
 
-# Sass
-/.sass-cache/
-
 # Assets
 /web/assets/
 
