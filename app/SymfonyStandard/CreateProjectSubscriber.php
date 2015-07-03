@@ -16,12 +16,12 @@ use Composer\Script\ScriptEvents;
 use Composer\Script\CommandEvent;
 use Sensio\Bundle\DistributionBundle\Composer\ScriptHandler;
 
-class RootPackageInstallSubscriber implements EventSubscriberInterface
+class CreateProjectSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
         return array(
-            ScriptEvents::PRE_INSTALL_CMD => array(
+            ScriptEvents::POST_CREATE_PROJECT_CMD => array(
                 array('configureApp', 512),
             ),
         );
@@ -30,6 +30,7 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
     public static function configureApp(CommandEvent $event)
     {
         $files = [
+            'composer.json',
             'Vagrantfile',
             'app/config/parameters.yml.dist',
             'app/config/config.yml',
@@ -41,7 +42,6 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
         $event->getIO()->write([
             '<info>Configure application</info>',
             '<comment>The following files will be updated</comment>:',
-            ' - composer.json'
         ]);
 
         foreach ($files as $file) {
@@ -82,13 +82,18 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
                 'app'
             );
 
+        $appDatabase = ($vendor ? $vendor . '_' : '') . $app;
+
+        $appComposer = ($vendor ? $vendor : $name) . '/' . $app;
+
         $appHost = $app . ($vendor ? '.' . $vendor : '') . '.dev';
 
         $vars = [
-            '{{ vendor }}'     => strtolower($vendor),
-            '{{ app }}'        => strtolower($app),
-            '{{ vendor_app }}' => ($vendor ? strtolower($vendor) . '_' : '') . strtolower($app),
-            '{{ app_host }}'   => strtolower($appHost),
+            '{{ vendor }}'       => strtolower($vendor),
+            '{{ app }}'          => strtolower($app),
+            '{{ app_database }}' => strtolower($appDatabase),
+            '{{ app_composer }}' => strtolower($appComposer),
+            '{{ app_host }}'     => strtolower($appHost),
         ];
 
         foreach ($files as $file) {
@@ -100,14 +105,5 @@ class RootPackageInstallSubscriber implements EventSubscriberInterface
                 file_put_contents($file, $content);
             }
         }
-
-        // Change the application name in composer
-        $composerName = $vendor ? $vendor . '/' . strtolower($app) : strtolower($app);
-
-        $content = file_get_contents('composer.json');
-
-        $content = strtr($content, ['elao/symfony-standard' => $composerName]);
-
-        file_put_contents('composer.json', $content);
     }
 }

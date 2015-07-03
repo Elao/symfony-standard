@@ -15,8 +15,8 @@ use Composer\Script\CommandEvent;
 
 class Composer
 {
-    public static function hookRootPackageInstall(CommandEvent $event)
+    public static function hookCreateProject(CommandEvent $event)
     {
-        $event->getComposer()->getEventDispatcher()->addSubscriber(new RootPackageInstallSubscriber());
+        $event->getComposer()->getEventDispatcher()->addSubscriber(new CreateProjectSubscriber());
     }
 }

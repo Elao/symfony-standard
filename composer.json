@@ -1,5 +1,5 @@
 {
-    "name": "elao/symfony-standard",
+    "name": "{{ app_composer }}",
     "description": "The elao/symfony-standard project",
     "license": "proprietary",
     "type": "project",
@@ -38,8 +38,8 @@
         "behat/mink-browserkit-driver": "1.2.*"
     },
     "scripts": {
-        "post-root-package-install": [
-            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        "post-create-project-cmd": [
+            "SymfonyStandard\\Composer::hookCreateProject"
         ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
