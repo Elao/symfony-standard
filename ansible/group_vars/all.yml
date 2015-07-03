@@ -113,9 +113,11 @@ elao_files:
   - path:  "{{ _app_dir }}/symfony/var/logs"
     src:   /var/log/symfony
     state: link
+    force: true
   - path:  "{{ _app_dir }}/symfony/var/cache"
     src:   /var/cache/symfony
     state: link
+    force: true
 
 #######
 # Gem #
