@@ -33,7 +33,7 @@
         elao_nginx_configs: "{{ _nginx_configs + _env_nginx_configs|default([]) }}"
       }
     # Cron
-    #- { role: elao.cron }
+    #- { role: elao.cron , when: _env_dev }
     # Python
     #- { role: elao.python }
     #- { role: elao.pip }
