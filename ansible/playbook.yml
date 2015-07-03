@@ -51,4 +51,6 @@
     # Elasticsearch
     #- { role: elao.java }
     #- { role: elao.elasticsearch }
+    # MongoDB
+    #- { role: elao.mongodb }
     # App

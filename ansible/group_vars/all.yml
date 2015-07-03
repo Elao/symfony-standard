@@ -44,6 +44,7 @@ elao_apt_repositories:
   - nodesource_0_12
   - postgresql
   - elasticsearch
+  - mongodb
 
 elao_apt_preferences:
   - ruby@bearstech
@@ -57,6 +58,7 @@ elao_apt_preferences:
   - postgresql@postgresql
   - redis@dotdeb
   - elasticsearch@elasticsearch
+  - mongodb@mongodb
 
 elao_apt_packages: []
 
@@ -196,6 +198,12 @@ elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 #################
 
 #elao_phpredisadmin_config_template: config/{{ _env }}.inc.php.j2
+
+###########
+# MongoDB #
+###########
+
+#elao_mongodb_config_template: config/{{ _env }}.conf.j2
 
 #######
 # Php #

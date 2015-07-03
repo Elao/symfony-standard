@@ -148,4 +148,10 @@
   name:    elao.elasticsearch
   version: origin/1.0
 
+# MongoDB
+
+- src:     https://github.com/ElaoInfra/ansible-role-mongodb
+  name:    elao.mongodb
+  version: origin/1.0
+
 # App
