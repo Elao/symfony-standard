@@ -2,8 +2,6 @@
 
 [![Join the chat at https://gitter.im/Elao/symfony-standard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Elao/symfony-standard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> Disclamer: This project is still a work in progress, It work for us, but it's not well documented
-
 ## Requirements
 
 * [Vagrant 1.7.2+](http://www.vagrantup.com/downloads.html)
@@ -13,35 +11,90 @@
 
 > Note: The `$` stands for your machine CLI, while the `⇒` stands for the VM CLI
 
-### Installation
+## Installation
 
-Run the following command and follow the instructions
+Create the project and access to its directory (where [app] is your application name)
 
-    $ composer create-project elao/symfony-standard my-app dev-master
+    $ composer create-project elao/symfony-standard [app] dev-master
+    $ cd [app]
 
-### Customize
+Install the related ansible roles
+
+    $ ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+
+Launch the virtual machine and ssh into it
+
+    $ vagrant up
+    $ vagrant ssh
+
+Install and prepare the project dependencies
+
+    ⇒ make install
+
+## Customize
 
 TODO
 
-### Running a project base on our standard application
+## Usage
 
+Your app is accessible via [http://app.vendor.dev/app_dev.php](http://app.vendor.dev/app_dev.php)
 
-    $ ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-    $ vagrant up
-    $ vagrant ssh
-    ⇒ make install
+## Tests
 
-> Note: Read the [FAQ](https://github.com/Elao/symfony-standard/wiki/FAQ) if you encouter the dhcp server error.
-
-Your app is accessible via [http://your-app.your-vendor.dev/app_dev.php](http://your-app.your-vendor.dev/app_dev.php)
-
-Running test in our application
--------------------------------
-
-    $ vagrant ssh
     ⇒ make test
 
-FAQ
----
+## Faq
 
-Go to the [FAQ](https://github.com/Elao/symfony-standard/wiki/FAQ)
+### VirtualBox DHCP Server
+
+> A host only network interface you're attempting to configure via DHCP already
+> has a conflicting host only adapter with DHCP enabled. The DHCP on this
+> adapter is...
+
+    $ VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
+
+### OSX DNS Cache
+
+If you virtual machine does not answer, or ping to `127.0.53.53`
+
+Before yosemite
+
+    $ sudo killall -HUP mDNSResponder
+
+On yosemite
+
+    $ sudo discoveryutil mdnsflushcache
+    $ sudo discoveryutil udnsflushcaches
+
+### OSX ssh key forwarding
+
+    $ ssh-add -K ~/.ssh/[your_private_key]
+
+### Vagrant process crash
+
+> An action '*foo*' was attempted on the machine '*bar*',
+> but another process is already executing an action on the machine.
+> Vagrant locks each machine for access by only one process at a time.
+> Please wait until the other Vagrant process finishes modifying this
+> machine, then try again.
+
+Kill vagrant ruby process, and try again
+
+    $ killall ruby
+
+### Nfs shares without password confirmation
+
+Edit /etc/sudoers
+
+    $ sudo visudo
+
+Under the section `# Cmnd alias specification`, add the following lines
+
+    # Cmnd alias specification
+    Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+    Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
+    Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
+
+Then in `# User privilege specification` section, append the following line underneath `%admin  ALL=(ALL) ALL`
+
+    %admin  ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
