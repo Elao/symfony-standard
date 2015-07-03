@@ -15,7 +15,7 @@
 
 Create the project and access to its directory (where [app] is your application name)
 
-    $ composer create-project elao/symfony-standard [app] dev-master
+    $ composer create-project elao/symfony-standard [app] dev-master --prefer-dist --no-install
     $ cd [app]
 
 Install the related ansible roles
