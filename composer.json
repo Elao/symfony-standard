@@ -38,8 +38,8 @@
         "behat/mink-browserkit-driver": "1.2.*"
     },
     "scripts": {
-        "post-root-package-install": [
-            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        "post-create-project-cmd": [
+            "SymfonyStandard\\Composer::hookCreateProject"
         ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
