@@ -30,6 +30,7 @@ class CreateProjectSubscriber implements EventSubscriberInterface
     public static function configureApp(CommandEvent $event)
     {
         $files = [
+            'composer.json',
             'Vagrantfile',
             'app/config/parameters.yml.dist',
             'app/config/config.yml',

@@ -1,5 +1,5 @@
 {
-    "name": "elao/symfony-standard",
+    "name": "{{ app_composer }}",
     "description": "The elao/symfony-standard project",
     "license": "proprietary",
     "type": "project",
