@@ -252,6 +252,11 @@ _nginx_configs:
   # Gzip
   - file:     gzip
     template: configs/gzip_{{ _env }}.j2
+  # Default 404
+  - file:     00-default.conf
+    template: configs/server_{{ _env }}.conf.j2
+    config:
+      - return: 404
   # App
   - file:     "{{ _app_host }}.conf"
     template: configs/server_{{ _env }}.conf.j2
