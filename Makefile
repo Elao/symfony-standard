@@ -23,9 +23,9 @@ help:
 
 ## Clean
 clean:
-	@rm -rf var/cache/* var/logs/* var/build/*
+	@rm -rf var/build/*
 	@mkdir -p var/build/logs var/build/phpunit
-	@cp -n app/config/parameters.yml.dist app/config/parameters.yml
+	@composer run-script post-install-cmd --no-interaction
 
 ## Prepare vendor
 prepare-vendor:
