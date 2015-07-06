@@ -50,7 +50,11 @@ prepare-test: clean prepare-vendor prepare-test build
 	@php bin/console doctrine:schema:drop --force --env=test
 	@php bin/console doctrine:schema:create --env=test
 
+## Coverage
+coverage:
+	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
+
 ## Test
 test:
-	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml --log-junit var/build/logs/junit.xml
+	@bin/phpunit -c app --colors --log-junit var/build/logs/junit.xml
 	@bin/behat -f progress
