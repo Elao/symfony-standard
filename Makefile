@@ -27,6 +27,9 @@ clean:
 	@mkdir -p var/build/logs var/build/phpunit
 	@composer run-script post-install-cmd --no-interaction
 
+## Install
+install: prepare-vendor prepare build
+
 ## Prepare vendor
 prepare-vendor:
 	@composer install -n
@@ -41,20 +44,17 @@ prepare:
 build:
 	@gulp
 
-## Install
-install: prepare-vendor prepare build
-
 ## Prepare test
 prepare-test: clean prepare-vendor prepare-test build
 	@php bin/console doctrine:database:create --if-not-exists
 	@php bin/console doctrine:schema:drop --force --env=test
 	@php bin/console doctrine:schema:create --env=test
 
-## Coverage
-coverage:
-	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
-
 ## Test
 test:
 	@bin/phpunit -c app --colors --log-junit var/build/logs/junit.xml
 	@bin/behat -f progress
+
+## Coverage
+coverage:
+	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
