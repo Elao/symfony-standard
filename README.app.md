@@ -1,4 +1,4 @@
-# {{ app_readme }}
+# {{ app_name }}
 
 ## Development
 

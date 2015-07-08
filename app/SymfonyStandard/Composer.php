@@ -92,19 +92,20 @@ class Composer
             }
         }
 
-        // Change the application name in composer
-        $appComposer = ($vendor ? $vendor : $app) . '/' . $app;
+        // App composer name
+        $appComposerName = ($vendor ? $vendor : $app) . '/' . $app;
+
+        // App name
+        $appName = ($vendor ? str_replace('-', ' ', $vendor) . ' - ' : '') . str_replace('-', ' ', $app);
 
         $content = file_get_contents('composer.json');
-        $content = strtr($content, ['elao/symfony-standard' => strtolower($appComposer)]);
+        $content = strtr($content, ['elao/symfony-standard'             => strtolower($appComposerName)]);
+        $content = strtr($content, ['The elao/symfony-standard project' => strtolower($appName)]);
 
         file_put_contents('composer.json', $content);
 
-        // Replace readme
-        $appReadme = ($vendor ? str_replace('-', ' ', $vendor) . ' - ' : '') . str_replace('-', ' ', $app);
-
         $content = file_get_contents('README.app.md');
-        $content = strtr($content, ['{{ app_readme }}' => ucwords($appReadme)]);
+        $content = strtr($content, ['{{ app_name }}' => ucwords($appName)]);
 
         file_put_contents('README.md', $content);
         unlink('README.app.md');
