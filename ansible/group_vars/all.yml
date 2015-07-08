@@ -51,9 +51,13 @@ elao_apt_preferences:
   - git@backports
   - file: dotdeb
     template: preferences/dotdeb_low.j2
+  #- php@dotdeb
+  #- php@dotdeb_php55
   - php@dotdeb_php56
   - nginx@nginx
+  #- nodejs@nodesource_0_10
   - nodejs@nodesource_0_12
+  # App
   - mysql@dotdeb
   - postgresql@postgresql
   - redis@dotdeb
