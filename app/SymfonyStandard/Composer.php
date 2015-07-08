@@ -73,7 +73,7 @@ class Composer
 
         $appDatabase = ($vendor ? $vendor . '_' : '') . $app;
 
-        $appHost = $app . ($vendor ? '.' . $vendor : '') . '.dev';
+        $appHost = $app . ($vendor ? '.' . $vendor : '');
 
         $vars = [
             '{{ vendor }}'       => strtolower($vendor),

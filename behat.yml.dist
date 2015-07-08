@@ -13,7 +13,7 @@ default:
                 - FeatureContext
     extensions:
         Behat\MinkExtension:
-            base_url:  'http://{{ app_host }}/app_test.php'
+            base_url:  'http://{{ app_host }}.dev/app_test.php'
             sessions:
                 default:
                     symfony2: ~
