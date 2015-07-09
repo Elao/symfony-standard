@@ -36,7 +36,7 @@ elao_apt_update: true
 elao_apt_repositories:
   - bearstech
   - backports
-  - dotdeb
+  - dotdeb # Php 5.4
   #- dotdeb_php55
   - dotdeb_php56
   - nginx
@@ -231,6 +231,7 @@ elao_php_extensions:
   #- pgsql
 
 elao_php_configs_exclusive: true
+#elao_php_configs_global:    true # Php 5.4
 elao_php_configs:
   - file: 50-xdebug.ini
     template: configs/xdebug_{{ _env }}.ini.j2
