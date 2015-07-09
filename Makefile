@@ -21,40 +21,52 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-## Clean
-clean:
-	@rm -rf var/build/*
-	@mkdir -p var/build/logs var/build/phpunit
-	@composer run-script post-install-cmd --no-interaction
+## Setup vagrant box and application
+setup:
+	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	vagrant up
+	vagrant ssh -c 'cd /srv/app/symfony && make install'
 
-## Install
-install: prepare-vendor prepare build
+install: prepare-vendor prepare-db prepare-db-test build
 
-## Prepare vendor
+install-test: clean prepare-vendor prepare-db-test build
+
 prepare-vendor:
 	@composer install -n
 	@npm install
 
-## Prepare
-prepare:
+prepare-db:
 	@php bin/console doctrine:database:create --if-not-exists
 	@php bin/console doctrine:schema:update --force
+	@php bin/console doctrine:fixtures:load
 
-## Build
-build:
-	@gulp
-
-## Prepare test
-prepare-test: clean prepare-vendor prepare-test build
-	@php bin/console doctrine:database:create --if-not-exists
+prepare-db-test:
+	@php bin/console doctrine:database:create --if-not-exists --env=test
 	@php bin/console doctrine:schema:drop --force --env=test
 	@php bin/console doctrine:schema:create --env=test
 
-## Test
+build:
+	@gulp
+
+clean:
+	@rm -rf var/build/*
+	@rm -rf var/cache/*
+	@mkdir -p var/build/logs var/build/phpunit
+	@composer run-script post-install-cmd --no-interaction
+
+## Run tests
 test:
 	@bin/phpunit -c app --colors --log-junit var/build/logs/junit.xml
 	@bin/behat -f progress
 
-## Coverage
+## Generate coverage report
 coverage:
 	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
+
+## Deploy app to demo
+deploy-demo:
+	cap demo deploy
+
+## Deploy app to production
+deploy-prod:
+	cap prod deploy
