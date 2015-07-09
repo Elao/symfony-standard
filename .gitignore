@@ -28,3 +28,5 @@
 # Ansible
 ansible.cfg
 /ansible/roles/*.*/
+
+# App
