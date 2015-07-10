@@ -13,6 +13,7 @@
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
             <directory>../src/*/Tests</directory>
+            <directory>../src/*/*/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -36,6 +37,7 @@
                 <directory>../src/*/Bundle/*Bundle/DataFixtures</directory>
                 <directory>../src/*/Bundle/*Bundle/Tests</directory>
                 <directory>../src/*/Tests</directory>
+                <directory>../src/*/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
