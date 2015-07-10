@@ -21,38 +21,39 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-## Setup vagrant box and application
+## Setup environment & Install application
 setup:
 	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	vagrant up
+	vagrant up --provision
 	vagrant ssh -c 'cd /srv/app/symfony && make install'
 
+## Install application
 install: prepare-vendor prepare-db prepare-db-test build
 
 install-test: clean prepare-vendor prepare-db-test build
 
 prepare-vendor:
-	@composer install -n
-	@npm install
+	composer install -n
+	npm install
 
 prepare-db:
-	@php bin/console doctrine:database:create --if-not-exists
-	@php bin/console doctrine:schema:update --force
-	@php bin/console doctrine:fixtures:load
+	php bin/console doctrine:database:create --if-not-exists
+	php bin/console doctrine:schema:update --force
+	#php bin/console doctrine:fixtures:load -n
 
 prepare-db-test:
-	@php bin/console doctrine:database:create --if-not-exists --env=test
-	@php bin/console doctrine:schema:drop --force --env=test
-	@php bin/console doctrine:schema:create --env=test
+	php bin/console doctrine:database:create --if-not-exists --env=test
+	php bin/console doctrine:schema:drop --force --env=test
+	php bin/console doctrine:schema:create --env=test
 
 build:
-	@gulp
+	gulp
 
 clean:
-	@rm -rf var/build/*
-	@rm -rf var/cache/*
-	@mkdir -p var/build/logs var/build/phpunit
-	@composer run-script post-install-cmd --no-interaction
+	rm -rf var/build/*
+	rm -rf var/cache/*
+	mkdir -p var/build/logs var/build/phpunit
+	composer run-script post-install-cmd --no-interaction
 
 ## Run tests
 test:
