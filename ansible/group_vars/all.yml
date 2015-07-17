@@ -297,7 +297,7 @@ elao_npm_packages:
 #    jobs:
 #      # Do foo bar
 #      - name:   foo-bar
-#        job:    "php {{ _app_dir }}/symfony/bin/console foo:bar --env={{ _env }}"
+#        job:    "php {{ _app_dir }}/symfony/bin/console app:foo:bar --env={{ _env }}"
 #        minute: 0
 #        hour:   7
 #        # Dev
