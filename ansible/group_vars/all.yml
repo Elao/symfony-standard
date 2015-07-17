@@ -313,4 +313,16 @@ elao_npm_packages:
 #elao_supervisor_configs:
 #  - file:     inet-http-server.conf
 #    template: configs/inet_http_server_{{ _env }}.conf.j2
-#  - ...
+#  - file:     app.conf
+#    template: configs/program_{{ _env }}.conf.j2
+#    config:
+#      - foo-bar:
+#        - command:         php bin/console app:foo:bar --env={{ _env }} --no-interaction -vv
+#        - directory:       "{{ _app_dir }}/symfony"
+#        - user:            "{{ elao_php_user }}"
+#        - autorestart:     true
+#        - stdout_logfile:  "{{ elao_supervisor_log_dir }}/foo-bar.log"
+#        - redirect_stderr: true
+#        - environment:     "SYMFONY_ENV=\"{{ _env }}\""
+#        # Dev
+#        - autostart:       false
