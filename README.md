@@ -66,6 +66,8 @@ On yosemite
     $ sudo discoveryutil mdnsflushcache
     $ sudo discoveryutil udnsflushcaches
 
+See: https://support.apple.com/kb/HT202516
+
 ### OSX ssh key forwarding
 
     $ ssh-add -K ~/.ssh/[your_private_key]
