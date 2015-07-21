@@ -34,7 +34,7 @@ Enable/Disable php xdebug
 
     ⇒ elao_php_xdebug [on|off]
 
-* *Supervisor*: http://clap-digital.tcs.dev:9001
-* *Mailcatcher*: http://clap-digital.tcs.dev:1080
-* *Log.io*: http://clap-digital.tcs.dev:28778
-* *phpMyAdmin*: http://clap-digital.tcs.dev:1979
+* *Supervisor*: http://{{ app_host }}.dev:9001
+* *Mailcatcher*: http://{{ app_host }}.dev:1080
+* *Log.io*: http://{{ app_host }}.dev:28778
+* *phpMyAdmin*: http://{{ app_host }}.dev:1979
