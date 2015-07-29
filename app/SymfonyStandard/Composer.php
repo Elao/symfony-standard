@@ -105,7 +105,10 @@ class Composer
         file_put_contents('composer.json', $content);
 
         $content = file_get_contents('README.app.md');
-        $content = strtr($content, ['{{ app_name }}' => ucwords($appName)]);
+        $content = strtr($content, [
+            '{{ app_name }}' => ucwords($appName),
+            '{{ app_host }}' => strtolower($appHost),
+        ]);
 
         file_put_contents('README.md', $content);
         unlink('README.app.md');
