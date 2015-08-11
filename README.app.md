@@ -38,3 +38,9 @@ Enable/Disable php xdebug
 * *Mailcatcher*: http://{{ app_host }}.dev:1080
 * *Log.io*: http://{{ app_host }}.dev:28778
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
+
+### Developers
+
+* [Developer Name](mailto:developer@elao.com)
+* [Developer Name](mailto:developer@elao.com)
+* [Developer Name](mailto:developer@elao.com)
