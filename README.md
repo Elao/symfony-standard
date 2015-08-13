@@ -57,14 +57,14 @@ Your app is accessible via [http://app.vendor.dev/app_dev.php](http://app.vendor
 
 If you virtual machine does not answer, or ping to `127.0.53.53`
 
-Before yosemite
-
-    $ sudo killall -HUP mDNSResponder
-
-On yosemite
+On Yosemite 10.10 to 10.10.3
 
     $ sudo discoveryutil mdnsflushcache
     $ sudo discoveryutil udnsflushcaches
+
+Before Yosemite and on Yosemite 10.10.4
+
+    $ sudo killall -HUP mDNSResponder
 
 See: https://support.apple.com/kb/HT202516
 
