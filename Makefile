@@ -57,12 +57,12 @@ clean:
 
 ## Run tests
 test:
-	@bin/phpunit -c app --colors --log-junit var/build/logs/junit.xml
+	@bin/phpunit -colors --log-junit var/build/logs/junit.xml
 	@bin/behat -f progress
 
 ## Generate coverage report
 coverage:
-	@bin/phpunit -c app --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
+	@bin/phpunit --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
 
 ## Deploy app to demo
 deploy-demo:
