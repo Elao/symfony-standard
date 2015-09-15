@@ -273,7 +273,7 @@ _nginx_configs:
       - include:     conf.d/gzip
       - location /:
         - try_files: $uri /app.php$is_args$args
-      - location ~ ^/(app|app_dev|app_test)\.php(/|$):
+      - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
         - include: conf.d/php_fpm_params
         #- internal;
 
