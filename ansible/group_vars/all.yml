@@ -41,7 +41,8 @@ elao_apt_repositories:
   - dotdeb_php56
   - nginx
   #- nodesource_0_10
-  - nodesource_0_12
+  #- nodesource_0_12
+  - nodesource_4
   - postgresql
   - elasticsearch
   - mongodb
@@ -56,7 +57,8 @@ elao_apt_preferences:
   - php@dotdeb_php56
   - nginx@nginx
   #- nodejs@nodesource_0_10
-  - nodejs@nodesource_0_12
+  #- nodejs@nodesource_0_12
+  - nodejs@nodesource_4
   # App
   - mysql@dotdeb
   - postgresql@postgresql
