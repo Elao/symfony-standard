@@ -11,7 +11,7 @@ help:
 	printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
 	printf " make [target]\n\n"
 	printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
-	awk '/^[a-zA-Z\-\_0-9\.]+:/ { \
+	awk '/^[a-zA-Z\-\_0-9\.@]+:/ { \
 		helpMessage = match(lastLine, /^## (.*)/); \
 		if (helpMessage) { \
 			helpCommand = substr($$1, 0, index($$1, ":")); \
@@ -21,53 +21,111 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
+#########
+# Setup #
+#########
+
 ## Setup environment & Install application
-setup:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	vagrant up --provision
+setup: setup-vagrant
 	vagrant ssh -c 'cd /srv/app/symfony && make install'
 
+setup@test: setup-ansible@test install@test
+
+setup-vagrant:
+	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	vagrant up --provision
+
+setup-ansible@test:
+	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+
+###########
+# Install #
+###########
+
 ## Install application
-install: prepare-vendor prepare-db prepare-db-test build
+install: install-app install-db install-db@test install-db-fixtures install-db-fixtures@test install-dep build
 
-install-test: clean prepare-vendor prepare-db-test build
+install@test: install-app@test install-db@test install-db-fixtures@test install-dep build@prod
 
-prepare-vendor:
-	composer install -n
-	npm install
+install@prod: install-dep build@prod
 
-prepare-db:
-	php bin/console doctrine:database:create --if-not-exists
-	php bin/console doctrine:schema:update --force
-	#php bin/console doctrine:fixtures:load -n
+install-app:
+	composer --no-progress --no-interaction install
 
-prepare-db-test:
-	php bin/console doctrine:database:create --if-not-exists --env=test
-	php bin/console doctrine:schema:drop --force --env=test
-	php bin/console doctrine:schema:create --env=test
+install-app@test:
+	SYMFONY_ENV=test composer --no-progress --no-interaction install
 
-build:
+install-db:
+	bin/console doctrine:database:create --if-not-exists
+	bin/console doctrine:schema:update --force
+
+install-db@test:
+	bin/console doctrine:database:create --if-not-exists --env=test
+	bin/console doctrine:schema:update --force --env=test
+
+install-db-fixtures:
+	#bin/console doctrine:fixtures:load -n
+
+install-db-fixtures@test:
+	#bin/console doctrine:fixtures:load -n --env=test
+
+install-dep:
+	npm --no-spin install
+
+#########
+# Build #
+#########
+
+## Build application
+build: build-assets
+
+build@prod: build-assets@prod
+
+build-assets:
+	gulp --dev
+
+build-assets@prod:
 	gulp
 
-clean:
-	rm -rf var/build/*
-	rm -rf var/cache/*
-	mkdir -p var/build/logs var/build/phpunit
-	composer run-script post-install-cmd --no-interaction
+########
+# Test #
+########
 
 ## Run tests
-test:
-	@bin/phpunit -colors --log-junit var/build/logs/junit.xml
-	@bin/behat -f progress
+test: test-phpunit test-behat
 
-## Generate coverage report
-coverage:
-	@bin/phpunit --colors --coverage-html var/build/phpunit --coverage-clover var/build/logs/clover.xml
+test@test: test-phpunit@test test-behat@test
 
-## Deploy app to demo
-deploy-demo:
+test-phpunit:
+	bin/phpunit
+
+test-phpunit@test:
+	rm -rf var/tests/junit.xml var/tests/clover.xml var/tests/coverage
+	bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
+
+test-behat:
+	bin/behat
+
+test-behat@test:
+	bin/behat --format=progress --no-interaction
+
+##########
+# Deploy #
+##########
+
+## Deploy application (demo)
+deploy@demo: deploy-capifony@demo
+
+## Deploy application (prod)
+deploy@prod: deploy-capifony@prod
+
+deploy-capifony@demo:
 	cap demo deploy
 
-## Deploy app to production
-deploy-prod:
+deploy-capifony@prod:
 	cap prod deploy
+
+##########
+# Custom #
+##########

@@ -5,8 +5,6 @@ _app:      {{ app }}
 _app_dir:  /srv/app
 _app_host: "{{ _app ~ ('.' ~ _vendor if _vendor else '') }}"
 
-_env:  dev
-
 ########
 # Motd #
 ########
@@ -42,9 +40,9 @@ elao_apt_repositories:
   - nginx
   #- nodesource_0_10
   - nodesource_0_12
-  - postgresql
-  - elasticsearch
-  - mongodb
+  #- postgresql
+  #- elasticsearch
+  #- mongodb
 
 elao_apt_preferences:
   - ruby@bearstech
@@ -59,10 +57,10 @@ elao_apt_preferences:
   - nodejs@nodesource_0_12
   # App
   - mysql@dotdeb
-  - postgresql@postgresql
-  - redis@dotdeb
-  - elasticsearch@elasticsearch
-  - mongodb@mongodb
+  #- postgresql@postgresql
+  #- redis@dotdeb
+  #- elasticsearch@elasticsearch
+  #- mongodb@mongodb
 
 elao_apt_packages: []
 
@@ -102,29 +100,7 @@ elao_ohmyzsh_users:
 # Files #
 #########
 
-elao_files:
-  - path:  /var/log/symfony
-    state: directory
-    acls:
-      - "user:{{ elao_php_user }}:rwx"
-      - "user:{{ _user }}:rwx"
-      - "default:user:{{ elao_php_user }}:rwx"
-      - "default:user:{{ _user }}:rwx"
-  - path:  /var/cache/symfony
-    state: directory
-    acls:
-      - "user:{{ elao_php_user }}:rwx"
-      - "user:{{ _user }}:rwx"
-      - "default:user:{{ elao_php_user }}:rwx"
-      - "default:user:{{ _user }}:rwx"
-  - path:  "{{ _app_dir }}/symfony/var/logs"
-    src:   /var/log/symfony
-    state: link
-    force: true
-  - path:  "{{ _app_dir }}/symfony/var/cache"
-    src:   /var/cache/symfony
-    state: link
-    force: true
+_all_files: []
 
 #######
 # Gem #
@@ -251,7 +227,7 @@ elao_php_configs:
 elao_nginx_config_template: config/http_{{ _env }}.conf.j2
 
 elao_nginx_configs_exclusive: true
-_nginx_configs:
+_all_nginx_configs:
   # Php fpm
   - file:     php_fpm_params
     template: configs/php_fpm_params_{{ _env }}.j2

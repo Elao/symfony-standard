@@ -10,8 +10,9 @@
 !bin/symfony_requirements
 /composer.phar
 
-# Build
-/var/build/
+# Tests
+/var/tests/*
+!var/tests/.gitkeep
 
 # Npm
 /node_modules/

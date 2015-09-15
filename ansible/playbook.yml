@@ -1,11 +1,6 @@
 ---
 
 - hosts: all
-  sudo:  yes
-
-  vars:
-    _env_dev: "{{ 'env_dev' in group_names }}"
-    _user:    "{{ 'vagrant' if 'env_dev' in group_names else 'docker' }}"
 
   roles:
     - { role: elao.motd }
@@ -14,11 +9,13 @@
     - { role: elao.apt }
     - { role: elao.ssh }
     - { role: elao.git }
-    - { role: elao.zsh, when: _env_dev }
-    - { role: elao.ohmyzsh, when: _env_dev }
+    - { role: elao.zsh, when: _env == 'dev' }
+    - { role: elao.ohmyzsh, when: _env == 'dev' }
     - { role: elao.curl }
     - { role: elao.acl }
-    - { role: elao.files }
+    - { role: elao.files,
+        elao_files: "{{ _all_files + _env_files|default([]) }}"
+      }
     - { role: elao.make }
     - { role: elao.nodejs }
     - { role: elao.npm }
@@ -26,14 +23,14 @@
     - { role: elao.gem }
     - { role: elao.phantomjs }
     - { role: elao.mailcatcher }
-    - { role: elao.logio, when: _env_dev }
+    - { role: elao.logio, when: _env == 'dev' }
     - { role: elao.php }
     - { role: elao.composer }
     - { role: elao.nginx,
-        elao_nginx_configs: "{{ _nginx_configs + _env_nginx_configs|default([]) }}"
+        elao_nginx_configs: "{{ _all_nginx_configs + _env_nginx_configs|default([]) }}"
       }
     # Cron
-    #- { role: elao.cron, when: _env_dev }
+    #- { role: elao.cron, when: _env == 'dev' }
     # Python
     #- { role: elao.python }
     #- { role: elao.pip }
@@ -41,13 +38,13 @@
     #- { role: elao.supervisor }
     # MySql
     - { role: elao.mysql }
-    - { role: elao.phpmyadmin, when: _env_dev }
+    - { role: elao.phpmyadmin, when: _env == 'dev' }
     # PostgreSQL
     #- { role: elao.postgresql }
-    #- { role: elao.phppgadmin, when: _env_dev }
+    #- { role: elao.phppgadmin, when: _env == 'dev' }
     # Redis
     #- { role: elao.redis }
-    #- { role: elao.phpredisadmin, when: _env_dev }
+    #- { role: elao.phpredisadmin, when: _env == 'dev' }
     # Elasticsearch
     #- { role: elao.java }
     #- { role: elao.elasticsearch }

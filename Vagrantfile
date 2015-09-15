@@ -17,6 +17,9 @@ options = {
     },
     :ansible_playbook => 'ansible/playbook.yml',
     :ansible_groups   => ['env_dev', 'app'],
+    :ansible_vars     => {
+        '_user' => 'vagrant'
+    },
     :debug            => false
 }
 
@@ -97,9 +100,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Provisioners
     config.vm.provision 'ansible' do |ansible|
-        ansible.playbook   = options[:ansible_playbook]
-        ansible.verbose    = options[:debug] ? 'vvvv' : false
-        ansible.groups     = {}
+        ansible.playbook      = options[:ansible_playbook]
+        ansible.verbose       = options[:debug] ? 'vvvv' : false
+        ansible.extra_vars    = options[:ansible_vars]
+        ansible.sudo          = true
+        ansible.raw_arguments = ['--force-handlers']
+        ansible.groups        = {}
         for group in options[:ansible_groups]
             ansible.groups[group] = ['default']
         end
