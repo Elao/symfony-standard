@@ -95,6 +95,7 @@ elao_ohmyzsh_users:
             else sudo mv /etc/php5/fpm/conf.d/20-xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini.off; fi
             sudo service php5-fpm restart
         }
+      - export PATH: ./bin:$PATH
       - cd {{ _app_dir }}/symfony
 
 #########
