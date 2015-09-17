@@ -41,7 +41,7 @@ elao_apt_repositories:
   #- nodesource_0_10
   - nodesource_0_12
   #- postgresql
-  #- elasticsearch
+  #- elasticsearch_1_7
   #- mongodb
 
 elao_apt_preferences:
@@ -59,7 +59,7 @@ elao_apt_preferences:
   - mysql@dotdeb
   #- postgresql@postgresql
   #- redis@dotdeb
-  #- elasticsearch@elasticsearch
+  #- elasticsearch@elasticsearch_1_7
   #- mongodb@mongodb
 
 elao_apt_packages: []
