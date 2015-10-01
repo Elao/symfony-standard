@@ -61,7 +61,7 @@ install-db:
 	bin/console doctrine:schema:update --force
 
 install-db@test:
-	-bin/console doctrine:database:drop --force --env=test
+	bin/console doctrine:database:drop --force --if-exists --env=test
 	bin/console doctrine:database:create --env=test
 	bin/console doctrine:schema:create --env=test
 
