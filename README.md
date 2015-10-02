@@ -18,18 +18,9 @@ Create the project and access to its directory (where [app] is your application 
     $ composer create-project elao/symfony-standard [app] dev-master --prefer-dist --no-install
     $ cd [app]
 
-Install the related ansible roles
-
-    $ ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-
-Launch the virtual machine and ssh into it
-
-    $ vagrant up
-    $ vagrant ssh
-
 Install and prepare the project dependencies
 
-    ⇒ make install
+    $ make setup
 
 ## Customize
 
