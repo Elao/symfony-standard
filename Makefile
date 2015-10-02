@@ -26,18 +26,26 @@ help:
 #########
 
 ## Setup environment & Install application
-setup: setup-vagrant
-	vagrant ssh -c 'cd /srv/app/symfony && make install'
+setup: provision
+	vagrant ssh -c 'cd /srv/app && make install'
 
 setup@test: setup-ansible@test install@test
-
-setup-vagrant:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	vagrant up --provision
 
 setup-ansible@test:
 	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
 	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+
+#############
+# Provision #
+#############
+
+## Provision environment
+provision: provision-vagrant
+
+provision-vagrant:
+	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	vagrant up --no-provision
+	vagrant provision
 
 ###########
 # Install #
