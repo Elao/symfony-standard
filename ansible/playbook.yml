@@ -25,7 +25,6 @@
     - { role: elao.mailcatcher }
     - { role: elao.logio, when: _env == 'dev' }
     - { role: elao.php }
-    - { role: elao.composer }
     - { role: elao.nginx,
         elao_nginx_configs: "{{ _all_nginx_configs + _env_nginx_configs|default([]) }}"
       }

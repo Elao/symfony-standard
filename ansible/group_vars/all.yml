@@ -222,6 +222,16 @@ elao_php_configs:
       - date.timezone: UTC
       # App
 
+elao_php_applications:
+  - composer
+  # Dev
+  - php-cs-fixer
+  - phpcs
+  # App
+  #- phpunit
+  #- phpunit@5.0.0
+  #- openl10n@0.2.0
+
 #########
 # Nginx #
 #########
