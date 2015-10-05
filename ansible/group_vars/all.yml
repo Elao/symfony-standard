@@ -55,6 +55,7 @@ elao_apt_preferences:
   - nginx@nginx
   #- nodejs@nodesource_0_10
   - nodejs@nodesource_0_12
+  #- nodejs@nodesource_4
   # App
   - mysql@dotdeb
   #- postgresql@postgresql
