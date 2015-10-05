@@ -31,24 +31,12 @@ elao_env:
 
 elao_apt_update: true
 
-elao_apt_repositories:
-  - bearstech
-  - backports
-  - dotdeb # Php 5.4
-  #- dotdeb_php55
-  - dotdeb_php56
-  - nginx
-  #- nodesource_0_10
-  - nodesource_0_12
-  #- postgresql
-  #- elasticsearch_1_7
-  #- mongodb
+elao_apt_repositories: []
 
 elao_apt_preferences:
   - ruby@bearstech
   - git@backports
-  - file: dotdeb
-    template: preferences/dotdeb_low.j2
+  - ~@dotdeb:100
   #- php@dotdeb
   #- php@dotdeb_php55
   - php@dotdeb_php56
