@@ -82,6 +82,10 @@
   name:    elao.nginx
   version: origin/1.0
 
+- src:     https://github.com/ElaoInfra/ansible-role-opcache-dashboard
+  name:    elao.opcache-dashboard
+  version: origin/1.0
+
 # Cron
 
 - src:     https://github.com/ElaoInfra/ansible-role-cron

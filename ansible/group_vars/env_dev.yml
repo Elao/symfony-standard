@@ -35,6 +35,17 @@ _env_files:
 #########
 
 _env_nginx_configs:
+  # OPcache Dashboard
+  - file:     opcache-dashboard.conf
+    template: configs/server_{{ _env }}.conf.j2
+    config:
+      - listen: 2013
+      - root:   "{{ elao_opcache_dashboard_dir }}"
+      - include: conf.d/gzip
+      - location /:
+        - try_files: $uri /opcache.php$is_args$args
+      - location ~ ^/.+\.php(/|$):
+        - include: conf.d/php_fpm_params
   # PhpMyAdmin
   - file:     phpmyadmin.conf
     template: configs/server_{{ _env }}.conf.j2
