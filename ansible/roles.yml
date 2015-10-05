@@ -78,10 +78,6 @@
   name:    elao.php
   version: origin/1.0
 
-- src:     https://github.com/ElaoInfra/ansible-role-composer
-  name:    elao.composer
-  version: origin/1.0
-
 - src:     https://github.com/ElaoInfra/ansible-role-nginx
   name:    elao.nginx
   version: origin/1.0
