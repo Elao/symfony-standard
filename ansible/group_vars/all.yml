@@ -151,6 +151,8 @@ elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 
 #elao_postgresql_version: 9.4
 
+#elao_postgresql_config_template: config/{{ _env }}.conf.j2
+
 #elao_postgresql_config_hba_template: config/hba/{{ _env }}.conf.j2
 
 ##############
