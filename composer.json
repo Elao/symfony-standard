@@ -28,7 +28,7 @@
         "nelmio/alice": "2.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
 
-        "phpunit/phpunit": "~4.8",
+        "phpunit/phpunit": "~5.0",
 
         "behat/behat": "3.0.*",
         "behat/mink-selenium2-driver": "1.2.*",
