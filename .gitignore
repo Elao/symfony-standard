@@ -30,4 +30,7 @@
 ansible.cfg
 /ansible/roles/*.*/
 
+# PHP CS Fixer
+.php_cs.cache
+
 # App
