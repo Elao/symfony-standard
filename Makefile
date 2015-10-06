@@ -29,11 +29,7 @@ help:
 setup: provision
 	vagrant ssh -c 'cd /srv/app/symfony && make install'
 
-setup@test: setup-ansible@test install@test
-
-setup-ansible@test:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+setup@test: provision@test install@test
 
 #############
 # Provision #
@@ -42,10 +38,21 @@ setup-ansible@test:
 ## Provision environment
 provision: provision-vagrant
 
+provision@test: provision-ansible@test
+
+provision-services@test: provision-services-ansible@test
+
 provision-vagrant:
 	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
 	vagrant up --no-provision
 	vagrant provision
+
+provision-ansible@test:
+	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+
+provision-services-ansible@test:
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/playbook.yml
 
 ###########
 # Install #
