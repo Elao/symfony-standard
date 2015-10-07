@@ -37,7 +37,7 @@ elao_apt_preferences:
   - ruby@bearstech
   - git@backports
   - ~@dotdeb:100
-  #- php@dotdeb
+  #- php@dotdeb # Php 5.4
   #- php@dotdeb_php55
   - php@dotdeb_php56
   - nginx@nginx
@@ -142,6 +142,8 @@ elao_mysql_configs:
 ##############
 # PhpMyAdmin #
 ##############
+
+#elao_phpmyadmin_version: dev-MAINT_4_4_15 # Php 5.4
 
 elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 
