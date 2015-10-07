@@ -39,3 +39,9 @@ Enable/Disable php xdebug
 * *Log.io*: http://{{ app_host }}.dev:28778
 * *OPcache Dashboard*: http://{{ app_host }}.dev:2013
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
+
+### Developers
+
+* [Developer Name](mailto:developer@elao.com)
+* [Developer Name](mailto:developer@elao.com)
+* [Developer Name](mailto:developer@elao.com)
