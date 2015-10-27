@@ -34,6 +34,12 @@ Enable/Disable php xdebug
 
     ⇒ elao_php_xdebug [on|off]
 
+Run test
+
+    ⇒ make test
+
+Tests files should be in the `tests/` directory and under the namespace `Tests\\`
+
 * *Supervisor*: http://{{ app_host }}.dev:9001
 * *Mailcatcher*: http://{{ app_host }}.dev:1080
 * *Log.io*: http://{{ app_host }}.dev:28778
