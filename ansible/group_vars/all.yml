@@ -31,7 +31,13 @@ elao_env:
 
 elao_apt_update: true
 
-elao_apt_repositories: []
+elao_apt_components: ['main']
+
+elao_apt_sources_list_template: sources_list/base.list.j2
+
+elao_apt_repositories:
+  - security
+  - updates
 
 elao_apt_preferences:
   - ruby@bearstech
