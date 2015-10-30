@@ -7,7 +7,8 @@
         "psr-4": {
             "": "src/",
             "SymfonyStandard\\": "app/SymfonyStandard/"
-        }
+        },
+        "files": [ "app/AppKernel.php" ]
     },
     "require": {
         "php": ">=5.3.9",
