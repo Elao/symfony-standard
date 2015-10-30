@@ -114,17 +114,17 @@ test: test-phpunit test-behat
 test@test: test-phpunit@test test-behat@test
 
 test-phpunit:
-	bin/phpunit
+	vendor/bin/phpunit
 
 test-phpunit@test:
 	rm -rf var/tests/junit.xml var/tests/clover.xml var/tests/coverage
-	bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
+	vendor/bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
 
 test-behat:
-	bin/behat
+	vendor/bin/behat
 
 test-behat@test:
-	bin/behat --format=progress --no-interaction
+	vendor/bin/behat --format=progress --no-interaction
 
 ##########
 # Deploy #
