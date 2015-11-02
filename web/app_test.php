@@ -20,10 +20,11 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 }
 */
 
-$loader = require_once __DIR__.'/../var/bootstrap.php.cache';
+/**
+ * @var Composer\Autoload\ClassLoader $loader
+ */
+$loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
-
-require_once __DIR__.'/../app/AppKernel.php';
 
 $kernel = new AppKernel('test', true);
 $kernel->loadClassCache();

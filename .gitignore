@@ -1,32 +1,25 @@
-/web/bundles/
 /app/config/parameters.yml
 /var/bootstrap.php.cache
 /var/SymfonyRequirements.php
 /var/cache
 /var/logs
-/vendor/
-/bin/*
-!bin/console
-!bin/symfony_requirements
-/composer.phar
+/var/sessions
 
 # Tests
 /var/tests/*
 !var/tests/.gitkeep
 
-# Npm
+# Vendors
+/vendor/
 /node_modules/
-
-# Bower
 /bower_components/
 
 # Assets
 /web/assets/
+/web/bundles/
 
 # Vagrant
 /.vagrant/
-
-# Ansible
 ansible.cfg
 /ansible/roles/*.*/
 
