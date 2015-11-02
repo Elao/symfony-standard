@@ -31,11 +31,18 @@ elao_env:
 
 elao_apt_update: true
 
-elao_apt_repositories: []
+elao_apt_components: ['main']
+
+elao_apt_sources_list_template: sources_list/debian.list.j2
+
+elao_apt_repositories_exclusive: true
+elao_apt_repositories:
+  - debian_security
+  - debian_updates
 
 elao_apt_preferences:
   - ruby@bearstech
-  - git@backports
+  - git@debian_backports
   - ~@dotdeb:100
   #- php@dotdeb # Php 5.4
   #- php@dotdeb_php55
@@ -49,7 +56,8 @@ elao_apt_preferences:
   #- postgresql@postgresql
   #- redis@dotdeb
   #- elasticsearch@elasticsearch_1_7
-  #- mongodb@mongodb
+  #- mongodb@mongodb_3_0
+  #- mongodb@mongodb_3_1
 
 elao_apt_packages: []
 
