@@ -21,12 +21,23 @@ _env_files:
       - "user:{{ _user }}:rwx"
       - "default:user:{{ elao_php_user }}:rwx"
       - "default:user:{{ _user }}:rwx"
+  - path:  /var/sessions/symfony
+    state: directory
+    acls:
+      - "user:{{ elao_php_user }}:rwx"
+      - "user:{{ _user }}:rwx"
+      - "default:user:{{ elao_php_user }}:rwx"
+      - "default:user:{{ _user }}:rwx"
   - path:  "{{ _app_dir }}/symfony/var/logs"
     src:   /var/log/symfony
     state: link
     force: true
   - path:  "{{ _app_dir }}/symfony/var/cache"
     src:   /var/cache/symfony
+    state: link
+    force: true
+  - path:  "{{ _app_dir }}/symfony/var/sessions"
+    src:   /var/sessions/symfony
     state: link
     force: true
 
