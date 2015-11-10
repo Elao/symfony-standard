@@ -64,7 +64,6 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
         "process-timeout": 600
     },
     "extra": {

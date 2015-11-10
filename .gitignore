@@ -5,9 +5,6 @@
 /var/cache
 /var/logs
 /vendor/
-/bin/*
-!bin/console
-!bin/symfony_requirements
 /composer.phar
 
 # Tests
