@@ -39,3 +39,5 @@ Enable/Disable php xdebug
 * *Log.io*: http://{{ app_host }}.dev:28778
 * *OPcache Dashboard*: http://{{ app_host }}.dev:2013
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
+* *phpPgAdmin*: http://{{ app_host }}.dev:1980
+* *phpRedisAdmin*: http://{{ app_host }}.dev:1981
