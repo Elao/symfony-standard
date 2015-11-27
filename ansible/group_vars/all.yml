@@ -86,8 +86,8 @@ elao_ohmyzsh_users:
     config:
       - |
         elao_php_xdebug () {
-            if [[ $1 == on ]]; then sudo mv /etc/php5/fpm/conf.d/20-xdebug.ini.off /etc/php5/fpm/conf.d/20-xdebug.ini
-            else sudo mv /etc/php5/fpm/conf.d/20-xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini.off; fi
+            if [[ $1 == on ]]; then sudo rename -v 's/20-xdebug.ini.off/20-xdebug.ini/' /etc/php5/*/conf.d/20-xdebug.ini.off
+            else sudo rename -v 's/20-xdebug.ini/20-xdebug.ini.off/' /etc/php5/*/conf.d/20-xdebug.ini; fi
             sudo service php5-fpm restart
         }
       - ZSH_THEME: elao-dev
