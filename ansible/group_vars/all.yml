@@ -51,6 +51,7 @@ elao_apt_preferences:
   #- nodejs@nodesource_0_10
   - nodejs@nodesource_0_12
   #- nodejs@nodesource_4
+  #- nodejs@nodesource_5
   # App
   - mysql@dotdeb
   #- postgresql@postgresql
