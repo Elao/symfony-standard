@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
+        "symfony/phpunit-bridge": "~2.7",
 
         "nelmio/alice": "2.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
