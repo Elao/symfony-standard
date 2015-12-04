@@ -66,6 +66,7 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
         "symfony-web-dir": "web",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
