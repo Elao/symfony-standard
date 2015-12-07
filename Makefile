@@ -43,7 +43,7 @@ provision@test: provision-ansible@test
 provision-services@test: provision-services-ansible@test
 
 provision-vagrant:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-galaxy install -r ansible/roles/requirements.yml -p ansible/roles -f
 	vagrant up --no-provision
 	vagrant provision
 
