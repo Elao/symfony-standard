@@ -15,9 +15,6 @@
 # Npm
 /node_modules/
 
-# Bower
-/bower_components/
-
 # Assets
 /web/assets/
 
