@@ -94,7 +94,7 @@ elao_ohmyzsh_users:
       - ZSH_THEME: elao-dev
       - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
       - export PATH: ./bin:$PATH
-      - cd {{ _app_dir }}/symfony
+      - cd {{ _app_dir }}
 
 #########
 # Files #
@@ -134,10 +134,10 @@ elao_logio_config_harvester:
     - nginx:
       - "{{ elao_nginx_log_dir }}/app.access.log"
       - "{{ elao_nginx_log_dir }}/app.error.log"
-    - symfony:
-      - /var/log/symfony/dev.log
-      - /var/log/symfony/test.log
-      - /var/log/symfony/prod.log
+    - app:
+      - /var/log/app/dev.log
+      - /var/log/app/test.log
+      - /var/log/app/prod.log
 
 #########
 # MySql #
@@ -260,7 +260,7 @@ _all_nginx_configs:
     template: configs/server_{{ _env }}.conf.j2
     config:
       - server_name: "{{ _app_host }}.dev"
-      - root:        "{{ _app_dir }}/symfony/web"
+      - root:        "{{ _app_dir }}/web"
       - access_log:  "{{ elao_nginx_log_dir }}/app.access.log"
       - error_log:   "{{ elao_nginx_log_dir }}/app.error.log"
       - include:     conf.d/gzip
@@ -288,7 +288,7 @@ elao_npm_packages:
 #    jobs:
 #      # Do foo bar
 #      - name:   foo-bar
-#        job:    "php {{ _app_dir }}/symfony/bin/console app:foo:bar --env={{ _env }}"
+#        job:    "php {{ _app_dir }}/bin/console app:foo:bar --env={{ _env }}"
 #        minute: 0
 #        hour:   7
 #        # Dev
@@ -309,7 +309,7 @@ elao_npm_packages:
 #    config:
 #      - foo-bar:
 #        - command:         php bin/console app:foo:bar --env={{ _env }} --no-interaction -vv
-#        - directory:       "{{ _app_dir }}/symfony"
+#        - directory:       "{{ _app_dir }}"
 #        - user:            "{{ elao_php_user }}"
 #        - autorestart:     true
 #        - stdout_logfile:  "{{ elao_supervisor_log_dir }}/foo-bar.log"

@@ -7,21 +7,21 @@ _env: dev
 #########
 
 _env_files:
-  - path:  /var/log/symfony
+  - path:  /var/log/app
     state: directory
     acls:
       - "user:{{ elao_php_user }}:rwx"
       - "user:{{ _user }}:rwx"
       - "default:user:{{ elao_php_user }}:rwx"
       - "default:user:{{ _user }}:rwx"
-  - path:  /var/cache/symfony
+  - path:  /var/cache/app
     state: directory
     acls:
       - "user:{{ elao_php_user }}:rwx"
       - "user:{{ _user }}:rwx"
       - "default:user:{{ elao_php_user }}:rwx"
       - "default:user:{{ _user }}:rwx"
-  - path:  /var/sessions/symfony
+  - path:  /var/lib/app/sessions
     state: directory
     acls:
       - "user:{{ elao_php_user }}:rwx"
