@@ -49,10 +49,10 @@ provision-vagrant:
 
 provision-ansible@test:
 	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/setup.yml
 
 provision-services-ansible@test:
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/playbook.yml
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/setup.yml
 
 ###########
 # Install #
