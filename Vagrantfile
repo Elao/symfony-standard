@@ -15,7 +15,7 @@ options = {
     :folders          => {
         '.' => '/srv/app/symfony'
     },
-    :ansible_playbook => 'ansible/playbook.yml',
+    :ansible_playbook => 'ansible/setup.yml',
     :ansible_groups   => ['env_dev', 'app'],
     :ansible_vars     => {
         '_user' => 'vagrant'
