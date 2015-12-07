@@ -60,8 +60,6 @@
     "config": {
         "process-timeout": 600
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
