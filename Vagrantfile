@@ -13,7 +13,7 @@ options = {
     :box              => 'elao/symfony-standard-debian',
     :box_version      => '~> 1.0.0',
     :folders          => {
-        '.' => '/srv/app/symfony'
+        '.' => '/srv/app'
     },
     :ansible_playbook => 'ansible/setup.yml',
     :ansible_groups   => ['env_dev', 'app'],
