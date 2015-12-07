@@ -16,31 +16,27 @@
         }
     },
     "require": {
-        "php": ">=5.3.9",
-        "symfony/symfony": "2.7.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~4.0",
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.0.*",
+        "doctrine/orm": "^2.5.0",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
+        "incenteev/composer-parameter-handler": "^2.0",
 
-        "sonata-project/intl-bundle": "2.2.*"
+        "sonata-project/intl-bundle": "^2.2"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-
-        "nelmio/alice": "2.1.*",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*",
-
-        "phpunit/phpunit": "~5.0",
-
-        "behat/behat": "3.0.*",
-        "behat/mink-selenium2-driver": "1.2.*",
-        "knplabs/friendly-contexts": "0.5.*",
-        "behat/symfony2-extension": "2.0.*",
-        "behat/mink-browserkit-driver": "1.2.*"
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^2.7",
+        "phpunit/phpunit": "^5.0",
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "behat/behat": "^3.0",
+        "behat/mink-selenium2-driver": "^1.2",
+        "behat/mink-browserkit-driver": "^1.2"
     },
     "scripts": {
         "post-create-project-cmd": [
@@ -66,6 +62,8 @@
     "config": {
         "process-timeout": 600
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
