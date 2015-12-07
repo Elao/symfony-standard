@@ -43,12 +43,12 @@ provision@test: provision-ansible@test
 provision-services@test: provision-services-ansible@test
 
 provision-vagrant:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-galaxy install -r ansible/roles/requirements.yml -p ansible/roles -f
 	vagrant up --no-provision
 	vagrant provision
 
 provision-ansible@test:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-galaxy install -r ansible/roles/requirements.yml -p ansible/roles -f
 	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/setup.yml
 
 provision-services-ansible@test:
