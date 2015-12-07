@@ -11,7 +11,7 @@ options = {
     :aliases          => [],
     :memory           => 1024,
     :box              => 'elao/symfony-standard-debian',
-    :box_version      => '~> 1.0.0',
+    :box_version      => '~> 2.0.0',
     :folders          => {
         '.' => '/srv/app'
     },
