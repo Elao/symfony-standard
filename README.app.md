@@ -40,9 +40,6 @@ Run test
 
 Tests files should be in the `tests/` directory and under the namespace `Tests\\`
 
-* *Supervisor*: http://{{ app_host }}.dev:9001
-* *Mailcatcher*: http://{{ app_host }}.dev:1080
-* *Log.io*: http://{{ app_host }}.dev:28778
 * *OPcache Dashboard*: http://{{ app_host }}.dev:2013
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
 * *phpPgAdmin*: http://{{ app_host }}.dev:1980

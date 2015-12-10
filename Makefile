@@ -99,10 +99,8 @@ build: build-assets
 build@prod: build-assets@prod
 
 build-assets:
-	gulp --dev
 
 build-assets@prod:
-	gulp
 
 ########
 # Test #
