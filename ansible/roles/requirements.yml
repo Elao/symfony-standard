@@ -16,7 +16,6 @@
   version: 1.0
 - src:     elao.ohmyzsh
   version: 1.0
-- src:     elao.curl
 - src:     elao.mailhog
   version: 1.0
   version: 1.0
