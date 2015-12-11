@@ -90,6 +90,12 @@ elao_ohmyzsh_users:
       - export PATH: ./bin:$PATH
       - cd {{ _app_dir }}
 
+###########
+# MailHog #
+###########
+
+elao_mailhog_config_template: config/{{ _env }}.j2
+
 #########
 # Files #
 #########

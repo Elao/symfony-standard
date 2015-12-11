@@ -40,6 +40,7 @@ Run test
 
 Tests files should be in the `tests/` directory and under the namespace `Tests\\`
 
+* *MailHog*: http://{{ app_host }}.dev:8025
 * *OPcache Dashboard*: http://{{ app_host }}.dev:2013
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
 * *phpPgAdmin*: http://{{ app_host }}.dev:1980
