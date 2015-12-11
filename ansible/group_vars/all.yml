@@ -63,6 +63,12 @@ elao_apt_preferences:
 elao_apt_packages: []
 
 #######
+# Git #
+#######
+
+elao_git_config_template: config/{{ _env }}.j2
+
+#######
 # Ssh #
 #######
 
@@ -70,12 +76,6 @@ elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
 
 elao_ssh_config_template: config/{{ _env }}.j2
 elao_ssh_config: []
-
-#######
-# Git #
-#######
-
-elao_git_config_template: config/{{ _env }}.j2
 
 #############
 # Oh my zsh #
