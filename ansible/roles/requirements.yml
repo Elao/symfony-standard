@@ -2,25 +2,27 @@
   version: 1.0
 - src:     elao.timezone
   version: 1.0
+- src:     elao.locales
+  version: 1.0
 - src:     elao.env
   version: 1.0
 - src:     elao.apt
   version: 1.0
-- src:     elao.ssh
-  version: 1.0
 - src:     elao.git
+  version: 1.0
+- src:     elao.ssh
   version: 1.0
 - src:     elao.zsh
   version: 1.0
 - src:     elao.ohmyzsh
   version: 1.0
-- src:     elao.curl
+- src:     elao.mailhog
+  version: 1.0
+- src:     elao.make
   version: 1.0
 - src:     elao.acl
   version: 1.0
 - src:     elao.files
-  version: 1.0
-- src:     elao.make
   version: 1.0
 - src:     elao.nodejs
   version: 1.0

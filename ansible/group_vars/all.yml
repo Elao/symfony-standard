@@ -18,6 +18,14 @@ elao_motd:          California - 1993
 
 elao_timezone: Etc/UTC
 
+###########
+# Locales #
+###########
+
+elao_locales: []
+
+elao_locales_default: C.UTF-8
+
 #######
 # Env #
 #######
@@ -55,6 +63,12 @@ elao_apt_preferences:
 elao_apt_packages: []
 
 #######
+# Git #
+#######
+
+elao_git_config_template: config/{{ _env }}.j2
+
+#######
 # Ssh #
 #######
 
@@ -62,12 +76,6 @@ elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
 
 elao_ssh_config_template: config/{{ _env }}.j2
 elao_ssh_config: []
-
-#######
-# Git #
-#######
-
-elao_git_config_template: config/{{ _env }}.j2
 
 #############
 # Oh my zsh #
@@ -81,6 +89,12 @@ elao_ohmyzsh_users:
       - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
       - export PATH: ./bin:$PATH
       - cd {{ _app_dir }}
+
+###########
+# MailHog #
+###########
+
+elao_mailhog_config_template: config/{{ _env }}.j2
 
 #########
 # Files #
@@ -153,6 +167,7 @@ elao_php_fpm_pools:
 elao_php_extensions:
   - opcache
   # Symfony
+  - json
   - intl
   - curl
   # App

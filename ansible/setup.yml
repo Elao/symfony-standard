@@ -5,27 +5,29 @@
   roles:
     - role: elao.motd
     - role: elao.timezone
+    - role: elao.locales
     - role: elao.env
     - role: elao.apt
-    - role: elao.ssh
     - role: elao.git
+    - role: elao.ssh
     - role: elao.zsh
       when: _env == 'dev'
     - role: elao.ohmyzsh
       when: _env == 'dev'
-    - role: elao.curl
+    - role: elao.mailhog
+      when: _env == 'dev'
+    - role: elao.make
     - role: elao.acl
     - role: elao.files
       elao_files: "{{ _all_files + _env_files|default([]) }}"
-    - role: elao.make
     - role: elao.nodejs
     - role: elao.npm
     - role: elao.php
     - role: elao.composer
-    - role: elao.opcache-dashboard
-      when: _env == 'dev'
     - role: elao.nginx
       elao_nginx_configs: "{{ _all_nginx_configs + _env_nginx_configs|default([]) }}"
+    - role: elao.opcache-dashboard
+      when: _env == 'dev'
     - role: elao.cron
       when: _env == 'dev'
     # MySql
