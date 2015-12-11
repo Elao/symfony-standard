@@ -18,6 +18,14 @@ elao_motd:          California - 1993
 
 elao_timezone: Etc/UTC
 
+###########
+# Locales #
+###########
+
+elao_locales: []
+
+elao_locales_default: C.UTF-8
+
 #######
 # Env #
 #######

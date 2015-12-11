@@ -5,6 +5,7 @@
   roles:
     - role: elao.motd
     - role: elao.timezone
+    - role: elao.locales
     - role: elao.env
     - role: elao.apt
     - role: elao.ssh

@@ -2,6 +2,8 @@
   version: 1.0
 - src:     elao.timezone
   version: 1.0
+- src:     elao.locales
+  version: 1.0
 - src:     elao.env
   version: 1.0
 - src:     elao.apt
