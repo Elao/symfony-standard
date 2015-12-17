@@ -1,5 +1,6 @@
 # Elao Symfony Standard Edition
 
+![Symfony 2.8](https://img.shields.io/badge/Symfony-2.8-blue.svg)
 [![Join the chat at https://gitter.im/Elao/symfony-standard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Elao/symfony-standard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Requirements
