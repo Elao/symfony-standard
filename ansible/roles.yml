@@ -1,157 +1,96 @@
-- src:     https://github.com/ElaoInfra/ansible-role-motd
-  name:    elao.motd
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-timezone
-  name:    elao.timezone
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-env
-  name:    elao.env
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-apt
-  name:    elao.apt
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-ssh
-  name:    elao.ssh
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-git
-  name:    elao.git
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-zsh
-  name:    elao.zsh
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-ohmyzsh
-  name:    elao.ohmyzsh
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-curl
-  name:    elao.curl
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-acl
-  name:    elao.acl
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-files
-  name:    elao.files
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-make
-  name:    elao.make
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-nodejs
-  name:    elao.nodejs
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-npm
-  name:    elao.npm
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-ruby
-  name:    elao.ruby
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-gem
-  name:    elao.gem
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-phantomjs
-  name:    elao.phantomjs
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-mailcatcher
-  name:    elao.mailcatcher
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-logio
-  name:    elao.logio
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-php
-  name:    elao.php
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-nginx
-  name:    elao.nginx
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-opcache-dashboard
-  name:    elao.opcache-dashboard
-  version: origin/1.0
+- src:     elao.motd
+  version: 1.0
+- src:     elao.timezone
+  version: 1.0
+- src:     elao.env
+  version: 1.0
+- src:     elao.apt
+  version: 1.0
+- src:     elao.ssh
+  version: 1.0
+- src:     elao.git
+  version: 1.0
+- src:     elao.zsh
+  version: 1.0
+- src:     elao.ohmyzsh
+  version: 1.0
+- src:     elao.curl
+  version: 1.0
+- src:     elao.acl
+  version: 1.0
+- src:     elao.files
+  version: 1.0
+- src:     elao.make
+  version: 1.0
+- src:     elao.nodejs
+  version: 1.0
+- src:     elao.npm
+  version: 1.0
+- src:     elao.ruby
+  version: 1.0
+- src:     elao.gem
+  version: 1.0
+- src:     elao.phantomjs
+  version: 1.0
+- src:     elao.mailcatcher
+  version: 1.0
+- src:     elao.logio
+  version: 1.0
+- src:     elao.php
+  version: 1.0
+- src:     elao.nginx
+  version: 1.0
+- src:     elao.opcache-dashboard
+  version: 1.0
 
 # Cron
 
-- src:     https://github.com/ElaoInfra/ansible-role-cron
-  name:    elao.cron
-  version: origin/1.0
+- src:     elao.cron
+  version: 1.0
 
 # Python
 
-- src:     https://github.com/ElaoInfra/ansible-role-python
-  name:    elao.python
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-pip
-  name:    elao.pip
-  version: origin/1.0
+- src:     elao.python
+  version: 1.0
+- src:     elao.pip
+  version: 1.0
 
 # Supervisor
 
-- src:     https://github.com/ElaoInfra/ansible-role-supervisor
-  name:    elao.supervisor
-  version: origin/1.0
+- src:     elao.supervisor
+  version: 1.0
 
 # MySQL
 
-- src:     https://github.com/ElaoInfra/ansible-role-mysql
-  name:    elao.mysql
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-phpmyadmin
-  name:    elao.phpmyadmin
-  version: origin/1.0
+- src:     elao.mysql
+  version: 1.0
+- src:     elao.phpmyadmin
+  version: 1.0
 
 # PostgreSQL
 
-- src:     https://github.com/ElaoInfra/ansible-role-postgresql
-  name:    elao.postgresql
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-phppgadmin
-  name:    elao.phppgadmin
-  version: origin/1.0
+- src:     elao.postgresql
+  version: 1.0
+- src:     elao.phppgadmin
+  version: 1.0
 
 # Redis
 
-- src:     https://github.com/ElaoInfra/ansible-role-redis
-  name:    elao.redis
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-phpredisadmin
-  name:    elao.phpredisadmin
-  version: origin/1.0
+- src:     elao.redis
+  version: 1.0
+- src:     elao.phpredisadmin
+  version: 1.0
 
 # Elasticsearch
 
-- src:     https://github.com/ElaoInfra/ansible-role-java
-  name:    elao.java
-  version: origin/1.0
-
-- src:     https://github.com/ElaoInfra/ansible-role-elasticsearch
-  name:    elao.elasticsearch
-  version: origin/1.0
+- src:     elao.java
+  version: 1.0
+- src:     elao.elasticsearch
+  version: 1.0
 
 # MongoDB
 
-- src:     https://github.com/ElaoInfra/ansible-role-mongodb
-  name:    elao.mongodb
-  version: origin/1.0
+- src:     elao.mongodb
+  version: 1.0
 
 # App
