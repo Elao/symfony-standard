@@ -8,7 +8,7 @@
             "": "src/",
             "SymfonyStandard\\": "app/SymfonyStandard/"
         },
-        "files": [ "app/AppKernel.php" ]
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
         "php": ">=5.3.9",
@@ -71,6 +71,9 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "2.8-dev"
         }
     }
 }
