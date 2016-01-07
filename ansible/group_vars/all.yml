@@ -166,8 +166,8 @@ elao_php_fpm_pools:
 
 elao_php_extensions:
   - opcache
-  # Symfony
   - json
+  # Symfony
   - intl
   - curl
   # App
