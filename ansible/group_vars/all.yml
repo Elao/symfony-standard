@@ -90,6 +90,11 @@ elao_ohmyzsh_users:
             else sudo rename -v 's/20-xdebug.ini/20-xdebug.ini.off/' /etc/php5/*/conf.d/20-xdebug.ini; fi
             sudo service php5-fpm restart
         }
+        elao_nginx_timeout () {
+            if [[ $1 == off ]]; then sudo sed -ri 's/fastcgi_read_timeout (.*);$/fastcgi_read_timeout 999s;#origin\1/' /etc/nginx/conf.d/php_fpm_params
+            else sudo sed -ri 's/^fastcgi_read_timeout 999s;#origin(.*)/fastcgi_read_timeout \1;/' /etc/nginx/conf.d/php_fpm_params; fi
+            sudo /etc/init.d/nginx restart
+        }
       - ZSH_THEME: elao-dev
       - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
       - export PATH: ./bin:$PATH
