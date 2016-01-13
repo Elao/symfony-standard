@@ -85,6 +85,12 @@ elao_ohmyzsh_users:
   - user:     "{{ _user }}"
     template: users/{{ _env }}.j2
     config:
+      - |
+        elao_nginx_timeout () {
+            if [[ $1 == off ]]; then sudo sed -ri 's/fastcgi_read_timeout (.*);$/fastcgi_read_timeout 999s;#origin\1/' /etc/nginx/conf.d/php_fpm_params
+            else sudo sed -ri 's/^fastcgi_read_timeout 999s;#origin(.*)/fastcgi_read_timeout \1;/' /etc/nginx/conf.d/php_fpm_params; fi
+            sudo /etc/init.d/nginx restart
+        }
       - ZSH_THEME: elao-dev
       - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
       - export PATH: ./bin:$PATH
