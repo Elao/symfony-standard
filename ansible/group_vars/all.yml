@@ -156,7 +156,7 @@ elao_mysql_configs:
 # PhpMyAdmin #
 ##############
 
-#elao_phpmyadmin_version: dev-MAINT_4_4_15 # Php 5.4
+#elao_phpmyadmin_version: <4.5 # Php 5.4
 
 elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 
