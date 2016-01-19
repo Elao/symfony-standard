@@ -116,7 +116,7 @@ test-phpunit:
 
 test-phpunit@test:
 	rm -rf var/tests/junit.xml var/tests/clover.xml var/tests/coverage
-	vendor/bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
+	stty cols 80; vendor/bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
 
 test-behat:
 	vendor/bin/behat
