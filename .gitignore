@@ -6,10 +6,6 @@
 /var/
 /phpunit.xml
 
-# Tests
-/var/tests/*
-!var/tests/.gitkeep
-
 # Npm
 /node_modules/
 
