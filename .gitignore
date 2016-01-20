@@ -4,6 +4,7 @@
 /var/SymfonyRequirements.php
 /var/cache
 /var/logs
+/phpunit.xml
 /vendor/
 /bin/*
 !bin/console
