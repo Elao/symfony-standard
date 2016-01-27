@@ -33,9 +33,9 @@ Build assets
 Enable/Disable php xdebug
 
     ⇒ elao_php_xdebug [on|off]
-    
+
 Enable/Disable nginx long timeout (999s instead of default 60s)
-    
+
     ⇒ elao_nginx_timeout [on|off]
 
 Run test
