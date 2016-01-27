@@ -1,10 +1,9 @@
 /app/config/parameters.yml
-/bin/
-/composer.phar
+/phpunit.xml
+/var/*
+!var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/var/
-/phpunit.xml
 
 # Tests
 /var/tests/*

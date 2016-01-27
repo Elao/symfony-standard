@@ -8,8 +8,9 @@
             "": "src/",
             "SymfonyStandard\\": "app/SymfonyStandard/"
         },
-        "files": [
-            "app/AppKernel.php"
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
         ]
     },
     "autoload-dev": {
