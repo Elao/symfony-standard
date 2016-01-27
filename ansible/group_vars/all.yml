@@ -86,6 +86,11 @@ elao_ohmyzsh_users:
     template: users/{{ _env }}.j2
     config:
       - |
+        elao_php_xdebug () {
+            if [[ $1 == on ]]; then sudo rename -v 's/20-xdebug.ini.off/20-xdebug.ini/' /etc/php5/*/conf.d/20-xdebug.ini.off
+            else sudo rename -v 's/20-xdebug.ini/20-xdebug.ini.off/' /etc/php5/*/conf.d/20-xdebug.ini; fi
+            sudo service php5-fpm restart
+        }
         elao_nginx_timeout () {
             if [[ $1 == off ]]; then sudo sed -ri 's/fastcgi_read_timeout (.*);$/fastcgi_read_timeout 999s;#origin\1/' /etc/nginx/conf.d/php_fpm_params
             else sudo sed -ri 's/^fastcgi_read_timeout 999s;#origin(.*)/fastcgi_read_timeout \1;/' /etc/nginx/conf.d/php_fpm_params; fi
@@ -173,6 +178,8 @@ elao_php_fpm_pools:
 elao_php_extensions:
   - opcache
   - json
+  # Dev
+  - xdebug
   # Symfony
   - intl
   - curl
@@ -182,6 +189,8 @@ elao_php_extensions:
 
 elao_php_configs_exclusive: true
 elao_php_configs:
+  - file: 50-xdebug.ini
+    template: configs/xdebug_{{ _env }}.ini.j2
   - file: 50-opcache.ini
     template: configs/opcache_{{ _env }}.ini.j2
   - file: 60-config.ini
