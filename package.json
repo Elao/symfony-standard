@@ -20,6 +20,6 @@
     ]
   },
   "devDependencies": {
-    "napa": "^2.0.2"
+    "napa": "^2.2.0"
   }
 }
