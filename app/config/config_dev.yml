@@ -19,7 +19,6 @@ monolog:
             level:  debug
         console:
             type:   console
-            bubble: false
             verbosity_levels:
                 VERBOSITY_VERBOSE: INFO
                 VERBOSITY_VERY_VERBOSE: DEBUG
