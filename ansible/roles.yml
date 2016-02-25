@@ -4,6 +4,8 @@
   version: 1.0
 - src:     elao.env
   version: 1.0
+- src:     elao.dnsmasq
+  version: 1.0
 - src:     elao.apt
   version: 1.0
 - src:     elao.ssh
