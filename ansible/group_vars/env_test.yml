@@ -1,3 +1,13 @@
 ---
 
 _env: test
+
+###########
+# Dnsmasq #
+###########
+
+elao_dnsmasq_configs_exclusive: true
+
+elao_dnsmasq_configs:
+  - file: dev.conf
+    template: configs/dev.conf.j2

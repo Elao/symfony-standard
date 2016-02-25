@@ -6,6 +6,8 @@
     - role: elao.motd
     - role: elao.timezone
     - role: elao.env
+    - role: elao.dnsmasq
+      when: _env == 'test'
     - role: elao.apt
     - role: elao.ssh
     - role: elao.git
