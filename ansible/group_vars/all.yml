@@ -200,6 +200,7 @@ elao_php_configs:
       # App
 
 elao_php_applications:
+  - security-checker
   # Dev
   - php-cs-fixer
   - phpcs
