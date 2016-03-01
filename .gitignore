@@ -5,10 +5,6 @@
 /vendor/
 /web/bundles/
 
-# Tests
-/var/tests/*
-!var/tests/.gitkeep
-
 # Npm
 /node_modules/
 
