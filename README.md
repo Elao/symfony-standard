@@ -6,7 +6,7 @@
 ## Requirements
 
 * [Vagrant 1.7.4+](http://www.vagrantup.com/downloads.html)
-* [VirtualBox 5.0.4+](https://www.virtualbox.org/wiki/Downloads)
+* [VirtualBox 5.0.14+](https://www.virtualbox.org/wiki/Downloads)
 * [Ansible 1.9.3+](http://docs.ansible.com/intro_installation.html)
 * [Vagrant Landrush 0.18.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.6.1+](https://github.com/smdahlen/vagrant-hostmanager)
 
