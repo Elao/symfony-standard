@@ -57,7 +57,7 @@ elao_apt_preferences:
   #- redis@dotdeb
   #- elasticsearch@elasticsearch_1_7
   #- mongodb@mongodb_3_0
-  #- mongodb@mongodb_3_1
+  #- mongodb@mongodb_3_2
 
 elao_apt_packages: []
 
