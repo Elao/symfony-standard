@@ -1,7 +1,7 @@
 /app/config/parameters.yml
-/build/
 /phpunit.xml
 /var/*
+!var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
 
