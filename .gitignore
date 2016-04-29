@@ -14,11 +14,6 @@
 # Vagrant
 /.vagrant/
 
-# Ansible
-ansible.cfg
-/ansible/roles/*.*/
-!ansible/roles/requirements.yml
-
 # PHP CS Fixer
 .php_cs.cache
 
