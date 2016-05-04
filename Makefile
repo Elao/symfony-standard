@@ -126,11 +126,13 @@ test-behat:
 test-behat@test:
 	bin/behat --format=progress --no-interaction
 	
-####################
-# Coding Standards #
-####################
+########
+# Lint #
+########
+
+## Linting
 lint:
-	phpcs src --standard=PSR2
+    phpcs src --standard=PSR2
 
 ##########
 # Deploy #
