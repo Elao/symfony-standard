@@ -124,6 +124,14 @@ test-behat:
 test-behat@test:
 	vendor/bin/behat --format=progress --no-interaction
 
+########
+# Lint #
+########
+
+## Linting
+lint:
+    phpcs src --standard=PSR2
+
 ##########
 # Deploy #
 ##########
