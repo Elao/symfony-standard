@@ -18,6 +18,14 @@ elao_motd:          California - 1993
 
 elao_timezone: Etc/UTC
 
+###########
+# Locales #
+###########
+
+elao_locales: []
+
+elao_locales_default: C.UTF-8
+
 #######
 # Env #
 #######
@@ -41,25 +49,26 @@ elao_apt_repositories:
   - debian_updates
 
 elao_apt_preferences:
-  - ruby@bearstech
-  - git@debian_backports
   - ~@dotdeb:100
-  #- php@dotdeb # Php 5.4
-  #- php@dotdeb_php55
-  - php@dotdeb_php56
+  - php@dotdeb
   - nginx@nginx
-  #- nodejs@nodesource_0_10
-  - nodejs@nodesource_0_12
-  #- nodejs@nodesource_4
+  - nodejs@nodesource_5
   # App
   - mysql@dotdeb
   #- postgresql@postgresql
   #- redis@dotdeb
-  #- elasticsearch@elasticsearch_1_7
+  #- elasticsearch@elasticsearch_2
   #- mongodb@mongodb_3_0
+  #- mongodb@mongodb_3_1
   #- mongodb@mongodb_3_2
 
 elao_apt_packages: []
+
+#######
+# Git #
+#######
+
+elao_git_config_template: config/{{ _env }}.j2
 
 #######
 # Ssh #
@@ -69,12 +78,6 @@ elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
 
 elao_ssh_config_template: config/{{ _env }}.j2
 elao_ssh_config: []
-
-#######
-# Git #
-#######
-
-elao_git_config_template: config/{{ _env }}.j2
 
 #############
 # Oh my zsh #
@@ -98,50 +101,19 @@ elao_ohmyzsh_users:
       - ZSH_THEME: elao-dev
       - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
       - export PATH: ./bin:$PATH
-      - cd {{ _app_dir }}/symfony
+      - cd {{ _app_dir }}
+
+###########
+# MailHog #
+###########
+
+elao_mailhog_config_template: config/{{ _env }}.j2
 
 #########
 # Files #
 #########
 
 _all_files: []
-
-#######
-# Gem #
-#######
-
-elao_gem_packages:
-  - name:    capifony
-    version: ~> 2.8
-
-#############
-# PhantomJS #
-#############
-
-elao_phantomjs_config_template: config/{{ _env }}.j2
-
-###############
-# Mailcatcher #
-###############
-
-elao_mailcatcher_config_template: config/{{ _env }}.j2
-
-##########
-# Log.io #
-##########
-
-elao_logio_config_harvester:
-  - nodeName: App
-  - logStreams:
-    - php:
-      - "{{ elao_php_log_dir }}/error.log"
-    - nginx:
-      - "{{ elao_nginx_log_dir }}/app.access.log"
-      - "{{ elao_nginx_log_dir }}/app.error.log"
-    - symfony:
-      - /var/log/symfony/dev.log
-      - /var/log/symfony/test.log
-      - /var/log/symfony/prod.log
 
 #########
 # MySql #
@@ -198,7 +170,7 @@ elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
 # Php #
 #######
 
-elao_php_version: 5
+elao_php_version: 7.0
 
 elao_php_sapis: ['cli', 'fpm']
 
@@ -208,17 +180,18 @@ elao_php_fpm_pools:
     template: fpm_pools/www_{{ _env }}.conf.j2
 
 elao_php_extensions:
+  - opcache
+  - json
   # Dev
   - xdebug
   # Symfony
   - intl
   - curl
   # App
-  - mysqlnd
+  - mysql
   #- pgsql
 
 elao_php_configs_exclusive: true
-#elao_php_configs_global:    true # Php 5.4
 elao_php_configs:
   - file: 50-xdebug.ini
     template: configs/xdebug_{{ _env }}.ini.j2
@@ -231,7 +204,6 @@ elao_php_configs:
       # App
 
 elao_php_applications:
-  - composer
   # Dev
   - php-cs-fixer
   - phpcs
@@ -264,7 +236,7 @@ _all_nginx_configs:
     template: configs/server_{{ _env }}.conf.j2
     config:
       - server_name: "{{ _app_host }}.dev"
-      - root:        "{{ _app_dir }}/symfony/web"
+      - root:        "{{ _app_dir }}/web"
       - access_log:  "{{ elao_nginx_log_dir }}/app.access.log"
       - error_log:   "{{ elao_nginx_log_dir }}/app.error.log"
       - include:     conf.d/gzip
@@ -278,11 +250,9 @@ _all_nginx_configs:
 # Npm #
 #######
 
-elao_npm_packages:
-  #- name:    bower
-  #  version: 1
-  - name:    gulp
-    version: 3
+#elao_npm_packages:
+#  - name:    foo
+#    version: 3
 
 ########
 # Cron #
@@ -294,32 +264,8 @@ elao_npm_packages:
 #    jobs:
 #      # Do foo bar
 #      - name:   foo-bar
-#        job:    "php {{ _app_dir }}/symfony/bin/console app:foo:bar --env={{ _env }}"
+#        job:    "php {{ _app_dir }}/bin/console app:foo:bar --env={{ _env }}"
 #        minute: 0
 #        hour:   7
 #        # Dev
 #        state:  absent
-
-##############
-# Supervisor #
-##############
-
-#elao_supervisor_config_template: config/{{ _env }}.conf.j2
-
-#elao_supervisor_configs_exclusive: true
-#elao_supervisor_configs:
-#  - file:     inet-http-server.conf
-#    template: configs/inet_http_server_{{ _env }}.conf.j2
-#  - file:     app.conf
-#    template: configs/program_{{ _env }}.conf.j2
-#    config:
-#      - foo-bar:
-#        - command:         php bin/console app:foo:bar --env={{ _env }} --no-interaction -vv
-#        - directory:       "{{ _app_dir }}/symfony"
-#        - user:            "{{ elao_php_user }}"
-#        - autorestart:     true
-#        - stdout_logfile:  "{{ elao_supervisor_log_dir }}/foo-bar.log"
-#        - redirect_stderr: true
-#        - environment:     "SYMFONY_ENV=\"{{ _env }}\""
-#        # Dev
-#        - autostart:       false

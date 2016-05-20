@@ -38,9 +38,13 @@ Enable/Disable nginx long timeout (999s instead of default 60s)
 
     ⇒ elao_nginx_timeout [on|off]
 
-* *Supervisor*: http://{{ app_host }}.dev:9001
-* *Mailcatcher*: http://{{ app_host }}.dev:1080
-* *Log.io*: http://{{ app_host }}.dev:28778
+Run test
+
+    ⇒ make test
+
+Tests files should be in the `tests/` directory and under the namespace `Tests\\`
+
+* *MailHog*: http://{{ app_host }}.dev:8025
 * *OPcache Dashboard*: http://{{ app_host }}.dev:2013
 * *phpMyAdmin*: http://{{ app_host }}.dev:1979
 * *phpPgAdmin*: http://{{ app_host }}.dev:1980

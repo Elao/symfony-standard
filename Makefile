@@ -27,7 +27,7 @@ help:
 
 ## Setup environment & Install application
 setup: provision
-	vagrant ssh -c 'cd /srv/app/symfony && make install'
+	vagrant ssh -c 'cd /srv/app && make install'
 
 setup@test: provision@test install@test
 
@@ -43,16 +43,16 @@ provision@test: provision-ansible@test
 provision-services@test: provision-services-ansible@test
 
 provision-vagrant:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+	ansible-galaxy install -r ansible/roles/requirements.yml -p ansible/roles -f
 	vagrant up --no-provision
 	vagrant provision
 
 provision-ansible@test:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+	ansible-galaxy install -r ansible/roles/requirements.yml -p ansible/roles -f
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/setup.yml
 
 provision-services-ansible@test:
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/playbook.yml
+	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/setup.yml
 
 ###########
 # Install #
@@ -99,10 +99,8 @@ build: build-assets
 build@prod: build-assets@prod
 
 build-assets:
-	gulp --dev
 
 build-assets@prod:
-	gulp
 
 ########
 # Test #
@@ -114,18 +112,18 @@ test: test-phpunit test-behat
 test@test: test-phpunit@test test-behat@test
 
 test-phpunit:
-	bin/phpunit
+	vendor/bin/phpunit
 
 test-phpunit@test:
 	rm -rf var/tests/junit.xml var/tests/clover.xml var/tests/coverage
-	stty cols 80; bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
+	stty cols 80; vendor/bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
 
 test-behat:
-	bin/behat
+	vendor/bin/behat
 
 test-behat@test:
-	bin/behat --format=progress --no-interaction
-	
+	vendor/bin/behat --format=progress --no-interaction
+
 ########
 # Lint #
 ########
