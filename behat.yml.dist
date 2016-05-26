@@ -7,7 +7,7 @@ default:
                class: FeatureKernel
                env:   test
         Behat\MinkExtension:
-            base_url:  'http://{{ app_host }}.dev/app_test.php'
+            base_url:  'http://{{ app.name }}.dev/app_test.php'
             sessions:
                 default:
                     symfony2: ~

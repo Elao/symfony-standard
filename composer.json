@@ -61,9 +61,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
         ]
     },
-    "config": {
-        "process-timeout": 600
-    },
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
@@ -72,7 +69,15 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "secret":            "APP_SECRET",
+                "database_host":     "APP_DATABASE_HOST",
+                "database_port":     "APP_DATABASE_PORT",
+                "database_name":     "APP_DATABASE_NAME",
+                "database_user":     "APP_DATABASE_USER",
+                "database_password": "APP_DATABASE_PASSWORD"
+            }
         },
         "branch-alias": {
             "dev-master": "2.8-dev"
