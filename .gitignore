@@ -6,12 +6,6 @@
 /vendor/
 /web/bundles/
 
-# Npm
-/node_modules/
-
-# Assets
-/web/assets/
-
 # Vagrant
 /.vagrant/
 
