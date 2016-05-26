@@ -36,5 +36,8 @@ Admin
 * [RTail](http://{{ app.name }}.dev:8888)
 * [OPcache Dashboard](http://{{ app.name }}.dev:2013)
 * [PhpMyAdmin](http://{{ app.name }}.dev:1979)
+* [PhpPgAdmin](http://{{ app.name }}.dev:1980)
+* [PhpRedisAdmin](http://{{ app.name }}.dev:1981)
+* [MongoExpress](http://{{ app.name }}.dev:8081)
 * [Elasticsearch](http://{{ app.name }}.dev:9200/_plugin/dejaVu)
 * [Ngrok](http://{{ app.name }}.dev:4040)
