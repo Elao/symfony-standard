@@ -1,271 +1,143 @@
 ---
 
-_vendor:   {{ vendor }}
-_app:      {{ app }}
-_app_dir:  /srv/app
-_app_host: "{{ _app ~ ('.' ~ _vendor if _vendor else '') }}"
+app_options:
 
-########
-# Motd #
-########
+  php_version:    7.0
+  nodejs_version: 6
 
-elao_motd_template: template/elao.j2
-elao_motd:          California - 1993
+app_patterns:
 
-############
-# Timezone #
-############
+  ############
+  # Timezone #
+  ############
 
-elao_timezone: Etc/UTC
+  timezone: Etc/UTC
 
-###########
-# Locales #
-###########
+  #######
+  # Env #
+  #######
 
-elao_locales: []
+  env:
+    - SYMFONY_ENV:           "{{ app.env }}"
+    - APP_SECRET:            "{{ ansible_date_time.iso8601_micro|hash('sha256') }}"
+    - APP_DATABASE_HOST:     127.0.0.1
+    - APP_DATABASE_PORT:     null
+    - APP_DATABASE_NAME:     app
+    - APP_DATABASE_USER:     "{{ app.user }}"
+    - APP_DATABASE_PASSWORD: null
 
-elao_locales_default: C.UTF-8
+  #########
+  # Files #
+  #########
 
-#######
-# Env #
-#######
+  files:
+    - path:  "{{ app.dir }}/var/logs"
+      src:   "{{ app.log_dir }}"
+      state: link_directory
+    - path:  "{{ app.dir }}/var/cache"
+      src:   "{{ app.cache_dir }}"
+      state: link_directory
+    - path:  "{{ app.dir }}/var/sessions"
+      src:   "{{ app.sessions_dir }}"
+      state: link_directory
 
-elao_env:
-  - SYMFONY_ENV: "{{ _env }}"
+  #######
+  # Npm #
+  #######
 
-#######
-# Apt #
-#######
+  #npm_packages:
+  #  - name:    gulp
+  #    version: 3
+  #  - name: gulpjs/gulp-cli#4.0
+  #  - name:    webpack
+  #    version: 1
+  #  - name:    webpack
+  #    version: 2.1.0-beta.7
 
-elao_apt_update: true
+  #######
+  # Php #
+  #######
 
-elao_apt_components: ['main']
+  php_fpm_pools:
+    - file:     app.conf
+      template: fpm_pools/default.{{ env }}.j2
+      config:
+        - app:
+          - user:  "{{ app.user }}"
+          - group: "{{ app.group }}"
+          - php_admin_value[error_log]: "{{ app.log_dir }}/php.error.log"
 
-elao_apt_sources_list_template: sources_list/debian.list.j2
+  php_extensions:
+    # Symfony
+    - intl
+    - curl
+    # App
 
-elao_apt_repositories_exclusive: true
-elao_apt_repositories:
-  - debian_security
-  - debian_updates
+  php_configs:
+    - file: app_opcache.ini
+      template: configs/opcache.{{ env }}.j2
+    - file: app.ini
+      template: configs/default.{{ env }}.j2
+      config:
+        - date.timezone: UTC
 
-elao_apt_preferences:
-  - ~@dotdeb:100
-  - php@dotdeb
-  - nginx@nginx
-  - nodejs@nodesource_5
-  # App
-  - mysql@dotdeb
-  #- postgresql@postgresql
-  #- redis@dotdeb
-  #- elasticsearch@elasticsearch_2
-  #- mongodb@mongodb_3_0
-  #- mongodb@mongodb_3_1
-  #- mongodb@mongodb_3_2
+  #########
+  # Nginx #
+  #########
 
-elao_apt_packages: []
+  nginx_configs:
+    # Php fpm
+    - file:     app_php_fpm
+      template: configs/php_fpm.{{ env }}.j2
+    # Gzip
+    - file:     app_gzip
+      template: configs/gzip.{{ env }}.j2
+    # App
+    - file:     app.conf
+      template: configs/server.j2
+      config:
+        - server_name: "{{ ansible_fqdn }} *.{{ ansible_fqdn }}"
+        #- server_name: "*.ngrok.io"
+        - root:        "{{ app.dir }}/web"
+        - access_log:  "{{ app.log_dir }}/nginx.access.log"
+        - error_log:   "{{ app.log_dir }}/nginx.error.log"
+        - include:     conf.d/app_gzip
+        - location /:
+          - try_files: $uri /app.php$is_args$args
+        - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
+          - include: conf.d/app_php_fpm
+          #- internal;
 
-#######
-# Git #
-#######
+  ########
+  # Cron #
+  ########
 
-elao_git_config_template: config/{{ _env }}.j2
+  #cron_files:
+  #  - file: app
+  #    user: "{{ app.user }}"
+  #    jobs:
+  #      - name:   foo-bar
+  #        job:    "php {{ app.dir }}/bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv >> {{ app.log_dir }}/cron.foo-bar.log 2>&1"
+  #        minute: 0
+  #        hour:   7
+  #        # Dev
+  #        state:  absent
 
-#######
-# Ssh #
-#######
+  ##############
+  # Supervisor #
+  ##############
 
-elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
-
-elao_ssh_config_template: config/{{ _env }}.j2
-elao_ssh_config: []
-
-#############
-# Oh my zsh #
-#############
-
-elao_ohmyzsh_users:
-  - user:     "{{ _user }}"
-    template: users/{{ _env }}.j2
-    config:
-      - |
-        elao_php_xdebug () {
-            if [[ $1 == on ]]; then sudo rename -v 's/20-xdebug.ini.off/20-xdebug.ini/' /etc/php5/*/conf.d/20-xdebug.ini.off
-            else sudo rename -v 's/20-xdebug.ini/20-xdebug.ini.off/' /etc/php5/*/conf.d/20-xdebug.ini; fi
-            sudo service php5-fpm restart
-        }
-        elao_nginx_timeout () {
-            if [[ $1 == off ]]; then sudo sed -ri 's/fastcgi_read_timeout (.*);$/fastcgi_read_timeout 999s;#origin\1/' /etc/nginx/conf.d/php_fpm_params
-            else sudo sed -ri 's/^fastcgi_read_timeout 999s;#origin(.*)/fastcgi_read_timeout \1;/' /etc/nginx/conf.d/php_fpm_params; fi
-            sudo /etc/init.d/nginx restart
-        }
-      - ZSH_THEME: elao-dev
-      - plugins: (git debian common-aliases history history-substring-search npm composer symfony2)
-      - export PATH: ./bin:$PATH
-      - cd {{ _app_dir }}
-
-###########
-# MailHog #
-###########
-
-elao_mailhog_config_template: config/{{ _env }}.j2
-
-#########
-# Files #
-#########
-
-_all_files: []
-
-#########
-# MySql #
-#########
-
-elao_mysql_configs_exclusive: true
-elao_mysql_configs:
-  - file: my.cnf
-    template: configs/{{ _env }}.cnf.j2
-
-##############
-# PhpMyAdmin #
-##############
-
-#elao_phpmyadmin_version: <4.5 # Php 5.4
-
-elao_phpmyadmin_config_template: config/{{ _env }}.inc.php.j2
-
-##############
-# PostgreSQL #
-##############
-
-#elao_postgresql_version: 9.4
-
-#elao_postgresql_config_template: config/{{ _env }}.conf.j2
-
-#elao_postgresql_config_hba_template: config/hba/{{ _env }}.conf.j2
-
-##############
-# PhpPgAdmin #
-##############
-
-#elao_phppgadmin_config_template: config/{{ _env }}.inc.php.j2
-
-#########
-# Redis #
-#########
-
-#elao_redis_config_template: config/{{ _env }}.conf.j2
-
-#################
-# PhpRedisAdmin #
-#################
-
-#elao_phpredisadmin_config_template: config/{{ _env }}.inc.php.j2
-
-###########
-# MongoDB #
-###########
-
-#elao_mongodb_config_template: config/{{ _env }}.conf.j2
-
-#######
-# Php #
-#######
-
-elao_php_version: 7.0
-
-elao_php_sapis: ['cli', 'fpm']
-
-elao_php_fpm_pools_exclusive: true
-elao_php_fpm_pools:
-  - file:     www.conf
-    template: fpm_pools/www_{{ _env }}.conf.j2
-
-elao_php_extensions:
-  - opcache
-  - json
-  # Dev
-  - xdebug
-  # Symfony
-  - intl
-  - curl
-  # App
-  - mysql
-  #- pgsql
-
-elao_php_configs_exclusive: true
-elao_php_configs:
-  - file: 50-xdebug.ini
-    template: configs/xdebug_{{ _env }}.ini.j2
-  - file: 50-opcache.ini
-    template: configs/opcache_{{ _env }}.ini.j2
-  - file: 60-config.ini
-    template: configs/{{ _env }}.ini.j2
-    config:
-      - date.timezone: UTC
-      # App
-
-elao_php_applications:
-  # Dev
-  - php-cs-fixer
-  - phpcs
-  # App
-  #- phpunit
-  #- phpunit@5.0.0
-  #- openl10n@0.2.0
-
-#########
-# Nginx #
-#########
-
-elao_nginx_config_template: config/http_{{ _env }}.conf.j2
-
-elao_nginx_configs_exclusive: true
-_all_nginx_configs:
-  # Php fpm
-  - file:     php_fpm_params
-    template: configs/php_fpm_params_{{ _env }}.j2
-  # Gzip
-  - file:     gzip
-    template: configs/gzip_{{ _env }}.j2
-  # Default 404
-  - file:     00-default.conf
-    template: configs/server_{{ _env }}.conf.j2
-    config:
-      - return: 404
-  # App
-  - file:     "{{ _app_host }}.conf"
-    template: configs/server_{{ _env }}.conf.j2
-    config:
-      - server_name: "{{ _app_host }}.dev"
-      - root:        "{{ _app_dir }}/web"
-      - access_log:  "{{ elao_nginx_log_dir }}/app.access.log"
-      - error_log:   "{{ elao_nginx_log_dir }}/app.error.log"
-      - include:     conf.d/gzip
-      - location /:
-        - try_files: $uri /app.php$is_args$args
-      - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
-        - include: conf.d/php_fpm_params
-        #- internal;
-
-#######
-# Npm #
-#######
-
-#elao_npm_packages:
-#  - name:    foo
-#    version: 3
-
-########
-# Cron #
-########
-
-#elao_cron_files:
-#  - file: app
-#    user: "{{ elao_php_user }}"
-#    jobs:
-#      # Do foo bar
-#      - name:   foo-bar
-#        job:    "php {{ _app_dir }}/bin/console app:foo:bar --env={{ _env }}"
-#        minute: 0
-#        hour:   7
-#        # Dev
-#        state:  absent
+  #supervisor_configs:
+  #  - file:     app.conf
+  #    template: configs/manala_program_{{ app.env }}.conf.j2
+  #    config:
+  #      - foo-bar:
+  #        - command:         php bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv
+  #        - directory:       "{{ app.dir }}"
+  #        - user:            "{{ app.user }}"
+  #        - autorestart:     true
+  #        - stdout_logfile:  "{{ app.log_dir }}/supervisor.foo-bar.log"
+  #        - redirect_stderr: true
+  #        - environment:     "SYMFONY_ENV=\"{{ app.env }}\""
+  #        # Dev
+  #        - autostart:       false

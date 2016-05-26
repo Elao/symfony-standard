@@ -1,4 +1,4 @@
-# {{ app_name }}
+# {{ app.label }}
 
 ## Development
 
@@ -6,10 +6,10 @@
 
 ### Requirements
 
-* [Vagrant 1.7.4+](http://www.vagrantup.com/downloads.html)
-* [VirtualBox 5.0.4+](https://www.virtualbox.org/wiki/Downloads)
-* [Ansible 1.9.3+](http://docs.ansible.com/intro_installation.html)
-* [Vagrant Landrush 0.18.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.6.1+](https://github.com/smdahlen/vagrant-hostmanager)
+* Make
+* [VirtualBox 5.0.20+](https://www.virtualbox.org/wiki/Downloads)
+* [Vagrant 1.8.2+](https://www.vagrantup.com/downloads.html)
+* [Vagrant Landrush 1.0.0+](https://github.com/vagrant-landrush/landrush)
 
 ### Setup
 
@@ -17,35 +17,24 @@ Clone the project in your workspace, and launch setup
 
     $ make setup
 
-You should access the project via http://{{ app_host }}.dev/app_dev.php
+You should access the project via http://{{ app.name }}.dev/app_dev.php
 
 ### Usage
 
-Launch vagrant box, and ssh into it
+Start/Stop/Ssh
 
-    $ vagrant up
-    $ vagrant ssh
+    $ vagrant up/halt/ssh
 
-Build assets
+Build
 
-    ⇒ gulp
+    ⇒ make build
 
-Enable/Disable php xdebug
+Admin
 
-    ⇒ elao_php_xdebug [on|off]
-
-Enable/Disable nginx long timeout (999s instead of default 60s)
-
-    ⇒ elao_nginx_timeout [on|off]
-
-Run test
-
-    ⇒ make test
-
-Tests files should be in the `tests/` directory and under the namespace `Tests\\`
-
-* *MailHog*: http://{{ app_host }}.dev:8025
-* *OPcache Dashboard*: http://{{ app_host }}.dev:2013
-* *phpMyAdmin*: http://{{ app_host }}.dev:1979
-* *phpPgAdmin*: http://{{ app_host }}.dev:1980
-* *phpRedisAdmin*: http://{{ app_host }}.dev:1981
+* [MailHog](http://{{ app.name }}.dev:8025)
+* [Supervisor](http://{{ app.name }}.dev:9001)
+* [RTail](http://{{ app.name }}.dev:8888)
+* [OPcache Dashboard](http://{{ app.name }}.dev:2013)
+* [PhpMyAdmin](http://{{ app.name }}.dev:1979)
+* [Elasticsearch](http://{{ app.name }}.dev:9200/_plugin/dejaVu)
+* [Ngrok](http://{{ app.name }}.dev:4040)
