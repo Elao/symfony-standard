@@ -51,6 +51,7 @@ Vagrant.configure(2) do |config|
       ansible.provisioning_path = '/srv/app/ansible'
       ansible.playbook          = playbook + '.yml'
       ansible.inventory_path    = '/etc/ansible/hosts'
+      ansible.tags              = ENV['ANSIBLE_TAGS']
     end
   end
 
