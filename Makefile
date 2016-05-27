@@ -39,6 +39,16 @@ update:
 provision:
 	vagrant provision --provision-with provision
 
+## Provision nginx
+provision-nginx: export ANSIBLE_TAGS=manala_skeleton.roles.nginx
+provision-nginx:
+	vagrant provision --provision-with provision
+
+## Provision php
+provision-php: export ANSIBLE_TAGS = manala_skeleton.roles.php
+provision-php:
+	vagrant provision --provision-with provision
+
 ###########
 # Install #
 ###########
@@ -46,7 +56,7 @@ provision:
 ## Install application
 install:
 	# Composer
-	composer --no-progress --no-interaction install
+	composer install --no-progress --no-interaction
 	# Db
 	bin/console doctrine:database:create --if-not-exists
 	bin/console doctrine:schema:update --force
@@ -54,28 +64,23 @@ install:
 	bin/console doctrine:database:create --if-not-exists --env=test
 	bin/console doctrine:schema:update --force --env=test
 	# Db - Fixtures
-	#bin/console doctrine:fixtures:load -n
+	#bin/console doctrine:fixtures:load --no-interaction
 	# Db - Fixtures - Test
-	#bin/console doctrine:fixtures:load -n --env=test
-	# Npm
-	npm --no-spin install
+	#bin/console doctrine:fixtures:load --no-interaction --env=test
 
+install@test: SYMFONY_ENV = test
 install@test:
 	# Composer
-	SYMFONY_ENV=test composer --no-progress --no-interaction install
+	composer install --no-progress --no-interaction
 	# Db
-	bin/console doctrine:database:create --if-not-exists --env=test
-	bin/console doctrine:schema:update --force --env=test
+	bin/console doctrine:database:drop --force --if-exists
+	bin/console doctrine:database:create --if-not-exists
+	bin/console doctrine:schema:update --force
 	# Db - Fixtures
-	#bin/console doctrine:fixtures:load -n --env=test
-	# Npm
-	npm --no-spin install
+	#bin/console doctrine:fixtures:load --no-interaction
 
-install@prod: install-dep
-	# Composer
-	#composer --no-progress --no-interaction install
-	# Npm
-	npm --no-spin install
+install@prod: SYMFONY_ENV = prod
+install@prod:
 
 #########
 # Build #
@@ -83,10 +88,20 @@ install@prod: install-dep
 
 ## Build application
 build:
-	#gulp --dev
 
+build@prod: SYMFONY_ENV = prod
 build@prod:
-	#gulp
+
+############
+# Security #
+############
+
+## Run security checks
+security:
+	security-checker security:check
+
+security@test: SYMFONY_ENV = test
+security@test: security
 
 ########
 # Lint #
@@ -94,26 +109,31 @@ build@prod:
 
 ## Run lint tools
 lint:
-    phpcs src --standard=PSR2
+	phpcs src --standard=PSR2
+
+lint@test: SYMFONY_ENV = test
+lint@test: lint
 
 ########
 # Test #
 ########
 
 ## Run tests
+test: SYMFONY_ENV = test
 test:
 	# PHPUnit
 	vendor/bin/phpunit
 	# Behat
-	bin/console cache:clear --env=test && vendor/bin/behat
+	bin/console cache:clear && vendor/bin/behat
 
+test@test: SYMFONY_ENV = test
 test@test:
 	# PHPUnit
 	rm -Rf build/phpunit && mkdir -p build/phpunit
 	stty cols 80 && vendor/bin/phpunit --log-junit build/phpunit/junit.xml --coverage-clover build/phpunit/clover.xml --coverage-html build/phpunit/coverage
 	# Behat
 	rm -Rf build/behat && mkdir -p build/behat
-	bin/console cache:clear --env=test && vendor/bin/behat --format=junit --out=build/behat --no-interaction
+	bin/console cache:clear && vendor/bin/behat --format=junit --out=build/behat --no-interaction
 
 ##########
 # Deploy #
