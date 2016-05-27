@@ -40,14 +40,12 @@ provision:
 	vagrant provision --provision-with provision
 
 ## Provision nginx
-provision-nginx: export ANSIBLE_TAGS=manala_skeleton.roles.nginx
-provision-nginx:
-	vagrant provision --provision-with provision
+provision-nginx: export ANSIBLE_TAGS = manala_skeleton.roles.nginx
+provision-nginx: provision
 
 ## Provision php
 provision-php: export ANSIBLE_TAGS = manala_skeleton.roles.php
-provision-php:
-	vagrant provision --provision-with provision
+provision-php: provision
 
 ###########
 # Install #
