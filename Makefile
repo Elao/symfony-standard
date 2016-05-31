@@ -32,19 +32,26 @@ setup:
 	vagrant ssh -- "cd /srv/app && make install build"
 
 ## Update environment
+update: export ANSIBLE_TAGS = manala.update
 update:
-	vagrant provision --provision-with update
+	vagrant provision
+
+## Update ansible
+update-ansible: export ANSIBLE_TAGS = manala.update
+update-ansible:
+	vagrant provision --provision-with ansible
 
 ## Provision environment
+provision: export ANSIBLE_EXTRA_VARS = {"manala":{"update":false}}
 provision:
-	vagrant provision --provision-with provision
+	vagrant provision --provision-with app
 
 ## Provision nginx
-provision-nginx: export ANSIBLE_TAGS = manala_skeleton.roles.nginx
+provision-nginx: export ANSIBLE_TAGS = manala_nginx
 provision-nginx: provision
 
 ## Provision php
-provision-php: export ANSIBLE_TAGS = manala_skeleton.roles.php
+provision-php: export ANSIBLE_TAGS = manala_php
 provision-php: provision
 
 ###########

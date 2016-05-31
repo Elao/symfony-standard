@@ -9,6 +9,10 @@
 # Vagrant
 /.vagrant/
 
+# Ansible
+/ansible/roles/*
+!ansible/roles/.gitkeep
+
 # PHP CS Fixer
 .php_cs.cache
 
