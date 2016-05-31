@@ -125,14 +125,13 @@ test-behat:
 
 test-behat@test:
 	bin/behat --format=progress --no-interaction
-	
+
 ########
 # Lint #
 ########
 
-## Linting
 lint:
-    phpcs src --standard=PSR2
+	php-cs-fixer fix --config-file=.php_cs --dry-run --diff
 
 ##########
 # Deploy #
