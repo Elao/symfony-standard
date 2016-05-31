@@ -79,9 +79,6 @@
                 "database_user":     "APP_DATABASE_USER",
                 "database_password": "APP_DATABASE_PASSWORD"
             }
-        },
-        "branch-alias": {
-            "dev-master": "2.8-dev"
         }
     }
 }
