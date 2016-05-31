@@ -107,7 +107,7 @@ security@test: security
 
 ## Run lint tools
 lint:
-	phpcs src --standard=PSR2
+	php-cs-fixer fix --config-file=.php_cs --dry-run --diff
 
 lint@test: SYMFONY_ENV = test
 lint@test: lint
