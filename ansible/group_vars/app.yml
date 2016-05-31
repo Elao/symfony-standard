@@ -94,9 +94,9 @@ app_patterns:
       template: configs/gzip.{{ env }}.j2
     # App
     - file:     app.conf
-      template: configs/server.j2
+      template: configs/server.{{ env }}.j2
       config:
-        - server_name: "{{ ansible_fqdn }} *.{{ ansible_fqdn }}"
+        - server_name: "$hostname"
         #- server_name: "*.ngrok.io"
         - root:        "{{ app.dir }}/web"
         - access_log:  "{{ app.log_dir }}/nginx.access.log"

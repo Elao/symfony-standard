@@ -46,12 +46,13 @@ Vagrant.configure(2) do |config|
   end
 
   # Vm - Provision - Setup
-  for playbook in ['update', 'provision']
+  for playbook in ['ansible', 'app']
     config.vm.provision playbook, type: 'ansible_local' do |ansible|
       ansible.provisioning_path = '/srv/app/ansible'
       ansible.playbook          = playbook + '.yml'
       ansible.inventory_path    = '/etc/ansible/hosts'
       ansible.tags              = ENV['ANSIBLE_TAGS']
+      ansible.extra_vars        = JSON.parse(ENV['ANSIBLE_EXTRA_VARS'] || '{"manala":{"update":true}}')
     end
   end
 
