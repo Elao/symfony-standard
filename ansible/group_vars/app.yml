@@ -96,7 +96,7 @@ app_patterns:
     - file:     app.conf
       template: configs/server.{{ env }}.j2
       config:
-        - server_name: "$hostname"
+        - server_name: "{{ ansible_fqdn }}"
         #- server_name: "*.ngrok.io"
         - root:        "{{ app.dir }}/web"
         - access_log:  "{{ app.log_dir }}/nginx.access.log"
