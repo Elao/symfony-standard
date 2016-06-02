@@ -86,6 +86,8 @@ install@test:
 
 install@prod: SYMFONY_ENV = prod
 install@prod:
+	# Composer
+	composer install --no-progress --no-interaction
 
 #########
 # Build #

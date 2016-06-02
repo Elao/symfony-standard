@@ -19,7 +19,7 @@ app_patterns:
 
   env:
     - SYMFONY_ENV:           "{{ app.env }}"
-    - APP_SECRET:            "{{ ansible_date_time.iso8601_micro|hash('sha256') }}"
+    - APP_SECRET:            ThisTokenIsNotSoSecretChangeIt
     - APP_DATABASE_HOST:     127.0.0.1
     - APP_DATABASE_PORT:     null
     - APP_DATABASE_NAME:     app
@@ -31,13 +31,13 @@ app_patterns:
   #########
 
   files:
-    - path:  "{{ app.dir }}/var/logs"
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/logs"
       src:   "{{ app.log_dir }}"
       state: link_directory
-    - path:  "{{ app.dir }}/var/cache"
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/cache"
       src:   "{{ app.cache_dir }}"
       state: link_directory
-    - path:  "{{ app.dir }}/var/sessions"
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/sessions"
       src:   "{{ app.sessions_dir }}"
       state: link_directory
 
@@ -96,9 +96,9 @@ app_patterns:
     - file:     app.conf
       template: configs/server.{{ env }}.j2
       config:
-        - server_name: "$hostname"
+        - server_name: "{{ ansible_fqdn }}"
         #- server_name: "*.ngrok.io"
-        - root:        "{{ app.dir }}/web"
+        - root:        "{{ app.dir }}{{ app.dir_release }}/web"
         - access_log:  "{{ app.log_dir }}/nginx.access.log"
         - error_log:   "{{ app.log_dir }}/nginx.error.log"
         - include:     conf.d/app_gzip
@@ -117,7 +117,7 @@ app_patterns:
   #    user: "{{ app.user }}"
   #    jobs:
   #      - name:   foo-bar
-  #        job:    "php {{ app.dir }}/bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv >> {{ app.log_dir }}/cron.foo-bar.log 2>&1"
+  #        job:    "php {{ app.dir }}{{ app.dir_release }}/bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv >> {{ app.log_dir }}/cron.foo-bar.log 2>&1"
   #        minute: 0
   #        hour:   7
   #        # Dev
@@ -133,7 +133,7 @@ app_patterns:
   #    config:
   #      - foo-bar:
   #        - command:         php bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv
-  #        - directory:       "{{ app.dir }}"
+  #        - directory:       "{{ app.dir }}{{ app.dir_release }}"
   #        - user:            "{{ app.user }}"
   #        - autorestart:     true
   #        - stdout_logfile:  "{{ app.log_dir }}/supervisor.foo-bar.log"

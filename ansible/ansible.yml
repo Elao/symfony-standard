@@ -6,6 +6,7 @@
   vars:
     manala_ansible_galaxy_roles:
       - manala.ansible-galaxy
+      - manala.deploy
       - manala.skeleton
   roles:
     - manala.ansible-galaxy
