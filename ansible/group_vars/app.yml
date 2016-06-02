@@ -1,0 +1,143 @@
+---
+
+app_options:
+
+  php_version:    7.0
+  nodejs_version: 6
+
+app_patterns:
+
+  ############
+  # Timezone #
+  ############
+
+  timezone: Etc/UTC
+
+  #######
+  # Env #
+  #######
+
+  env:
+    - SYMFONY_ENV:           "{{ app.env }}"
+    - APP_SECRET:            ThisTokenIsNotSoSecretChangeIt
+    - APP_DATABASE_HOST:     127.0.0.1
+    - APP_DATABASE_PORT:     null
+    - APP_DATABASE_NAME:     app
+    - APP_DATABASE_USER:     "{{ app.user }}"
+    - APP_DATABASE_PASSWORD: null
+
+  #########
+  # Files #
+  #########
+
+  files:
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/logs"
+      src:   "{{ app.log_dir }}"
+      state: link_directory
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/cache"
+      src:   "{{ app.cache_dir }}"
+      state: link_directory
+    - path:  "{{ app.dir }}{{ app.dir_release }}/var/sessions"
+      src:   "{{ app.sessions_dir }}"
+      state: link_directory
+
+  #######
+  # Npm #
+  #######
+
+  #npm_packages:
+  #  - name:    gulp
+  #    version: 3
+  #  - name: gulpjs/gulp-cli#4.0
+  #  - name:    webpack
+  #    version: 1
+  #  - name:    webpack
+  #    version: 2.1.0-beta.7
+
+  #######
+  # Php #
+  #######
+
+  php_fpm_pools:
+    - file:     app.conf
+      template: fpm_pools/default.{{ env }}.j2
+      config:
+        - app:
+          - user:  "{{ app.user }}"
+          - group: "{{ app.group }}"
+          - php_admin_value[error_log]: "{{ app.log_dir }}/php.error.log"
+
+  php_extensions:
+    # Symfony
+    - intl
+    - curl
+    # App
+
+  php_configs:
+    - file: app_opcache.ini
+      template: configs/opcache.{{ env }}.j2
+    - file: app.ini
+      template: configs/default.{{ env }}.j2
+      config:
+        - date.timezone: UTC
+
+  #########
+  # Nginx #
+  #########
+
+  nginx_configs:
+    # Php fpm
+    - file:     app_php_fpm
+      template: configs/php_fpm.{{ env }}.j2
+    # Gzip
+    - file:     app_gzip
+      template: configs/gzip.{{ env }}.j2
+    # App
+    - file:     app.conf
+      template: configs/server.{{ env }}.j2
+      config:
+        - server_name: "{{ ansible_fqdn }}"
+        #- server_name: "*.ngrok.io"
+        - root:        "{{ app.dir }}{{ app.dir_release }}/web"
+        - access_log:  "{{ app.log_dir }}/nginx.access.log"
+        - error_log:   "{{ app.log_dir }}/nginx.error.log"
+        - include:     conf.d/app_gzip
+        - location /:
+          - try_files: $uri /app.php$is_args$args
+        - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
+          - include: conf.d/app_php_fpm
+          #- internal;
+
+  ########
+  # Cron #
+  ########
+
+  #cron_files:
+  #  - file: app
+  #    user: "{{ app.user }}"
+  #    jobs:
+  #      - name:   foo-bar
+  #        job:    "php {{ app.dir }}{{ app.dir_release }}/bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv >> {{ app.log_dir }}/cron.foo-bar.log 2>&1"
+  #        minute: 0
+  #        hour:   7
+  #        # Dev
+  #        state:  absent
+
+  ##############
+  # Supervisor #
+  ##############
+
+  #supervisor_configs:
+  #  - file:     app.conf
+  #    template: configs/manala_program_{{ app.env }}.conf.j2
+  #    config:
+  #      - foo-bar:
+  #        - command:         php bin/console app:foo:bar --env={{ app.env }} --no-interaction -vv
+  #        - directory:       "{{ app.dir }}{{ app.dir_release }}"
+  #        - user:            "{{ app.user }}"
+  #        - autorestart:     true
+  #        - stdout_logfile:  "{{ app.log_dir }}/supervisor.foo-bar.log"
+  #        - redirect_stderr: true
+  #        - environment:     "SYMFONY_ENV=\"{{ app.env }}\""
+  #        # Dev
+  #        - autostart:       false

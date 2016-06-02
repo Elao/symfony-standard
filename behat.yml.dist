@@ -1,15 +1,15 @@
 default:
 
     extensions:
-        Behat\Symfony2Extension:
-            kernel:
-               path:  features/bootstrap/FeatureKernel.php
-               class: FeatureKernel
-               env:   test
+        Behat\Symfony2Extension: ~
         Behat\MinkExtension:
-            base_url:  'http://{{ app_host }}.dev/app_test.php'
+            base_url:  'http://{{ app.name }}.dev/app_test.php'
             sessions:
                 default:
                     symfony2: ~
                 javascript:
                     selenium2: ~
+    suites:
+        default:
+            contexts:
+                - FeatureContext: ~

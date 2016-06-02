@@ -1,14 +1,14 @@
 # Elao Symfony Standard Edition
 
-![Symfony 2.8](https://img.shields.io/badge/Symfony-2.8-blue.svg)
+![Symfony 3.0](https://img.shields.io/badge/Symfony-3.0-blue.svg)
 [![Join the chat at https://gitter.im/Elao/symfony-standard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Elao/symfony-standard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Requirements
 
-* [Vagrant 1.7.4+](http://www.vagrantup.com/downloads.html)
-* [VirtualBox 5.0.14+](https://www.virtualbox.org/wiki/Downloads)
-* [Ansible 1.9.3+](http://docs.ansible.com/intro_installation.html)
-* [Vagrant Landrush 0.18.0+](https://github.com/phinze/landrush) or [Vagrant Host Manager plugin 1.6.1+](https://github.com/smdahlen/vagrant-hostmanager)
+* Make
+* [VirtualBox 5.0.20+](https://www.virtualbox.org/wiki/Downloads)
+* [Vagrant 1.8.2+](https://www.vagrantup.com/downloads.html)
+* [Vagrant Landrush 1.0.0+](https://github.com/vagrant-landrush/landrush)
 
 > Note: The `$` stands for your machine CLI, while the `⇒` stands for the VM CLI
 
@@ -16,7 +16,7 @@
 
 Create the project and access to its directory (where [app] is your application name)
 
-    $ composer create-project elao/symfony-standard [app] 2.8.x-dev --prefer-dist --no-install
+    $ composer create-project elao/symfony-standard [app] 3.0.x-dev --prefer-dist --no-install
     $ cd [app]
 
 Install and prepare the project dependencies
@@ -30,10 +30,6 @@ TODO
 ## Usage
 
 Your app is accessible via [http://app.vendor.dev/app_dev.php](http://app.vendor.dev/app_dev.php)
-
-## Tests
-
-    ⇒ make test
 
 ## Faq
 

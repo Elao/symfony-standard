@@ -8,35 +8,42 @@
             "": "src/",
             "SymfonyStandard\\": "app/SymfonyStandard/"
         },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "require": {
-        "php": ">=5.3.9",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.1.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "symfony/polyfill-apcu": "^1.0",
+        "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-
-        "sonata-project/intl-bundle": "2.2.*"
+        "incenteev/composer-parameter-handler": "^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7",
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
 
-        "nelmio/alice": "2.1.*",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "phpunit/phpunit": "^5.3",
 
-        "phpunit/phpunit": "~5.0",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
 
-        "behat/behat": "3.0.*",
-        "behat/mink-selenium2-driver": "1.2.*",
-        "knplabs/friendly-contexts": "0.5.*",
-        "behat/symfony2-extension": "2.0.*",
-        "behat/mink-browserkit-driver": "1.2.*"
+        "behat/behat": "^3.1",
+        "behat/mink": "^1.7",
+        "behat/mink-selenium2-driver": "^1.3",
+        "behat/mink-browserkit-driver": "^1.3",
+        "behat/symfony2-extension": "^2.1"
     },
     "scripts": {
         "post-create-project-cmd": [
@@ -59,21 +66,23 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
         ]
     },
-    "config": {
-        "bin-dir": "bin",
-        "process-timeout": 600
-    },
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.8-dev"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "secret":            "APP_SECRET",
+                "database_host":     "APP_DATABASE_HOST",
+                "database_port":     "APP_DATABASE_PORT",
+                "database_name":     "APP_DATABASE_NAME",
+                "database_user":     "APP_DATABASE_USER",
+                "database_password": "APP_DATABASE_PASSWORD"
+            }
         }
     }
 }

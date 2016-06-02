@@ -21,134 +21,136 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-#########
-# Setup #
-#########
+###############
+# Environment #
+###############
 
-## Setup environment & Install application
-setup: provision
-	vagrant ssh -c 'cd /srv/app/symfony && make install'
-
-setup@test: provision@test install@test
-
-#############
-# Provision #
-#############
-
-## Provision environment
-provision: provision-vagrant
-
-provision@test: provision-ansible@test
-
-provision-services@test: provision-services-ansible@test
-
-provision-vagrant:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
+## Setup environment & Install & Build application
+setup:
 	vagrant up --no-provision
 	vagrant provision
+	vagrant ssh -- "cd /srv/app && make install build"
 
-provision-ansible@test:
-	ansible-galaxy install -r ansible/roles.yml -p ansible/roles -f
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers ansible/playbook.yml
+## Update environment
+update: export ANSIBLE_TAGS = manala.update
+update:
+	vagrant provision
 
-provision-services-ansible@test:
-	ansible-playbook -i ansible/hosts -l env_test,app -s -e "_user=${_ANSIBLE_USER}" --force-handlers --tags=elao_services ansible/playbook.yml
+## Update ansible
+update-ansible: export ANSIBLE_TAGS = manala.update
+update-ansible:
+	vagrant provision --provision-with ansible
+
+## Provision environment
+provision: export ANSIBLE_EXTRA_VARS = {"manala":{"update":false}}
+provision:
+	vagrant provision --provision-with app
+
+## Provision nginx
+provision-nginx: export ANSIBLE_TAGS = manala_nginx
+provision-nginx: provision
+
+## Provision php
+provision-php: export ANSIBLE_TAGS = manala_php
+provision-php: provision
 
 ###########
 # Install #
 ###########
 
 ## Install application
-install: install-app install-db install-db@test install-db-fixtures install-db-fixtures@test install-dep build
-
-install@test: install-app@test install-db@test install-db-fixtures@test install-dep build@prod
-
-install@prod: install-dep build@prod
-
-install-app:
-	composer --no-progress --no-interaction install
-
-install-app@test:
-	SYMFONY_ENV=test composer --no-progress --no-interaction install
-
-install-db:
+install:
+	# Composer
+	composer install --no-progress --no-interaction
+	# Db
 	bin/console doctrine:database:create --if-not-exists
 	bin/console doctrine:schema:update --force
+	# Db - Test
+	bin/console doctrine:database:create --if-not-exists --env=test
+	bin/console doctrine:schema:update --force --env=test
+	# Db - Fixtures
+	#bin/console doctrine:fixtures:load --no-interaction
+	# Db - Fixtures - Test
+	#bin/console doctrine:fixtures:load --no-interaction --env=test
 
-install-db@test:
-	bin/console doctrine:database:drop --force --if-exists --env=test
-	bin/console doctrine:database:create --env=test
-	bin/console doctrine:schema:create --env=test
+install@test: SYMFONY_ENV = test
+install@test:
+	# Composer
+	composer install --no-progress --no-interaction
+	# Db
+	bin/console doctrine:database:drop --force --if-exists
+	bin/console doctrine:database:create --if-not-exists
+	bin/console doctrine:schema:update --force
+	# Db - Fixtures
+	#bin/console doctrine:fixtures:load --no-interaction
 
-install-db-fixtures:
-	#bin/console doctrine:fixtures:load -n
-
-install-db-fixtures@test:
-	#bin/console doctrine:fixtures:load -n --env=test
-
-install-dep:
-	npm --no-spin install
+install@prod: SYMFONY_ENV = prod
+install@prod:
+	# Composer
+	composer install --no-progress --no-interaction
 
 #########
 # Build #
 #########
 
 ## Build application
-build: build-assets
+build:
 
-build@prod: build-assets@prod
+build@prod: SYMFONY_ENV = prod
+build@prod:
 
-build-assets:
-	gulp --dev
+############
+# Security #
+############
 
-build-assets@prod:
-	gulp
+## Run security checks
+security:
+	security-checker security:check
+
+security@test: SYMFONY_ENV = test
+security@test: security
+
+########
+# Lint #
+########
+
+## Run lint tools
+lint:
+	php-cs-fixer fix --config-file=.php_cs --dry-run --diff
+
+lint@test: SYMFONY_ENV = test
+lint@test: lint
 
 ########
 # Test #
 ########
 
 ## Run tests
-test: test-phpunit test-behat
+test: SYMFONY_ENV = test
+test:
+	# PHPUnit
+	vendor/bin/phpunit
+	# Behat
+	bin/console cache:clear && vendor/bin/behat
 
-test@test: test-phpunit@test test-behat@test
-
-test-phpunit:
-	bin/phpunit
-
-test-phpunit@test:
-	rm -rf var/tests/junit.xml var/tests/clover.xml var/tests/coverage
-	stty cols 80; bin/phpunit --log-junit var/tests/junit.xml --coverage-clover var/tests/clover.xml --coverage-html var/tests/coverage
-
-test-behat:
-	bin/behat
-
-test-behat@test:
-	bin/behat --format=progress --no-interaction
-	
-########
-# Lint #
-########
-
-## Linting
-lint:
-    phpcs src --standard=PSR2
+test@test: SYMFONY_ENV = test
+test@test:
+	# PHPUnit
+	rm -Rf build/phpunit && mkdir -p build/phpunit
+	stty cols 80 && vendor/bin/phpunit --log-junit build/phpunit/junit.xml --coverage-clover build/phpunit/clover.xml --coverage-html build/phpunit/coverage
+	# Behat
+	rm -Rf build/behat && mkdir -p build/behat
+	bin/console cache:clear && vendor/bin/behat --format=junit --out=build/behat --no-interaction
 
 ##########
 # Deploy #
 ##########
 
 ## Deploy application (demo)
-deploy@demo: deploy-capifony@demo
+deploy@demo:
 
 ## Deploy application (prod)
-deploy@prod: deploy-capifony@prod
-
-deploy-capifony@demo:
-	cap demo deploy
-
-deploy-capifony@prod:
-	cap prod deploy
+deploy@prod:
 
 ##########
 # Custom #
