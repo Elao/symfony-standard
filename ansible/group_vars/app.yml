@@ -19,7 +19,7 @@ app_patterns:
 
   env:
     - SYMFONY_ENV:           "{{ app.env }}"
-    - APP_SECRET:            "{{ ansible_date_time.iso8601_micro|hash('sha256') }}"
+    - APP_SECRET:            ThisTokenIsNotSoSecretChangeIt
     - APP_DATABASE_HOST:     127.0.0.1
     - APP_DATABASE_PORT:     null
     - APP_DATABASE_NAME:     app
