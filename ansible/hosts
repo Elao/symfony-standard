@@ -1,0 +1,7 @@
+demo-1 ansible_ssh_host={{ app.name }}.demo ansible_ssh_user=app
+
+[deploy_demo]
+demo-1
+
+[deploy:children]
+deploy_demo

@@ -87,7 +87,9 @@ install@test:
 install@prod: SYMFONY_ENV = prod
 install@prod:
 	# Composer
-	composer install --no-progress --no-interaction
+	composer install --prefer-dist --optimize-autoloader --no-progress --no-interaction
+	# Symfony cache
+	bin/console cache:warmup --no-debug
 
 #########
 # Build #
@@ -148,9 +150,11 @@ test@test:
 
 ## Deploy application (demo)
 deploy@demo:
+	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_demo
 
 ## Deploy application (prod)
 deploy@prod:
+	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_prod
 
 ##########
 # Custom #
