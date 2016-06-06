@@ -62,7 +62,7 @@ app_patterns:
 
   php_fpm_pools:
     - file:     app.conf
-      template: fpm_pools/default.{{ env }}.j2
+      template: fpm_pools/app.{{ env }}.j2
       config:
         - app:
           - user:  "{{ app.user }}"
@@ -77,9 +77,9 @@ app_patterns:
 
   php_configs:
     - file: app_opcache.ini
-      template: configs/opcache.{{ env }}.j2
+      template: configs/app_opcache.{{ env }}.j2
     - file: app.ini
-      template: configs/default.{{ env }}.j2
+      template: configs/app.{{ env }}.j2
       config:
         - date.timezone: UTC
 
@@ -90,13 +90,13 @@ app_patterns:
   nginx_configs:
     # Php fpm
     - file:     app_php_fpm
-      template: configs/php_fpm.{{ env }}.j2
+      template: configs/app_php_fpm.{{ env }}.j2
     # Gzip
     - file:     app_gzip
-      template: configs/gzip.{{ env }}.j2
+      template: configs/app_gzip.{{ env }}.j2
     # App
     - file:     app.conf
-      template: configs/server.{{ env }}.j2
+      template: configs/app.{{ env }}.j2
       config:
         - server_name: "{{ app.host }}"
         #- server_name: "*.ngrok.io"
