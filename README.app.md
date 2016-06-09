@@ -39,5 +39,5 @@ Admin
 * [PhpPgAdmin](http://{{ app.name }}.dev:1980)
 * [PhpRedisAdmin](http://{{ app.name }}.dev:1981)
 * [MongoExpress](http://{{ app.name }}.dev:8081)
-* [Elasticsearch](http://{{ app.name }}.dev:9200/_plugin/dejaVu)
+* [Elasticsearch](http://{{ app.name }}.dev:9200/_plugin/head/)
 * [Ngrok](http://{{ app.name }}.dev:4040)
