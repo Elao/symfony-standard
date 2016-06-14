@@ -86,20 +86,20 @@ app_patterns:
     - file:     app_gzip
       template: configs/app_gzip.{{ env }}.j2
     # App
-    - file:     app.conf
-      template: configs/app.{{ env }}.j2
+    - file: app.conf
       config:
-        - server_name: "{{ app.host }}"
-        #- server_name: "*.ngrok.io"
-        - root:        "{{ app.dir }}{{ app.dir_release }}/web"
-        - access_log:  "{{ app.log_dir }}/nginx.access.log"
-        - error_log:   "{{ app.log_dir }}/nginx.error.log"
-        - include:     conf.d/app_gzip
-        - location /:
-          - try_files: $uri /app.php$is_args$args
-        - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
-          - include: conf.d/app_php_fpm
-          #- internal;
+        - server:
+          - server_name: "{{ app.host }}"
+          #- server_name: "*.ngrok.io"
+          - root:        "{{ app.dir }}{{ app.dir_release }}/web"
+          - access_log:  "{{ app.log_dir }}/nginx.access.log"
+          - error_log:   "{{ app.log_dir }}/nginx.error.log"
+          - include:     conf.d/app_gzip
+          - location /:
+            - try_files: $uri /app.php$is_args$args
+          - location ~ ^/(app(_[-\w]+)?)\.php(/|$):
+            - include: conf.d/app_php_fpm
+            #- internal;
 
   ########
   # Cron #
