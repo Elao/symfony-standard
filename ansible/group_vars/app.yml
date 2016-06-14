@@ -108,7 +108,7 @@ app_patterns:
   #cron_files:
   #  - file: app
   #    user: "{{ app.user }}"
-  #    env_variables:
+  #    environment:
   #      - SYMFONY_ENV: "{{ app.env }}"
   #    jobs:
   #      - name:   foo-bar
