@@ -15,11 +15,11 @@ app_patterns:
 
   timezone_default: Etc/UTC
 
-  #######
-  # Env #
-  #######
+  ###############
+  # Environment #
+  ###############
 
-  env_variables:
+  environment_variables:
     - SYMFONY_ENV:           "{{ app.env }}"
     - APP_SECRET:            ThisTokenIsNotSoSecretChangeIt
     - APP_DATABASE_HOST:     127.0.0.1
