@@ -60,15 +60,6 @@ app_patterns:
   # Php #
   #######
 
-  php_fpm_pools:
-    - file:     app.conf
-      template: fpm_pools/app.{{ env }}.j2
-      config:
-        - app:
-          - user:  "{{ app.user }}"
-          - group: "{{ app.group }}"
-          - php_admin_value[error_log]: "{{ app.log_dir }}/php.error.log"
-
   php_extensions:
     # Symfony
     - intl
