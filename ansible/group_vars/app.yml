@@ -2,10 +2,18 @@
 
 app_options:
 
-  php_version:    '7.0'
-  nodejs_version: '6'
-  mysql:          true
-  mysql_version:  '5.6'
+  #php_version:           '7.0' #5.4|5.5|5.6|7.0
+  #nodejs_version:        '6'   #0.10|0.12|4|5|6
+
+  #mysql:                 false
+  #mysql_version:         '5.6' #5.6|5.7
+  #postgresql:            false
+  #postgresql_version:    '9.5' #9.4|9.5
+  #redis:                 false
+  #mongodb:               false
+  #mongodb_version:       '3.2' #3.0|3.2
+  #elasticsearch:         false
+  #elasticsearch_version: '1.7' #1.5|1.6|1.7|2
 
 app_patterns:
 
