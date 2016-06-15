@@ -7,7 +7,7 @@
 
 * Make
 * [VirtualBox 5.0.20+](https://www.virtualbox.org/wiki/Downloads)
-* [Vagrant 1.8.2+](https://www.vagrantup.com/downloads.html)
+* [Vagrant 1.8.4+](https://www.vagrantup.com/downloads.html)
 * [Vagrant Landrush 1.0.0+](https://github.com/vagrant-landrush/landrush)
 
 > Note: The `$` stands for your machine CLI, while the `⇒` stands for the VM CLI
