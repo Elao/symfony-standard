@@ -15,6 +15,9 @@ use Composer\Script\CommandEvent;
 
 class Composer
 {
+    const TAG_START = '<#';
+    const TAG_END = '#>';
+
     /**
      * Create the project.
      *
@@ -26,7 +29,6 @@ class Composer
             'README.app.md',
             'Vagrantfile',
             'behat.yml.dist',
-            'app/config/config.yml',
             '.php_cs'
         ];
 
@@ -55,18 +57,10 @@ class Composer
             '<info>You are going to define your project\'s vendor and app name, it will look something like this : app.vendor</info>',
         ]);
 
-        $validator = function ($value) {
-            if (!preg_match('/^([-A-Z0-9])*$/i', $value)) {
-                throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphens)');
-            }
+        $projectInfos = self::askAppVendorName($event);
 
-            return $value;
-        };
-
-        $projectName = self::askAppVendorName($event);
-
-        $vendor = $projectName['vendor'];
-        $app = $projectName['appName'];
+        $vendor = $projectInfos['vendor'];
+        $app = $projectInfos['appName'];
 
         $appName = $app . ($vendor ? '.' . $vendor : '');
         $appLabel = ucwords(str_replace('.', ' - ', str_replace('-', ' ', $appName)));
@@ -75,10 +69,10 @@ class Composer
         $appComposerName = str_replace('.', '/', $appName);
 
         $vars = [
-            '<# app.name #>'       => strtolower($appName),
-            '<# app.label #>'      => $appLabel,
-            '<# vendor.label #>'   => $vendorLabel,
-            '<# app.composer.label #>' => strtolower($appComposerName)
+            self::TAG_START . ' app.name ' . self::TAG_END      => strtolower($appName),
+            self::TAG_START . ' app.label ' . self::TAG_END      => $appLabel,
+            self::TAG_START . ' vendor.label ' . self::TAG_END   => $vendorLabel,
+            self::TAG_START . ' app.composer.label ' . self::TAG_END => strtolower($appComposerName)
         ];
 
         foreach ($files as $file) {
@@ -114,6 +108,7 @@ class Composer
      * Ask for the vendor and the app name, calls itself back if not confirmed.
      *
      * @param CommandEvent $event
+     *
      * @return array
      */
     static private function askAppVendorName(CommandEvent $event)
@@ -141,7 +136,8 @@ class Composer
      * Ask for the vendor.
      *
      * @param CommandEvent $event
-     * @return mixed
+     *
+     * @return string
      */
     static private function askVendor(CommandEvent $event)
     {
@@ -163,7 +159,8 @@ class Composer
      * Ask for the App name.
      *
      * @param CommandEvent $event
-     * @return mixed
+     *
+     * @return string
      */
     static private function askAppName(CommandEvent $event)
     {
@@ -173,9 +170,6 @@ class Composer
                 function ($value) {
                     if (!preg_match('/^([-A-Z0-9])*$/i', $value)) {
                         throw new \InvalidArgumentException('The name should only contains alphanumeric characters (and hyphens)');
-                    }
-                    if (empty($value) OR null === $value){
-                        throw new \InvalidArgumentException('The name is mandatory, please define a valid name for your app');
                     }
                     return $value;
                 },
@@ -187,7 +181,6 @@ class Composer
     /**
      * Install the dependencies (roles) listed in the ansible/group_vars/app.yml config file.
      *
-     * Handle dependencies installation
      * @param CommandEvent $event
      */
     static private function installDependencies(CommandEvent $event)
@@ -199,12 +192,12 @@ class Composer
         $versionList = self::getDependenciesVersionList($content);
         $vars = [];
 
-        self::handleVersion('php', $content, $event, $vars);
-        self::handleVersion('nodejs', $content, $event, $vars);
+        self::handleDependencyVersion($event, 'php', $content, $vars);
+        self::handleDependencyVersion($event, 'nodejs', $content, $vars);
 
         foreach ($dependencies as $dependency)
         {
-            self::handleDependency($dependency, $event, $content, $versionList, $vars);
+            self::handleDependency($event, $dependency, $content, $versionList, $vars);
         }
 
         $content = strtr($content, $vars);
@@ -214,13 +207,17 @@ class Composer
     /**
      * Handle a single dependency.
      *
-     * @param $dependency
-     * @param $event
-     * @param $content
-     * @param $versionList
-     * @param $vars
+     * @param CommandEvent $event
+     *
+     * @param string $dependency
+     *
+     * @param string $content
+     *
+     * @param string $versionList
+     *
+     * @param array $vars
      */
-    private static function handleDependency($dependency, $event, $content, $versionList, &$vars)
+    private static function handleDependency($event, $dependency, $content, $versionList, &$vars)
     {
         preg_match('/#'. $dependency .'.*false/', $content, $activationMatches);
         preg_match('/#'. $dependency .'_version.*\r?\n/', $content, $versionMatches);
@@ -243,7 +240,7 @@ class Composer
 
         if (preg_match('/^Y/i', $dependencyValue) && in_array($dependency . '_version', $versionList))
         {
-           self::handleVersion($dependency, $content, $event, $vars);
+           self::handleDependencyVersion($event, $dependency, $content, $vars);
         }
         else if (in_array($dependency . '_version', $versionList))
         {
@@ -255,12 +252,15 @@ class Composer
     /**
      * Handle the dependency version.
      *
-     * @param $dependency
-     * @param $content
-     * @param $event
-     * @param $vars
+     * @param CommandEvent $event
+     *
+     * @param string $dependency
+     *
+     * @param string $content
+     *
+     * @param array $vars
      */
-    private static function handleVersion($dependency, $content, $event, &$vars)
+    private static function handleDependencyVersion($event, $dependency, $content, &$vars)
     {
         $versions = self::getAvailableDependencyVersions($content, $dependency . '_version');
         $defaultVersion = self::getDefaultVersion($content, $dependency);
@@ -289,7 +289,9 @@ class Composer
      * Get the dependency default version.
      *
      * @param $content
+     *
      * @param $dependency
+     *
      * @return mixed
      */
     private static function getDefaultVersion($content, $dependency)
@@ -337,6 +339,7 @@ class Composer
      * Get the available versions for a given dependency.
      *
      * @param $content
+     *
      * @param $dependency
      *
      * @return array
