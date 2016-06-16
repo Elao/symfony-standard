@@ -48,13 +48,13 @@ app_patterns:
   #######
 
   #npm_packages:
-  #  - name:    gulp
+  #  - package: gulp
   #    version: 3
-  #  - name: gulpjs/gulp-cli#4.0
-  #  - name:    webpack
+  #  - gulpjs/gulp-cli#4.0
+  #  - package: webpack
   #    version: 1
-  #  - name:    webpack
-  #    version: 2.1.0-beta.7
+  #  - package: webpack
+  #    version: 2.1.0-beta.13
 
   #######
   # Php #
