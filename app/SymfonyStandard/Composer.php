@@ -238,6 +238,20 @@ class Composer
         $activationReplacement = preg_match('/^Y/i', $dependencyValue) ? preg_replace(['/#/', '/false/'], ['', 'true'] , $activationMatches[0]) : '';
         $vars[$activationMatches[0]] = $activationReplacement;
 
+        if ('postgresql' === $dependency)
+        {
+            $confirmation = $event->getIO()
+                ->askConfirmation(
+                    '<info>Do you want to use postgresql as your default connection for Doctrine ?</info> [<comment>y,N</comment>]',
+                    false
+                );
+
+            if ($confirmation) {
+                self::changeDoctrineDriver();
+            }
+
+        }
+
         if (preg_match('/^Y/i', $dependencyValue) && in_array($dependency . '_version', $versionList))
         {
            self::handleDependencyVersion($event, $dependency, $content, $vars);
@@ -280,6 +294,11 @@ class Composer
                 5,
                 $defaultVersion
             );
+
+        if ('php' === $dependency)
+        {
+            self::setVagrantBox($chosenVersion);
+        }
 
         $versionReplacement = preg_replace(['/#/', '/\'\d.*\'.*(\r?\n)/'], ['', '\'' . $chosenVersion.'\'$1'] , $versionMatches[0]);
         $vars[$versionMatches[0]] = $versionReplacement;
@@ -353,5 +372,37 @@ class Composer
         }
 
         return explode("|", $matches[1]);
+    }
+
+    /**
+     * Set Vagrant box version.
+     *
+     * @param $phpVersion
+     */
+    private static function setVagrantBox($phpVersion)
+    {
+        $file = 'Vagrantfile';
+        $content = file_get_contents($file);
+        preg_match('/\:box_version.*,/', $content, $matches);
+
+        $boxVersion = '7.0' === $phpVersion ? '3.0.0' : '2.0.0';
+
+        $replacement = preg_replace('/\'.*\'/', '\'' . $boxVersion.'\'', $matches[0]);
+
+        $content = strtr($content, [$matches[0] => $replacement]);
+        file_put_contents($file, $content);
+    }
+
+    private static function changeDoctrineDriver()
+    {
+        $file = 'app/config/config.yml';
+        $content = file_get_contents($file);
+
+        preg_match('/driver\:.*\r?\n/', $content, $matches);
+
+        $replacement = preg_replace('/mysql/', 'pgsql', $matches[0]);
+
+        $content = strtr($content, [$matches[0] => $replacement]);
+        file_put_contents($file, $content);
     }
 }
