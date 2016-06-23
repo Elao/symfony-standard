@@ -247,7 +247,7 @@ class Composer
                 );
 
             if ($confirmation) {
-                self::changeDoctrineDriver();
+                self::replaceValueInFile('app/config/config.yml', '/driver\:.*\r?\n/', '/mysql/', 'pgsql');
             }
 
         }
@@ -297,7 +297,8 @@ class Composer
 
         if ('php' === $dependency)
         {
-            self::setVagrantBox($chosenVersion);
+            $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
+            self::replaceValueInFile('Vagrantfile', '/\:box_version.*,/', '/\'.*\'/', '\'' . $boxVersion.'\'');
         }
 
         $versionReplacement = preg_replace(['/#/', '/\'\d.*\'.*(\r?\n)/'], ['', '\'' . $chosenVersion.'\'$1'] , $versionMatches[0]);
@@ -307,9 +308,9 @@ class Composer
     /**
      * Get the dependency default version.
      *
-     * @param $content
+     * @param string $content
      *
-     * @param $dependency
+     * @param string $dependency
      *
      * @return mixed
      */
@@ -327,7 +328,7 @@ class Composer
     /**
      * Get the list of dependencies having versions defined.
      *
-     * @param $content
+     * @param string $content
      *
      * @return mixed
      */
@@ -342,7 +343,7 @@ class Composer
     /**
      * Get the list of available dependencies.
      *
-     * @param $content
+     * @param string $content
      *
      * @return mixed
      */
@@ -357,9 +358,9 @@ class Composer
     /**
      * Get the available versions for a given dependency.
      *
-     * @param $content
+     * @param string $content
      *
-     * @param $dependency
+     * @param string $dependency
      *
      * @return array
      */
@@ -375,33 +376,20 @@ class Composer
     }
 
     /**
-     * Set Vagrant box version.
+     * @param string $file
      *
-     * @param $phpVersion
+     * @param string $pattern
+     *
+     * @param string $replacementPattern
+     *
+     * @param string $value
      */
-    private static function setVagrantBox($phpVersion)
+    private static function replaceValueInFile($file, $pattern, $replacementPattern, $value)
     {
-        $file = 'Vagrantfile';
         $content = file_get_contents($file);
-        preg_match('/\:box_version.*,/', $content, $matches);
+        preg_match($pattern, $content, $matches);
 
-        $boxVersion = '7.0' === $phpVersion ? '3.0.0' : '2.0.0';
-
-        $replacement = preg_replace('/\'.*\'/', '\'' . $boxVersion.'\'', $matches[0]);
-
-        $content = strtr($content, [$matches[0] => $replacement]);
-        file_put_contents($file, $content);
-    }
-
-    private static function changeDoctrineDriver()
-    {
-        $file = 'app/config/config.yml';
-        $content = file_get_contents($file);
-
-        preg_match('/driver\:.*\r?\n/', $content, $matches);
-
-        $replacement = preg_replace('/mysql/', 'pgsql', $matches[0]);
-
+        $replacement = preg_replace($replacementPattern, $value, $matches[0]);
         $content = strtr($content, [$matches[0] => $replacement]);
         file_put_contents($file, $content);
     }
