@@ -9,9 +9,9 @@
     manala_skeleton_env:  "{{ env }}"
     manala_skeleton_options_hashes:
       - app_options
-      - app_options_env
+      - app_(\w*)_options
     manala_skeleton_patterns_hashes:
       - app_patterns
-      - app_patterns_env
+      - app_(\w*)_patterns
   roles:
     - manala.skeleton
