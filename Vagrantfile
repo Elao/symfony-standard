@@ -2,9 +2,9 @@
 # vi: set ft=ruby :
 
 app = {
-  :name        => 'app.elao',
+  :name        => '<# app.name #>',
   :box         => 'manala/app-dev-debian',
-  :box_version => '2.0.0',
+  :box_version => '~> 3.0.0',
   :box_memory  => 1024
 }
 
