@@ -23,18 +23,18 @@ class Composer
             'app/config/config.yml',
             'package.json',
             'ansible/group_vars/all.yml',
-            'behat.yml.dist'
+            'behat.yml.dist',
         ];
 
         $event->getIO()->write([
             '<info>Configure application</info>',
             '<comment>The following files will be updated</comment>:',
             '- composer.json',
-            '- README.md'
+            '- README.md',
         ]);
 
         foreach ($files as $file) {
-            $event->getIO()->write('- ' . $file);
+            $event->getIO()->write('- '.$file);
         }
 
         $confirmation = $event->getIO()
@@ -71,9 +71,9 @@ class Composer
                 'app'
             );
 
-        $appDatabase = ($vendor ? $vendor . '_' : '') . $app;
+        $appDatabase = ($vendor ? $vendor.'_' : '').$app;
 
-        $appHost = $app . ($vendor ? '.' . $vendor : '');
+        $appHost = $app.($vendor ? '.'.$vendor : '');
 
         $vars = [
             '{{ vendor }}'       => strtolower($vendor),
@@ -93,10 +93,10 @@ class Composer
         }
 
         // App composer name
-        $appComposerName = ($vendor ? $vendor : $app) . '/' . $app;
+        $appComposerName = ($vendor ? $vendor : $app).'/'.$app;
 
         // App name
-        $appName = ($vendor ? str_replace('-', ' ', $vendor) . ' - ' : '') . str_replace('-', ' ', $app);
+        $appName = ($vendor ? str_replace('-', ' ', $vendor).' - ' : '').str_replace('-', ' ', $app);
 
         $content = file_get_contents('composer.json');
         $content = strtr($content, ['elao/symfony-standard'             => strtolower($appComposerName)]);

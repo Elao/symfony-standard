@@ -1,9 +1,9 @@
 <?php
 
-include __DIR__ . '/../../app/AppKernel.php';
+include __DIR__.'/../../app/AppKernel.php';
 
 /**
- * See: https://github.com/Behat/Symfony2Extension/issues/69
+ * See: https://github.com/Behat/Symfony2Extension/issues/69.
  */
 class FeatureKernel extends AppKernel
 {
@@ -18,7 +18,7 @@ class FeatureKernel extends AppKernel
                 ['\\', 'features/bootstrap'],
                 ['/'],
                 dirname($r->getFileName())
-            ) . 'app';
+            ).'app';
         }
 
         return $this->rootDir;
