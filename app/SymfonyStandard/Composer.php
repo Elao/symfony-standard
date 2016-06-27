@@ -298,7 +298,7 @@ class Composer
         if ('php' === $dependency)
         {
             $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
-            self::replaceValueInFile('Vagrantfile', '/\:box_version.*,/', '/\'.*\'/', '\'' . $boxVersion.'\'');
+            self::replaceValueInFile('Vagrantfile', '/\:box_version.*,/', '/\'.*\'/', '\'~> ' . $boxVersion.'\'');
         }
 
         $versionReplacement = preg_replace(['/#/', '/\'\d.*\'.*(\r?\n)/'], ['', '\'' . $chosenVersion.'\'$1'] , $versionMatches[0]);
