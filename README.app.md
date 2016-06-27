@@ -1,4 +1,4 @@
-# {{ app.label }}
+# <# app.label #>
 
 ## Development
 
@@ -17,7 +17,7 @@ Clone the project in your workspace, and launch setup
 
     $ make setup
 
-You should access the project via http://{{ app.name }}.dev/app_dev.php
+You should access the project via http://<# app.name #>.dev/app_dev.php
 
 ### Usage
 
@@ -31,13 +31,13 @@ Build
 
 Admin
 
-* [MailHog](http://{{ app.name }}.dev:8025)
-* [Supervisor](http://{{ app.name }}.dev:9001)
-* [RTail](http://{{ app.name }}.dev:8888)
-* [OPcache Dashboard](http://{{ app.name }}.dev:2013)
-* [PhpMyAdmin](http://{{ app.name }}.dev:1979)
-* [PhpPgAdmin](http://{{ app.name }}.dev:1980)
-* [PhpRedisAdmin](http://{{ app.name }}.dev:1981)
-* [MongoExpress](http://{{ app.name }}.dev:8081)
-* [Elasticsearch](http://{{ app.name }}.dev:9200/_plugin/head/)
-* [Ngrok](http://{{ app.name }}.dev:4040)
+* [MailHog](http://<# app.name #>.dev:8025)
+* [Supervisor](http://<# app.name #>.dev:9001)
+* [RTail](http://<# app.name #>.dev:8888)
+* [OPcache Dashboard](http://<# app.name #>.dev:2013)
+* [PhpMyAdmin](http://<# app.name #>.dev:1979)
+* [PhpPgAdmin](http://<# app.name #>.dev:1980)
+* [PhpRedisAdmin](http://<# app.name #>.dev:1981)
+* [MongoExpress](http://<# app.name #>.dev:8081)
+* [Elasticsearch](http://<# app.name #>.dev:9200/_plugin/head/)
+* [Ngrok](http://<# app.name #>.dev:4040)
