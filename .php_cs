@@ -1,9 +1,9 @@
 <?php
 
 $header = <<<EOF
-This file is part of the <# app.label #> website.
+This file is part of the App website.
 
-Copyright © <# vendor.label #>
+Copyright © Vendor
 
 @author Elao <contact@elao.com>
 EOF;
