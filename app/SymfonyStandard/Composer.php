@@ -1,38 +1,45 @@
 <?php
 
 /*
- * This file is part of the App website.
+ * This file is part of the Elao/symfony-standard package.
  *
- * Copyright © Vendor
+ * Copyright © Elao
  *
- * @author Elao <contact@elao.com>
+ * @author Maximilien Bernard <maximilien.bernard@elao.com>
  */
 
 namespace SymfonyStandard;
 
 use Composer\Script\CommandEvent;
 
+/**
+ * Class Composer
+ * @package SymfonyStandard
+ */
 class Composer
 {
+    /**
+     * @const ANSIBLE_FILE : path to the ansible app.yml file
+     */
     const ANSIBLE_FILE = 'ansible/group_vars/app.yml';
 
+    /**
+     * @var array
+     */
     public static $fileMap = [
-         'README.app.md' => [
-                'label' => '/App/',
-                'name' => '/()app(\.dev)/',
-         ],
-
+        'README.app.md' => [
+            'label' => '/App/',
+            'name' => '/()app(\.dev)/',
+        ],
         'Vagrantfile' => [
-                'name' => '/(:name.+\')app(\')/',
+            'name' => '/(:name.+\')app(\')/',
         ],
-
         'behat.yml.dist' => [
-                'name' => '/()app(\.dev)/',
+            'name' => '/()app(\.dev)/',
         ],
-
         '.php_cs' => [
-                'label' => '/App/',
-                'vendor' => '/Vendor/',
+            'label' => '/App/',
+            'vendor' => '/Vendor/',
         ],
         'composer.json' => [
             'composerVendor' => '/elao\/symfony-standard/',
@@ -210,7 +217,7 @@ class Composer
      * @param string       $content
      * @param string       $versionList
      */
-    private static function handleDependency($event, $dependency, $content, $versionList)
+    private static function handleDependency(CommandEvent $event, $dependency, $content, $versionList)
     {
         preg_match('/#' . $dependency . '.*false/', $content, $activationMatches);
         preg_match('/#' . $dependency . '_version.*\r?\n/', $content, $versionMatches);
@@ -260,7 +267,7 @@ class Composer
      * @param string       $dependency
      * @param string       $content
      */
-    private static function handleDependencyVersion($event, $dependency, $content)
+    private static function handleDependencyVersion(CommandEvent $event, $dependency, $content)
     {
         $versions = self::getAvailableDependencyVersions($content, $dependency . '_version');
         $defaultVersion = self::getDefaultVersion($content, $dependency);
@@ -297,8 +304,7 @@ class Composer
      * @param string $dependency
      *
      * @throws \InvalidArgumentException
-     * @return mixed
-     *
+     * @return array
      */
     private static function getDefaultVersion($content, $dependency)
     {
@@ -316,7 +322,7 @@ class Composer
      *
      * @param string $content
      *
-     * @return mixed
+     * @return array
      */
     private static function getDependenciesVersionList($content)
     {
@@ -331,7 +337,7 @@ class Composer
      *
      * @param string $content
      *
-     * @return mixed
+     * @return array
      */
     private static function getDependenciesList($content)
     {
@@ -363,6 +369,8 @@ class Composer
     }
 
     /**
+     * Uses a regular expression to find and replace $replacementPattern by $value in $file
+     *
      * @param string $file
      * @param mixed  $replacementPattern
      * @param mixed  $value
