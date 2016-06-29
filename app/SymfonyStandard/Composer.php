@@ -1,12 +1,11 @@
 <?php
 
 /*
- * This file is part of the Symfony package.
+ * This file is part of the App website.
  *
- * (c) Fabien Potencier <fabien@symfony.com>
+ * Copyright © Vendor
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * @author Elao <contact@elao.com>
  */
 
 namespace SymfonyStandard;
@@ -58,7 +57,7 @@ class Composer
         ]);
 
         foreach ($files as $filename) {
-            $event->getIO()->write('- '.$filename);
+            $event->getIO()->write('- ' . $filename);
         }
 
         $confirmation = $event->getIO()
@@ -79,17 +78,17 @@ class Composer
         $vendor = $projectInfos['vendor'];
         $app = $projectInfos['appName'];
 
-        $appName = $app.($vendor ? '.'.$vendor : '');
+        $appName = $app . ($vendor ? '.' . $vendor : '');
         $appLabel = ucwords(str_replace('.', ' - ', str_replace('-', ' ', $appName)));
 
         $appComposerName = str_replace('.', '/', $appName);
 
         $userValues = [
             'label' => $appLabel,
-            'name' => '$1'.$appName.'$2',
+            'name' => '$1' . $appName . '$2',
             'vendor' => $vendor ? ucwords(str_replace('-', ' ', $vendor))  : $appLabel,
-            'composerVendor' => ($vendor ? $vendor : $app).'/'.$app,
-            'composerName' => ($vendor ? str_replace('-', ' ', $vendor).' - ' : '').str_replace('-', ' ', $app),
+            'composerVendor' => ($vendor ? $vendor : $app) . '/' . $app,
+            'composerName' => ($vendor ? str_replace('-', ' ', $vendor) . ' - ' : '') . str_replace('-', ' ', $app),
         ];
 
         foreach (self::$fileMap as $filename => $values) {
@@ -124,7 +123,7 @@ class Composer
 
         $confirmation = $event->getIO()
             ->askConfirmation(
-                '<info>Your project’s vendor will be "'.$projectInfos['vendor'].'" and your app name will be "'.$projectInfos['appName'].
+                '<info>Your project’s vendor will be "' . $projectInfos['vendor'] . '" and your app name will be "' . $projectInfos['appName'] .
                 '". Do you want to continue?</info> [<comment>Y,n</comment>]',
                 true
             );
@@ -213,12 +212,12 @@ class Composer
      */
     private static function handleDependency($event, $dependency, $content, $versionList)
     {
-        preg_match('/#'.$dependency.'.*false/', $content, $activationMatches);
-        preg_match('/#'.$dependency.'_version.*\r?\n/', $content, $versionMatches);
+        preg_match('/#' . $dependency . '.*false/', $content, $activationMatches);
+        preg_match('/#' . $dependency . '_version.*\r?\n/', $content, $versionMatches);
 
         $dependencyValue = $event->getIO()
             ->askAndValidate(
-                '<info>Do you wish to install '.$dependency.' ?</info> [<comment>y/N</comment>]: ',
+                '<info>Do you wish to install ' . $dependency . ' ?</info> [<comment>y/N</comment>]: ',
                 function ($value) {
                     if (!preg_match('/^(?:Y|N|^$)$/i', $value)) {
                         throw new \InvalidArgumentException('Invalid input');
@@ -231,9 +230,9 @@ class Composer
             );
 
         preg_match('/^Y/i', $dependencyValue) ?
-            self::replaceValueInFile(self::ANSIBLE_FILE, '/#('.$dependency.':.+)false/', '$1 '.'true')
+            self::replaceValueInFile(self::ANSIBLE_FILE, '/#(' . $dependency . ':.+)false/', '$1 ' . 'true')
         :
-            self::replaceValueInFile(self::ANSIBLE_FILE, '/#'.$dependency.':.+false\r?\n/', '');
+            self::replaceValueInFile(self::ANSIBLE_FILE, '/#' . $dependency . ':.+false\r?\n/', '');
 
         if (preg_match('/^Y/i', $dependencyValue) && 'postgresql' === $dependency) {
             $confirmation = $event->getIO()
@@ -247,10 +246,10 @@ class Composer
             }
         }
 
-        if (preg_match('/^Y/i', $dependencyValue) && in_array($dependency.'_version', $versionList)) {
+        if (preg_match('/^Y/i', $dependencyValue) && in_array($dependency . '_version', $versionList)) {
             self::handleDependencyVersion($event, $dependency, $content);
-        } elseif (in_array($dependency.'_version', $versionList)) {
-            self::replaceValueInFile(self::ANSIBLE_FILE,  '/.*#'.$dependency.'_version:.+\r?\n/', '');
+        } elseif (in_array($dependency . '_version', $versionList)) {
+            self::replaceValueInFile(self::ANSIBLE_FILE,  '/.*#' . $dependency . '_version:.+\r?\n/', '');
         }
     }
 
@@ -263,9 +262,9 @@ class Composer
      */
     private static function handleDependencyVersion($event, $dependency, $content)
     {
-        $versions = self::getAvailableDependencyVersions($content, $dependency.'_version');
+        $versions = self::getAvailableDependencyVersions($content, $dependency . '_version');
         $defaultVersion = self::getDefaultVersion($content, $dependency);
-        preg_match('/#'.$dependency.'_version.*\r?\n/', $content, $versionMatches);
+        preg_match('/#' . $dependency . '_version.*\r?\n/', $content, $versionMatches);
 
         $versionValidator = function ($value) use ($versions) {
             if (!in_array($value, $versions)) {
@@ -277,7 +276,7 @@ class Composer
 
         $chosenVersion = $event->getIO()
             ->askAndValidate(
-                '<info>'.$dependency.' version ('.implode(', ', $versions).')</info> [<comment>'.$defaultVersion.'</comment>] : ',
+                '<info>' . $dependency . ' version (' . implode(', ', $versions) . ')</info> [<comment>' . $defaultVersion . '</comment>] : ',
                 $versionValidator,
                 5,
                 $defaultVersion
@@ -285,10 +284,10 @@ class Composer
 
         if ('php' === $dependency) {
             $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
-            self::replaceValueInFile('Vagrantfile',  '/(box_version\s+=>\s+)\'.+(\',)/', '$1\'~> '.$boxVersion.'$2');
+            self::replaceValueInFile('Vagrantfile',  '/(box_version\s+=>\s+)\'.+(\',)/', '$1\'~> ' . $boxVersion . '$2');
         }
 
-        self::replaceValueInFile(self::ANSIBLE_FILE,  '/#('.$dependency.'_version:.+)\'.+(\').+(\S)/', '$1 \''.$chosenVersion.'$2');
+        self::replaceValueInFile(self::ANSIBLE_FILE,  '/#(' . $dependency . '_version:.+)\'.+(\').+(\S)/', '$1 \'' . $chosenVersion . '$2');
     }
 
     /**
@@ -297,13 +296,13 @@ class Composer
      * @param string $content
      * @param string $dependency
      *
+     * @throws \InvalidArgumentException
      * @return mixed
      *
-     * @throws \InvalidArgumentException
      */
     private static function getDefaultVersion($content, $dependency)
     {
-        preg_match('/'.$dependency.'.*\'(.*)\'/', $content, $matches);
+        preg_match('/' . $dependency . '.*\'(.*)\'/', $content, $matches);
 
         if (!isset($matches[1]) || empty($matches[1])) {
             throw new \InvalidArgumentException(sprintf('A default version of %s is missing in your ansible/groupe_vars/app.yml file', $dependency));
@@ -348,13 +347,13 @@ class Composer
      * @param string $content
      * @param string $dependency
      *
+     * @throws \InvalidArgumentException
      * @return array
      *
-     * @throws \InvalidArgumentException
      */
     private static function getAvailableDependencyVersions($content, $dependency)
     {
-        preg_match('/'.$dependency.'.*#(.*)\r?\n/', $content, $matches);
+        preg_match('/' . $dependency . '.*#(.*)\r?\n/', $content, $matches);
 
         if (!isset($matches[1]) || empty($matches[1])) {
             throw new \InvalidArgumentException(sprintf('A valid list of versions for %s is missing in your ansible/groupe_vars/app.yml file', $dependency));
