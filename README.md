@@ -16,7 +16,7 @@
 
 Create the project and access to its directory (where [app] is your application name)
 
-    $ composer create-project elao/symfony-standard [app] 3.0.x-dev --prefer-dist --no-install
+    $ composer create-project elao/symfony-standard [app] dev-master --prefer-dist --no-install
     $ cd [app]
 
 Install and prepare the project dependencies
