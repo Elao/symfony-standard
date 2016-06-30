@@ -72,6 +72,10 @@ app_patterns:
     # Symfony
     - intl
     - curl
+    - mbstring
+    - xml
+    # Composer
+    - zip
     # App
 
   php_configs:
