@@ -289,12 +289,18 @@ class Composer
                 $defaultVersion
             );
 
-        if ('php' === $dependency) {
-            $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
-            self::replaceValueInFile('Vagrantfile',  '/(box_version\s+=>\s+)\'.+(\',)/', '$1\'~> ' . $boxVersion . '$2');
+        if ('php' === $dependency OR 'nodejs' === $dependency) {
+            if ('php' === $dependency) {
+                $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
+                self::replaceValueInFile('Vagrantfile', '/(box_version\s+=>\s+)\'.+(\',)/', '$1\'~> ' . $boxVersion . '$2');
+            }
+
+            self::replaceValueInFile(self::ANSIBLE_FILE,  '/(' . $dependency . '_version:.+)\'.+(\').+(\S)/', '$1 \'' . $chosenVersion . '$2');
+        }
+        else{
+            self::replaceValueInFile(self::ANSIBLE_FILE,  '/#(' . $dependency . '_version:.+)\'.+(\').+(\S)/', '$1 \'' . $chosenVersion . '$2');
         }
 
-        self::replaceValueInFile(self::ANSIBLE_FILE,  '/#(' . $dependency . '_version:.+)\'.+(\').+(\S)/', '$1 \'' . $chosenVersion . '$2');
     }
 
     /**
