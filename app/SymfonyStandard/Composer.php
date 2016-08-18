@@ -11,11 +11,11 @@
 
 namespace SymfonyStandard;
 
-use Composer\Script\CommandEvent;
+use Composer\Script\Event;
 
 class Composer
 {
-    public static function hookCreateProject(CommandEvent $event)
+    public static function hookCreateProject(Event $event)
     {
         $files = [
             'Vagrantfile',
