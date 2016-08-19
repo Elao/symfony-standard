@@ -77,12 +77,16 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml",
             "env-map": {
-                "secret":            "APP_SECRET",
-                "database_host":     "APP_DATABASE_HOST",
-                "database_port":     "APP_DATABASE_PORT",
-                "database_name":     "APP_DATABASE_NAME",
-                "database_user":     "APP_DATABASE_USER",
-                "database_password": "APP_DATABASE_PASSWORD"
+                "secret":             "APP_SECRET",
+                "database_host":      "APP_DATABASE_HOST",
+                "database_port":      "APP_DATABASE_PORT",
+                "database_name":      "APP_DATABASE_NAME",
+                "database_user":      "APP_DATABASE_USER",
+                "database_password":  "APP_DATABASE_PASSWORD",
+                "mailer_transport":   "APP_MAILER_TRANSPORT",
+                "mailer_host":        "APP_MAILER_HOST",
+                "mailer_user":        "APP_MAILER_USER",
+                "mailer_password":    "APP_MAILER_PASSWORD"
             }
         }
     }
