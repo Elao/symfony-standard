@@ -14,6 +14,7 @@ app_options:
   #mongodb_version:       '3.2' #3.0|3.2
   #elasticsearch:         false
   #elasticsearch_version: '1.7' #1.5|1.6|1.7|2
+  #influxdb:              false
 
 app_patterns:
 
