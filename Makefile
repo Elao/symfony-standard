@@ -76,7 +76,7 @@ install:
 install@test: SYMFONY_ENV = test
 install@test:
 	# Composer
-	composer install --no-progress --no-interaction
+	composer install --verbose --no-progress --no-interaction
 	# Db
 	bin/console doctrine:database:drop --force --if-exists
 	bin/console doctrine:database:create --if-not-exists
@@ -84,10 +84,17 @@ install@test:
 	# Db - Fixtures
 	#bin/console doctrine:fixtures:load --no-interaction
 
+install@demo: SYMFONY_ENV = prod
+install@demo:
+	# Composer
+	composer install --verbose --no-progress --no-interaction --prefer-dist --optimize-autoloader
+	# Symfony cache
+	bin/console cache:warmup --no-debug
+
 install@prod: SYMFONY_ENV = prod
 install@prod:
 	# Composer
-	composer install --prefer-dist --optimize-autoloader --no-progress --no-interaction
+	composer install --verbose --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev
 	# Symfony cache
 	bin/console cache:warmup --no-debug
 
@@ -97,6 +104,9 @@ install@prod:
 
 ## Build application
 build:
+
+build@demo: SYMFONY_ENV = prod
+build@demo:
 
 build@prod: SYMFONY_ENV = prod
 build@prod:
