@@ -11,7 +11,7 @@ EOF;
 Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);
 
 return Symfony\CS\Config\Config::create()
-    ->level('symfony')
+    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
     ->fixers([
         '-concat_without_spaces',
         '-phpdoc_short_description',
