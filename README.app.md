@@ -41,3 +41,4 @@ Admin
 * [MongoExpress](http://app.dev:8081)
 * [Elasticsearch](http://app.dev:9200/_plugin/head/)
 * [Ngrok](http://app.dev:4040)
+* [InfluxDB](http://app.dev:8083)
