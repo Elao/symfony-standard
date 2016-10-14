@@ -61,7 +61,7 @@ provision-php: provision
 ## Install application
 install:
 	# Composer
-	composer install --no-progress --no-interaction
+	composer install --verbose
 	# Db
 	bin/console doctrine:database:create --if-not-exists
 	bin/console doctrine:schema:update --force
