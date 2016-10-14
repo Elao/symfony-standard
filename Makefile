@@ -73,7 +73,7 @@ install:
 	# Db - Fixtures - Test
 	#bin/console doctrine:fixtures:load --no-interaction --env=test
 
-install@test: SYMFONY_ENV = test
+install@test: export SYMFONY_ENV = test
 install@test:
 	# Composer
 	composer install --verbose --no-progress --no-interaction
@@ -84,14 +84,14 @@ install@test:
 	# Db - Fixtures
 	#bin/console doctrine:fixtures:load --no-interaction
 
-install@demo: SYMFONY_ENV = prod
+install@demo: export SYMFONY_ENV = prod
 install@demo:
 	# Composer
 	composer install --verbose --no-progress --no-interaction --prefer-dist --optimize-autoloader
 	# Symfony cache
 	bin/console cache:warmup --no-debug
 
-install@prod: SYMFONY_ENV = prod
+install@prod: export SYMFONY_ENV = prod
 install@prod:
 	# Composer
 	composer install --verbose --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev
@@ -105,10 +105,10 @@ install@prod:
 ## Build application
 build:
 
-build@demo: SYMFONY_ENV = prod
+build@demo: export SYMFONY_ENV = prod
 build@demo:
 
-build@prod: SYMFONY_ENV = prod
+build@prod: export SYMFONY_ENV = prod
 build@prod:
 
 ############
@@ -119,7 +119,7 @@ build@prod:
 security:
 	security-checker security:check
 
-security@test: SYMFONY_ENV = test
+security@test: export SYMFONY_ENV = test
 security@test: security
 
 ########
@@ -130,7 +130,7 @@ security@test: security
 lint:
 	php-cs-fixer fix --config-file=.php_cs --dry-run --diff
 
-lint@test: SYMFONY_ENV = test
+lint@test: export SYMFONY_ENV = test
 lint@test: lint
 
 ########
@@ -138,14 +138,14 @@ lint@test: lint
 ########
 
 ## Run tests
-test: SYMFONY_ENV = test
+test: export SYMFONY_ENV = test
 test:
 	# PHPUnit
 	vendor/bin/phpunit
 	# Behat
 	bin/console cache:clear && vendor/bin/behat
 
-test@test: SYMFONY_ENV = test
+test@test: export SYMFONY_ENV = test
 test@test:
 	# PHPUnit
 	rm -Rf build/phpunit && mkdir -p build/phpunit
