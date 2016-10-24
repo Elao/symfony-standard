@@ -7,6 +7,8 @@ app_options:
 
   #mysql:                 false
   #mysql_version:         '5.6' #5.6|5.7
+  #mariadb:               false
+  #mariadb_version:       '10.1' #10.0|10.1|10.2
   #postgresql:            false
   #postgresql_version:    '9.5' #9.4|9.5
   #redis:                 false
