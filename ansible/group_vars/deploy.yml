@@ -43,10 +43,10 @@ manala_deploy_shared_dirs:
 # Writable #
 ############
 
-manala_deploy_writable_dirs_default:
-  mode:   ug=rwx,o=rx
-  follow: true
-manala_deploy_writable_dirs:
-  - var/cache
-  - var/logs
-  - var/sessions
+#manala_deploy_writable_dirs_default:
+#  mode:   ug=rwx,o=rx
+#  follow: true
+#manala_deploy_writable_dirs:
+#  - var/cache
+#  - var/logs
+#  - var/sessions
