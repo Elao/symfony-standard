@@ -30,3 +30,13 @@ app_local_patterns:
   #php_blackfire_client:
   #  - client-id:    ...
   #  - client-token: ...
+
+  #######
+  # Php #
+  #######
+
+  #php_configs:
+  #  - file: app_local.ini
+  #    config:
+  #      # Symfony ide integration, see: http://symfony.com/doc/current/reference/configuration/framework.html#ide
+  #      - xdebug.file_link_format: "'phpstorm://open?file=%f&line=%l&/srv/app/>/Users/manala/workspace/vendor/app/'"
