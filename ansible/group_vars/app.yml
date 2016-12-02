@@ -31,10 +31,10 @@ app_patterns:
     - SYMFONY_ENV:            "{{ app.env }}"
     - APP_SECRET:             ThisTokenIsNotSoSecretChangeIt
     - APP_DATABASE_HOST:      127.0.0.1
-    - APP_DATABASE_PORT:      null
+    - APP_DATABASE_PORT:      ~
     - APP_DATABASE_NAME:      app
     - APP_DATABASE_USER:      "{{ app.user }}"
-    - APP_DATABASE_PASSWORD:  null
+    - APP_DATABASE_PASSWORD:  ~
     - APP_MAILER_TRANSPORT:   smtp
     - APP_MAILER_HOST:        127.0.0.1
     - APP_MAILER_USER:        ~
