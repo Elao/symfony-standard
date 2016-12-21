@@ -14,9 +14,10 @@ app_options:
   #redis:                 false
   #mongodb:               false
   #mongodb_version:       '3.2' #3.0|3.2
+  #influxdb:              false
+  #sqlite:                false
   #elasticsearch:         false
   #elasticsearch_version: '1.7' #1.5|1.6|1.7|2
-  #influxdb:              false
   #java:                  false
 
 app_patterns:
