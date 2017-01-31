@@ -11,7 +11,7 @@ app = {
 Vagrant.require_version '>= 1.8.4'
 
 Vagrant.configure(2) do |config|
-  
+
   # Ssh
   config.ssh.username      = 'app'
   config.ssh.forward_agent = true
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
     mount_options: ['nolock', 'actimeo=1', 'fsc']
 
   # Vm - Provider - Virtualbox
-  config.vm.provider "virtualbox" # Force provider
+  config.vm.provider 'virtualbox' # Force provider
   config.vm.provider :virtualbox do |virtualbox|
     virtualbox.name   = app[:name]
     virtualbox.memory = app[:box_memory]
