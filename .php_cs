@@ -25,5 +25,6 @@ return PhpCsFixer\Config::create()
         'ordered_imports' => true,
         'simplified_null_return' => false,
         'header_comment' => ['header' => $header],
+        'braces' => ['allow_single_line_closure' => true],
     ])
 ;
