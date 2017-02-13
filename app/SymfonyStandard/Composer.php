@@ -291,7 +291,7 @@ class Composer
 
         if ('php' === $dependency OR 'nodejs' === $dependency) {
             if ('php' === $dependency) {
-                $boxVersion = '7.0' === $chosenVersion ? '3.0.0' : '2.0.0';
+                $boxVersion = (('7.0' === $chosenVersion) || ('7.1' === $chosenVersion)) ? '3.0.0' : '2.0.0';
                 self::replaceValueInFile('Vagrantfile', '/(box_version\s+=>\s+)\'.+(\',)/', '$1\'~> ' . $boxVersion . '$2');
             }
 
