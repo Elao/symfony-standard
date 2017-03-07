@@ -74,17 +74,13 @@ Kill vagrant ruby process, and try again
 
 ### Nfs shares without password confirmation
 
-Edit /etc/sudoers
+Edit /etc/sudoers.d/vagrant
 
-    $ sudo visudo
+    $ sudo vi /etc/sudoers.d/vagrant
 
-Under the section `# Cmnd alias specification`, add the following lines
+Copy/paste the following lines:
 
-    # Cmnd alias specification
     Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
     Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
     Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
-
-Then in `# User privilege specification` section, append the following line underneath `%admin  ALL=(ALL) ALL`
-
-    %admin  ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
+    %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
