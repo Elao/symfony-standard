@@ -17,7 +17,7 @@ app_options:
   #influxdb:              false
   #sqlite:                false
   #elasticsearch:         false
-  #elasticsearch_version: '1.7' #1.5|1.6|1.7|2
+  #elasticsearch_version: '5' #1.5|1.6|1.7|2|5
   #java:                  false
 
 app_patterns:
