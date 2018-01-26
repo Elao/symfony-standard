@@ -4,11 +4,11 @@
 app = {
   :name        => 'app',
   :box         => 'manala/app-dev-debian',
-  :box_version => '~> 3.0.0',
+  :box_version => '~> 3.0.11',
   :box_memory  => 1024
 }
 
-Vagrant.require_version '>= 1.8.4'
+Vagrant.require_version '>= 2.0.1'
 
 Vagrant.configure(2) do |config|
 
@@ -48,12 +48,13 @@ Vagrant.configure(2) do |config|
   # Vm - Provision - Setup
   for playbook in ['ansible', 'app']
     config.vm.provision playbook, type: 'ansible_local' do |ansible|
-      ansible.version           = (playbook == 'ansible') ? 'latest' : ''
-      ansible.provisioning_path = '/srv/app/ansible'
-      ansible.playbook          = playbook + '.yml'
-      ansible.inventory_path    = '/etc/ansible/hosts'
-      ansible.tags              = ENV['ANSIBLE_TAGS']
-      ansible.extra_vars        = JSON.parse(ENV['ANSIBLE_EXTRA_VARS'] || '{"manala":{"update":true}}')
+      ansible.version            = (playbook == 'ansible') ? 'latest' : ''
+      ansible.compatibility_mode = '2.0'
+      ansible.provisioning_path  = '/srv/app/ansible'
+      ansible.playbook           = playbook + '.yml'
+      ansible.inventory_path     = '/etc/ansible/hosts'
+      ansible.tags               = ENV['ANSIBLE_TAGS']
+      ansible.extra_vars         = JSON.parse(ENV['ANSIBLE_EXTRA_VARS'] || '{"manala":{"update":true}}')
     end
   end
 
