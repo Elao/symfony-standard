@@ -8,23 +8,23 @@ Copyright © Vendor
 @author Elao <contact@elao.com>
 EOF;
 
-Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);
+$finder = PhpCsFixer\Finder::create()
+    ->in([__DIR__ . '/src', __DIR__ . '/tests'])
+;
 
-return Symfony\CS\Config\Config::create()
-    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
-    ->fixers([
-        '-concat_without_spaces',
-        '-phpdoc_short_description',
-        '-pre_increment',
-        'concat_with_spaces',
-        'header_comment',
-        'ordered_use',
-        'phpdoc_order',
-        'short_array_syntax',
-    ])
+return PhpCsFixer\Config::create()
     ->setUsingCache(true)
-    ->finder(
-        Symfony\CS\Finder\DefaultFinder::create()
-            ->in('src')
-    )
+    ->setFinder($finder)
+    ->setRules([
+        '@Symfony' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'phpdoc_summary' => false,
+        'phpdoc_annotation_without_dot' => false,
+        'phpdoc_order' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'ordered_imports' => true,
+        'simplified_null_return' => false,
+        'header_comment' => ['header' => $header],
+        'braces' => ['allow_single_line_closure' => true],
+    ])
 ;
